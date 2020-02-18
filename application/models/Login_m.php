@@ -10,7 +10,9 @@ class Login_m extends CI_Model
 
     public function comprobar_usuario_clave($username, $password)
     {
-        $resultado = $this->db->query("SELECT * FROM admin WHERE username like '$username' and password like '$password'");
-        return $resultado->result();
+        //Para evitar la inyeccion SQL hago una consulta preparada
+        $sql = "SELECT *  FROM admin WHERE username=? AND password = ?";
+        $resultado = $this->db->query($sql, array($username, $password));
+        return $resultado->row();
     }
 }

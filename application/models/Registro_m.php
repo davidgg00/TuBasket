@@ -17,10 +17,4 @@ class Registro_m extends CI_Model
     {
         $this->db->insert('usuarios', $datos);
     }
-
-    public function leer()
-    {
-        $resultado = $this->db->query("SELECT * FROM admin ");
-        return $resultado->result();
-    }
 }

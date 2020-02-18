@@ -1,7 +1,7 @@
 <div class="row align-items-center justify-content-center w-100 ">
     <div class="formulario col-5 p-10px shadow-lg">
         <div id=" logo" class="row">
-            <img src="logo2.png" class="img-fluid mx-auto" alt="Logo TuBasket">
+            <img src="<?php echo base_url('assets/img/logo2.png') ?>" class="img-fluid mx-auto" alt="Logo TuBasket">
         </div>
         <form action="<?php echo base_url() . 'login_c/iniciarsesion' ?>" method="POST">
             <div class="form-group text-center w-50 mx-auto input-group mb-3">
