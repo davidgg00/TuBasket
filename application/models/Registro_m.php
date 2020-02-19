@@ -17,4 +17,9 @@ class Registro_m extends CI_Model
     {
         $this->db->insert('usuarios', $datos);
     }
+
+    public function insert_liga($datos)
+    {
+        $this->db->insert('liga', $datos);
+    }
 }

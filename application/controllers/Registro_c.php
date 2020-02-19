@@ -11,8 +11,8 @@ class Registro_c extends CI_Controller
 
     public function index()
     {
-        $datos["contenido"] = "registro_v";
-        $this->load->view("plantilla/plantilla", $datos);
+        $this->load->view("modulos/head");
+        $this->load->view("registro_v");
     }
 
     public function registrar_user()
@@ -36,6 +36,25 @@ class Registro_c extends CI_Controller
             //TO-DO NO IMPLEMENTADO TODAVÍAR
             $this->Registro_m->insert_jugador($this->input->post());
             redirect(base_url());
+        }
+    }
+
+    public function crear_liga()
+    {
+        $resultado = $this->db->query("SELECT Count(*) as Contador FROM liga WHERE nombre=?", $_POST['liga']);
+        $existe = $resultado->row();
+        //Si resultado->row devuelve un 1 significará que ya existe una liga con ese nombres
+        if ($existe->Contador == 1) {
+            echo "Existe";
+        } else {
+            $this->load->model("Registro_m");
+            $registros = array(
+                'nombre' => $_POST['liga'],
+                'password' => $_POST['clave'],
+                'administrador' => $_POST['administrador']
+            );
+            $this->Registro_m->insert_liga($registros);
+            echo "Creada";
         }
     }
 }
