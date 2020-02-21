@@ -21,7 +21,6 @@ class Login_c extends CI_Controller
         //Si devuelve algo comprobar_usuario_clave es que el login es correcto
         $login = $this->Login_m->comprobar_usuario_clave($this->input->post()['username'], $this->input->post()['password']);
         if ($login) {
-
             //Necesitamos saber que tipo de cuenta es para redirigir a una vista u otra
             //Entonces si tenemos el campo equipo es jugador. De lo contrario admin
             if (isset($login->equipo)) {

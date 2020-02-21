@@ -24,5 +24,6 @@
     <link rel="stylesheet" href="<?= base_url('assets/js/vex-master/dist/css/vex.css') ?>">
     <link rel="stylesheet" href="<?= base_url('assets/js/vex-master/dist/css/vex-theme-os.css') ?>">
     <!--Sweet Alert-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>

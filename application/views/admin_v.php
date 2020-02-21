@@ -31,6 +31,7 @@
     $(document).ready(function() {
         //PARA ABRIR EL FORMULARIO CON LIBRERIA VEX
         $("#crearligadiv").on("click", function(evento) {
+            console.log($("#panel"));
             vex.dialog.open({
                 message: 'Formulario CREAR LIGA:',
                 input: [
@@ -59,19 +60,50 @@
                             "clave": password,
                             "administrador": administrador
                         }, function(dato_devuelto) {
+                            console.log(dato_devuelto);
                             //Si la llamada devuelve Existe será que hay una liga ya con ese nombre
                             if (dato_devuelto == "Existe") {
                                 //Simulamos un click a la sección cargar div para que intente de nuevo
                                 $("#crearligadiv").click();
                                 //Mostramos error
-                                swal("Error", "Ese nombre de liga ya está en uso.", "error");
+                                Swal.fire({
+                                    backdrop: false,
+                                    icon: 'error',
+                                    title: 'Ooops....',
+                                    text: 'Esa liga ya existe!',
+                                    footer: 'Prueba'
+                                })
                             } else if (dato_devuelto == "Creada") {
                                 //Mostramos alerta correcta
-                                swal("Liga creada correctamente", "", "success");
+                                Swal.fire({
+                                    backdrop: false,
+                                    icon: 'success',
+                                    title: 'Ooops....',
+                                    text: 'Esa liga ya existe!',
+                                    footer: 'Prueba'
+                                })
                             }
                         });
                     }
                 }
+            })
+        });
+
+        $("#divgestionliga").on("click", function(evento) {
+            Swal.fire({
+                backdrop: false,
+                title: '<strong>Elige la liga</strong>',
+                icon: '',
+                html: '<?php foreach ($ligas as $liga) : ?>' +
+                    '<div class="card"><div class="card-header">' +
+                    '<?= $liga->nombre ?> ' +
+                    '</div><div class="card-body">' +
+                    '<?= $liga->password ?> ' +
+                    '</div></div>' +
+                    '<?php endforeach; ?>',
+                showCloseButton: true,
+                showConfirmButton: false,
+                focusConfirm: false,
             })
         })
     });
