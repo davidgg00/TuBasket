@@ -11,7 +11,6 @@ class Inicio_c extends CI_Controller
     public function index()
     {
         if ($_SESSION['tipo_cuenta'] == "Admin") {
-
             $this->load->view("modulos/head");
             $this->load->view("admin_v", self::obtenerLigas());
         } else if ($_SESSION['tipo_cuenta'] == "Jugador") {

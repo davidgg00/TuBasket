@@ -41,6 +41,9 @@ class Registro_c extends CI_Controller
 
     public function crear_liga()
     {
+        if ($_POST['liga'] == "") {
+            return false;
+        }
         $resultado = $this->db->query("SELECT Count(*) as Contador FROM liga WHERE nombre=?", $_POST['liga']);
         $existe = $resultado->row();
         //Si resultado->row devuelve un 1 significará que ya existe una liga con ese nombres

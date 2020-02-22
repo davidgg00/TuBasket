@@ -31,7 +31,6 @@
     $(document).ready(function() {
         //PARA ABRIR EL FORMULARIO CON LIBRERIA VEX
         $("#crearligadiv").on("click", function(evento) {
-            console.log($("#panel"));
             vex.dialog.open({
                 message: 'Formulario CREAR LIGA:',
                 input: [
@@ -53,34 +52,34 @@
                         let liga = $("#nombreLiga").val();
                         let password = $("#contrasenia").val();
                         let administrador = $("#administrador").val();
-                        //Creamos llamada a AJAX por GET
+                        //Creamos llamada a AJAX por POST
                         $.post("<?php echo base_url('Registro_c/crear_liga') ?>", {
                             //Pasamos por parametro los valores
                             "liga": liga,
                             "clave": password,
                             "administrador": administrador
                         }, function(dato_devuelto) {
-                            console.log(dato_devuelto);
                             //Si la llamada devuelve Existe será que hay una liga ya con ese nombre
                             if (dato_devuelto == "Existe") {
-                                //Simulamos un click a la sección cargar div para que intente de nuevo
-                                $("#crearligadiv").click();
                                 //Mostramos error
                                 Swal.fire({
                                     backdrop: false,
                                     icon: 'error',
                                     title: 'Ooops....',
-                                    text: 'Esa liga ya existe!',
-                                    footer: 'Prueba'
+                                    text: 'Esa liga ya existe, prueba a crear una con otro nombre',
+                                    //Cuando se vaya a cerrar, se muestra de nuevo el formulario
+                                    onClose: () => {
+                                        $("#crearligadiv").click();
+                                    }
                                 })
+                                //Simulamos un click a la sección cargar div para que intente de nuevo
                             } else if (dato_devuelto == "Creada") {
                                 //Mostramos alerta correcta
                                 Swal.fire({
                                     backdrop: false,
                                     icon: 'success',
-                                    title: 'Ooops....',
-                                    text: 'Esa liga ya existe!',
-                                    footer: 'Prueba'
+                                    title: 'Liga creada con éxito....',
+                                    text: 'Puede acceder a su liga en el apartado Gestionar Liga',
                                 })
                             }
                         });
@@ -106,5 +105,6 @@
                 focusConfirm: false,
             })
         })
+
     });
 </script>
