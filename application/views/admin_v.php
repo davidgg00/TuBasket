@@ -87,7 +87,6 @@
                 }
             })
         });
-
         $("#divgestionliga").on("click", function(evento) {
             Swal.fire({
                 backdrop: false,
@@ -95,7 +94,7 @@
                 icon: '',
                 html: '<?php foreach ($ligas as $liga) : ?>' +
                     '<div class="card"><div class="card-header">' +
-                    '<?= $liga->nombre ?> ' +
+                    '<a href="<?php echo base_url("liga_c/index/$liga->nombre") ?>"><?= $liga->nombre ?> </a> ' +
                     '</div><div class="card-body">' +
                     '<?= $liga->password ?> ' +
                     '</div></div>' +

@@ -1,0 +1,60 @@
+body {
+    height: 100vh;
+    background-image: url("../img/equipo.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.container-fluid {
+    height: 100%;
+}
+
+header {
+    background: #23282D;
+    color: white;
+    height: 10%;
+}
+
+header a {
+    color: white;
+}
+
+#logo {
+    width: 130px;
+}
+
+
+aside {
+    background: rgba(235, 127, 33, 0.8);
+}
+
+#informacion {
+    height: 80%;
+}
+
+div.row  {
+    padding: 0;
+}
+
+#proxpartido {
+    background: rgba(255, 255, 255, 0.9)
+}
+
+footer {
+    background: #23282D;
+    color: white;
+    height: 10%;
+}
+
+#partido {
+    border: 3px solid black;
+}
+
+#partido img {
+    width: 150px;
+}
+
+#partido p {
+    font-weight: bold;
+}

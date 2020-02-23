@@ -6,7 +6,11 @@ class Registro_c extends CI_Controller
     function __construct()
     {
         parent::__construct();
-        $this->load->library('encryption');
+
+        //Si hay una sesión activa redirigimos a inicio_c
+        if (isset($this->session->userdata['username'])) {
+            redirect('Inicio_c');
+        }
     }
 
     public function index()
