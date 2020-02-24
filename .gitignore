@@ -6,3 +6,12 @@ application/*
 !application/views
 !application/models
 !application/controllers
+.htaccess
+.buildpath
+.settings/
+.project
+.idea/
+system/
+assets/grocery_crud/themes/bootstrap
+license.txt
+bootstrap-v4

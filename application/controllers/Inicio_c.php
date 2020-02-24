@@ -37,4 +37,10 @@ class Inicio_c extends CI_Controller
         $this->load->view("modulos/head");
         $this->load->view("liga_v", $datos);
     }
+
+    public function cerrarsesion()
+    {
+        session_destroy();
+        redirect(base_url());
+    }
 }

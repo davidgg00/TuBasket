@@ -15,6 +15,7 @@
     <script src="<?= base_url() . "assets/js/efectoform.js" ?>"></script>
     <script src="https://kit.fontawesome.com/bebbcbf4a0.js" crossorigin="anonymous"></script>
 
+
     <!-------------------------------------------LIBRERÍAS VEX PARA LAS ALERTAS Y FORMULARIOS------------------------------->
 
     <script src="<?= base_url('assets/js/vex-master/dist/js/vex.combined.min.js') ?>"></script>
