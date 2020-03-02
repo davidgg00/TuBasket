@@ -35,21 +35,8 @@ aside {
     height: calc(100% - 86.66px - 52px);
 }
 
-#crud {
-    background-color: #fff;
-    max-height: calc(100% - 86.66px - 52px);
-}
-
-.grocerycrud-container {
-    height: 100%;
-}
-
 div.row  {
     padding: 0;
-}
-
-#proxpartido {
-    background: rgba(255, 255, 255, 0.9)
 }
 
 footer {
@@ -70,3 +57,14 @@ footer {
     font-weight: bold;
 }
 
+#contenedor {
+    height: calc(100% - 86.66px - 52px);
+    overflow: scroll;
+    background-color: #fff;
+}
+
+
+
+#aceptar , #denegar {
+    font-size: 2em;
+}

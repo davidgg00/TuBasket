@@ -4,6 +4,11 @@
             <div class="formulario col-5 p-10px shadow-lg">
                 <div id=" logo" class="row">
                     <img src="<?php echo base_url('assets/img/logo2.png') ?>" class="img-fluid mx-auto" alt="Logo TuBasket">
+                    <?php if (isset($_SESSION['error'])) : ?>
+                        <div class="alert alert-danger mx-auto mb-0" role="alert">
+                            <?= $_SESSION['error'] ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
                 <form action="<?php echo base_url() . 'login_c/iniciarsesion' ?>" method="POST">
                     <div class="form-group text-center w-50 mx-auto input-group mb-3">

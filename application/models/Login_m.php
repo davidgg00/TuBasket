@@ -15,15 +15,16 @@ class Login_m extends CI_Model
         //Probamos a ver si la cuenta está en la tabla admin
         $sqlAdmin = "SELECT *  FROM admin WHERE username=? AND password = ?";
         $resultado = $this->db->query($sqlAdmin, array($username, $password));
-        if ($resultado) {
+        if ($resultado->row()) {
             return $resultado->row();
+        } else {
+            //Probamos si la cuenta está en la tabla jugadores
+            $sqlUsuarios = "SELECT *  FROM usuarios WHERE username=? AND password = ?";
+            $resultado = $this->db->query($sqlUsuarios, array($username, $password));
+            if ($resultado) {
+                return $resultado->row();
+            }
+            return false; //Si llega aqui es que el usuario no existe
         }
-        //Probamos si la cuenta está en la tabla jugadores
-        $sqlUsuarios = "SELECT *  FROM usuarios WHERE username=? AND password = ?";
-        $resultado = $this->db->query($sqlUsuarios, array($username, $password));
-        if ($resultado) {
-            return $resultado->row();
-        }
-        return false; //Si llega aqui es que el usuario no existe
     }
 }

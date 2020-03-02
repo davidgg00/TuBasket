@@ -1,0 +1,55 @@
+body {
+    height: 100vh;
+    background-image: url("../img/background.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#panel {
+    background: rgba(255, 255, 255, 0.6);
+    margin: 0;
+    padding: 0;
+}
+
+.opcion {
+    border: 4px solid black;
+    background: white;
+    height: 70%;
+}
+
+.opcion:hover {
+    cursor: pointer;
+}
+
+#titulo , #pie {
+    height: 20%;
+}
+
+#opciones {
+    height: 60%;
+    border-top: 3px solid black;
+    border-bottom: 3px solid black;
+    width: 100%;
+}
+
+#balon {
+    height: 80%;
+}
+
+.opcion > p {
+    font-size: 1.3em;
+}
+
+.opcion > i {
+    font-size: 8em;
+}
+
+.opcion > a {
+    text-decoration: none;
+    color: black;
+}
+
+#pie > img {
+    height: 90%;
+}

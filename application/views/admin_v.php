@@ -14,7 +14,7 @@
                     <p class="w-100 mt-1 font-weight-bold">Gestionar Liga</p>
                 </div>
                 <div class="opcion col-3 text-center p-2 d-flex justify-content-center">
-                    <a href="inicio_c/cerrarsesion" class="">
+                    <a href="admin_c/cerrarsesion" class="">
                         <img src="<?php echo base_url('assets/img/cerrarsesion.png') ?>" alt="Balon" class="img-fluid align-self-center" id="balon">
                         <p class="w-100 mt-1 font-weight-bold">Cerrar Sesión</p>
                     </a>
@@ -47,6 +47,7 @@
                     })
                 ],
                 callback: function(data) {
+                    console.log(data);
                     if (data) {
                         //Cogemos los valores del formulario
                         let liga = $("#nombreLiga").val();
@@ -59,6 +60,7 @@
                             "clave": password,
                             "administrador": administrador
                         }, function(dato_devuelto) {
+                            console.log(dato_devuelto);
                             //Si la llamada devuelve Existe será que hay una liga ya con ese nombre
                             if (dato_devuelto == "Existe") {
                                 //Mostramos error
@@ -80,6 +82,8 @@
                                     icon: 'success',
                                     title: 'Liga creada con éxito....',
                                     text: 'Puede acceder a su liga en el apartado Gestionar Liga',
+                                }).then(function() {
+                                    window.location.href = "admin_c";
                                 })
                             }
                         });
@@ -94,7 +98,7 @@
                 icon: '',
                 html: '<?php foreach ($ligas as $liga) : ?>' +
                     '<div class="card"><div class="card-header">' +
-                    '<a href="<?php echo base_url("liga_c/index/$liga->nombre") ?>"><?= $liga->nombre ?> </a> ' +
+                    '<a href="<?php echo base_url("Admin_c/index/$liga->nombre") ?>"><?= $liga->nombre ?> </a> ' +
                     '</div><div class="card-body">' +
                     '<?= $liga->password ?> ' +
                     '</div></div>' +
