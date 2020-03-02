@@ -1,0 +1,19 @@
+#contenedor {
+    background-color: #fff;
+}
+
+table {
+    font-size: 1em;
+}
+
+table tr {
+    max-height: 10%;
+}
+
+tr td {
+    width: 20%;
+}
+
+tr img {
+    width: 100px;
+}

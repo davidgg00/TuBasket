@@ -57,13 +57,9 @@ footer {
     font-weight: bold;
 }
 
-#contenedor {
-    height: calc(100% - 86.66px - 52px);
-    overflow: scroll;
-    background-color: #fff;
+#proxpartido {
+    background: rgba(255, 255, 255, 0.9)
 }
-
-
 
 #aceptar , #denegar {
     font-size: 2em;

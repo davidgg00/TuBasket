@@ -92,22 +92,32 @@
             })
         });
         $("#divgestionliga").on("click", function(evento) {
-            Swal.fire({
-                backdrop: false,
-                title: '<strong>Elige la liga</strong>',
-                icon: '',
-                html: '<?php foreach ($ligas as $liga) : ?>' +
-                    '<div class="card"><div class="card-header">' +
-                    '<a href="<?php echo base_url("Admin_c/index/$liga->nombre") ?>"><?= $liga->nombre ?> </a> ' +
-                    '</div><div class="card-body">' +
-                    '<?= $liga->password ?> ' +
-                    '</div></div>' +
-                    '<?php endforeach; ?>',
-                showCloseButton: true,
-                showConfirmButton: false,
-                focusConfirm: false,
-            })
-        })
+            $.ajax({
+                type: "get",
+                url: "<?php echo base_url("Admin_c/obtenerLigas") ?>",
+                success: function(dato_devuelto) {
+                    let datos = JSON.parse(dato_devuelto);
+                    let mihtml = "";
+                    for (dato of datos) {
+                        mihtml += "<div class='card'><div class='card-header'>";
+                        mihtml += "<a href='<?php echo base_url('Admin_c/index/') ?>" + dato.nombre + "'>" + dato.nombre + "</a>";
+                        mihtml += "</div><div class='card-body'>";
+                        mihtml += dato.password;
+                        mihtml += "</div></div>";
+                        console.log(dato.nombre);
+                    }
+                    Swal.fire({
+                        backdrop: false,
+                        title: '<strong>Elige la liga</strong>',
+                        icon: '',
+                        html: mihtml,
+                        showCloseButton: true,
+                        showConfirmButton: false,
+                        focusConfirm: false,
+                    })
+                }
+            });
 
+        })
     });
 </script>

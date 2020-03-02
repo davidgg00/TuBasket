@@ -22,7 +22,7 @@ class Admin_c extends CI_Controller
         if ($liga == "") {
             //Cargamos el head con el css necesario
             $this->load->view("modulos/head", array("css" => array("panel_admin")));
-            $this->load->view("admin_v", self::obtenerLigas());
+            $this->load->view("admin_v");
         } else {
             $datos["liga"] = $liga;
             //Cargamos los modulos junto con $datos que tiene el nombre de la liga
@@ -37,8 +37,8 @@ class Admin_c extends CI_Controller
     {   //cargamos el modelo
         $this->load->model("Admin_m");
         //Obtenemos las ligas para después mostrarlas en la linea 21
-        $data['ligas'] = $this->Admin_m->mostrar_ligas($_SESSION['username']);
-        return $data;
+        $data = $this->Admin_m->mostrar_ligas($_SESSION['username']);
+        echo json_encode($data->result());
     }
 
     public function cerrarsesion()
@@ -51,7 +51,7 @@ class Admin_c extends CI_Controller
     public function gestEquipo($liga)
     {
         $datos["liga"] = $liga;
-        $crud = new grocery_CRUD();
+        /* $crud = new grocery_CRUD();
         //para que te liste los equipos de la liga en la que están
         $crud->where('liga', $liga);
         //Ponemos un tema
@@ -72,11 +72,11 @@ class Admin_c extends CI_Controller
             $crud->unset_add();
         }
         //Renderizar mantenimiento
-        $output = $crud->render();
+        $output = $crud->render(); */
         $this->load->view("modulos/head", array("css" => array("liga", "gestion_equipos")));
         //$this->load->view("modulos/head", $output);
         $this->load->view("modulos/header_admin", $datos);
-        $this->load->view('gest_equipos_v', $output);
+        $this->load->view('gest_equipos_v');
         $this->load->view("modulos/footer");
     }
 
