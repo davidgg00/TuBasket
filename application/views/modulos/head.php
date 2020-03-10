@@ -30,4 +30,7 @@
     <!--Sweet Alert-->
     <script src="<?php echo base_url('assets/js/sweetalert2.js') ?>"></script>
     <script src="<?php echo base_url('assets/js/sweetalert.js') ?>"></script>
+    <!--PAGINATION-->
+    <script src="<?php echo base_url('assets/js/pagination.min.js') ?>"></script>
+    <script src="<?php echo base_url('assets/js/jquery.bootpag.min.js') ?>"></script>
 </head>
