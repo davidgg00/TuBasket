@@ -9,9 +9,9 @@ class Jugador_c extends CI_Controller
         //cargamos el modelo
         $this->load->model("Jugador_m");
         //Si no hay una sesión activa redirigimos al Login
-        if ($this->session->userdata['username'] == FALSE) {
+        /* if ($this->session->userdata['username'] == FALSE) {
             redirect('Login_c');
-        }
+        } */
     }
 
     public function index()
@@ -23,7 +23,7 @@ class Jugador_c extends CI_Controller
             $this->load->view("jugador_v", $data);
             $this->load->view("modulos/footer");
         } else {
-            $this->load->view("modulos/head");
+            $this->load->view("modulos/head", array("css" => array("liga", "sin_equipo")));
             $this->load->view("sinequipo_v", self::obtenerEquiposLiga());
         }
     }
@@ -40,7 +40,7 @@ class Jugador_c extends CI_Controller
 
     public function obtenerLigas()
     {
-        //Obtenemos las ligas para después mostrarlas en la linea 21
+        //Obtenemos las ligas
         $data['ligas'] = $this->Jugador_m->mostrar_ligas($_SESSION['username']);
         return $data;
     }

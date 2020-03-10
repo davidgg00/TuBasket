@@ -6,14 +6,8 @@ class Admin_c extends CI_Controller
     function __construct()
     {
         parent::__construct();
-        //Cargamos la librería
-        $this->load->library('grocery_CRUD');
         //cargamos modelos
         $this->load->model("Admin_m");
-        //Si no hay una sesión activa redirigimos al Login
-        if ($this->session->userdata['username'] == FALSE) {
-            redirect('Login_c');
-        }
     }
 
     public function index($liga = "")
@@ -30,6 +24,29 @@ class Admin_c extends CI_Controller
             $this->load->view("modulos/header_admin", $datos);
             $this->load->view("liga_v");
             $this->load->view("modulos/footer");
+        }
+    }
+
+
+    public function crear_liga()
+    {
+        //Aunque es requerido los campos, si están vacíos y le damos a registrar y clickamos fuera de la alerta te lo registra.
+        //Con esta condición comprobamos que no esté vacío los campos
+        if ($_POST['liga'] == "" && $_POST['contrasenia'] = "") {
+            return false;
+        }
+        $resultado = $this->Registro_m->select_liga($_POST['liga']);
+        if ($resultado) {
+            echo "Existe";
+        } else {
+            $this->load->model("Registro_m");
+            $registros = array(
+                'nombre' => $_POST['liga'],
+                'password' => hash("sha512", $_POST['clave']),
+                'administrador' => $_POST['administrador']
+            );
+            $this->Registro_m->insert_liga($registros);
+            echo "Creada";
         }
     }
 
@@ -51,30 +68,7 @@ class Admin_c extends CI_Controller
     public function gestEquipo($liga)
     {
         $datos["liga"] = $liga;
-        /* $crud = new grocery_CRUD();
-        //para que te liste los equipos de la liga en la que están
-        $crud->where('liga', $liga);
-        //Ponemos un tema
-        $crud->set_theme('flexigrid');
-        //Elegimos la tabla
-        $crud->set_table('equipo');
-        //La ponemos en español
-        $crud->set_language("spanish");
-        //Nombres a visualizar
-        $crud->display_as('nombre', 'Equipo');
-        $crud->field_type('liga', 'hidden', $liga);
-
-        $crud->set_field_upload('escudo_ruta', 'assets/uploads/escudos');
-        //Campos requeridos
-        $crud->required_fields(['nombre', 'pabellon', 'ciudad', 'escudo_ruta', 'liga']);
-        //Si hay mas de diez equipos no te deja insertar mas
-        if ($this->Admin_m->num_equipos_liga($liga) >= 10) {
-            $crud->unset_add();
-        }
-        //Renderizar mantenimiento
-        $output = $crud->render(); */
         $this->load->view("modulos/head", array("css" => array("liga", "gestion_equipos")));
-        //$this->load->view("modulos/head", $output);
         $this->load->view("modulos/header_admin", $datos);
         $this->load->view('gest_equipos_v');
         $this->load->view("modulos/footer");
@@ -87,5 +81,23 @@ class Admin_c extends CI_Controller
         $this->load->view("modulos/header_admin", $datos);
         $this->load->view('gest_jugadores_v');
         $this->load->view("modulos/footer");
+    }
+
+    public function partidos($liga)
+    {
+        $datos["liga"] = $liga;
+        $this->load->view("modulos/head", array("css" => array("liga", "partidos")));
+        $this->load->view("modulos/header_admin", $datos);
+        $this->load->view('partidos_v');
+        $this->load->view("modulos/footer");
+    }
+
+    public function getPartidosCarrusel($liga)
+    {
+        //cargamos el modelo
+        $this->load->model("Admin_m");
+        //Obtenemos las ligas para después mostrarlas en la linea 21
+        $data = $this->Admin_m->getProx5Partidos($liga);
+        echo json_encode($data->result());
     }
 }

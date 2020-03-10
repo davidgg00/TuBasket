@@ -1,0 +1,31 @@
+div.row {
+    flex: 1;
+    align-content: flex-start;
+}
+
+h2 {
+    margin: 10px 0;
+}
+
+.wrapper {
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.aceptar:hover,
+.denegar:hover {
+    cursor: pointer;
+}
+
+.paginationjs {
+    background-color: #fff;
+    border: 3px solid black;
+}
+
+.paginationjs-page {
+    width: 5%;
+}
+
+li {
+    display: inline-block;
+    list-style: none;
+}

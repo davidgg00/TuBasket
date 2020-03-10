@@ -1,50 +1,68 @@
 <script>
     function getJugadoresSinConfirmar() {
         //Creamos Ajax por GET para obtener los jugadores que no están validados en la plataforma
-        $.get("<?php echo base_url('Ajax_c/obtenerJugadoresSinConfirmar/' . $liga) ?>",
+        $.get("<?php echo base_url('GestionJugadores_c/obtenerJugadoresSinConfirmar/' . $liga) ?>",
             function(dato_devuelto) {
                 //Lo parseamos.
                 let jugadores = JSON.parse(dato_devuelto);
                 //Y los mostramos después del thead
                 for (let dato of jugadores) {
-                    $("thead.alert-warning").after("<tr><th scope='row'>" + dato.username + "</th><td>" + dato.email + "</td><td>" + dato.apenom + "</td><td>" + dato.fecha_nac + "</td> <td>" + dato.nombre_equipo + "</td><td class='d-flex justify-content-around'><i class='fas fa-check-square' id='aceptar' data-username='" + dato.username + "'></i><i class='fas fa-window-close' id='denegar' data-username='" + dato.username + "'></i></td> </tr>");
+                    $("thead.alert-warning").after("<tr><th scope='row'>" + dato.username + "</th><td>" + dato.email + "</td><td>" + dato.apenom + "</td><td>" + dato.fecha_nac + "</td> <td>" + dato.nombre_equipo + "</td><td class='d-flex justify-content-around'><i data-tippy-content='Aceptar Jugador' class='tippy fas fa-check-square aceptar' id='aceptar' data-username='" + dato.username + "'></i><i data-tippy-content='Denegar Jugador' class='fas fa-window-close denegar' id='denegar' data-username='" + dato.username + "'></i></td> </tr>");
                 }
-                $("#aceptar").on("click", function(evento) {
-                    $.get(window.location.origin + "/TuBasket/Ajax_c/aceptarJugador/" + $(this).data('username'), );
+                $(".aceptar").on("click", function(evento) {
+                    $.get(window.location.origin + "/TuBasket/GestionJugadores_c/aceptarJugador/" + $(this).data('username'), );
                     $(this).parent().parent().remove();
-                    getJugadoresSinConfirmar();
-                    $("tbody").html("");
+                    $("#jugadores_confirmados").html("");
                     getJugadoresConfirmados();
                 })
-
-                $("#denegar").on("click", function(evento) {
+                $(".denegar").on("click", function(evento) {
+                    $.get(window.location.origin + "/TuBasket/GestionJugadores_c/eliminarJugador/" + $(this).data('username'), );
                     $(this).parent().parent().remove();
-                    $.get(window.location.origin + "/TuBasket/Ajax_c/eliminarJugador/" + $(this).data('username'), );
                 })
             }
         );
+    }
+
+    function template(jugadores) {
+        let html;
+        for (let dato of jugadores) {
+            html += "<tr><th scope='row'>" + dato.username + "</th><td>" + dato.email + "</td><td>" + dato.apenom + "</td><td>" + dato.fecha_nac + "</td> <td>" + dato.nombre_equipo + "</td></tr>"
+        }
+        return html;
     }
 
     function getJugadoresConfirmados() {
-        //Creamos Ajax por GET para obtener los jugadores que están validados en la plataforma
-        $.get("<?php echo base_url('Ajax_c/obtenerJugadoresConfirmados/' . $liga) ?>",
-            function(dato_devuelto) {
-                //Lo parseamos.
-                let jugadores = JSON.parse(dato_devuelto);
-                //Y los mostramos después del tbody
-                for (let dato of jugadores) {
-                    $("tbody").append("<tr><th scope='row'>" + dato.username + "</th><td>" + dato.email + "</td><td>" + dato.apenom + "</td><td>" + dato.fecha_nac + "</td> <td>" + dato.nombre_equipo + "</td></tr>");
-                }
+        //Creamos paginacion con ajax
+        $("#paginacion").pagination({
+            dataSource: function(done) {
+                $.ajax({
+                    type: "GET",
+                    url: "<?php echo base_url('GestionJugadores_c/obtenerJugadoresConfirmados/' . $liga) ?>",
+                    success: function(response) {
+                        //Lo parseamos.
+                        let jugadores = JSON.parse(response);
+                        done(jugadores);
+                    }
+                });
+            },
+            locator: 'items',
+            pageSize: 10,
+            callback: function(data, pagination) {
+                var html = template(data);
+                $("#jugadores_confirmados").html(html)
             }
-        );
+        })
     }
-    getJugadoresSinConfirmar();
-    getJugadoresConfirmados();
+    $(document).ready(function() {
+        getJugadoresSinConfirmar();
+        getJugadoresConfirmados();
+    });
 </script>
+
 <div class="row">
-    <table class="mx-auto table table-striped table-light table-bordered table-hover col-12">
-        <h2 class="mx-auto alert alert-warning mb-0">USUARIOS PENDIENTES DE ACEPTAR</h2>
-        <thead class="alert-warning">
+    <table class="mx-auto table table-striped table-light table-bordered table-hover col-10">
+        <h2 class="mx-auto w-10 alert alert-warning mb-0">USUARIOS PENDIENTES DE VALIDAR</h2>
+        <thead class="alert-warning" id="jugadores_sinConfirmar">
             <tr>
                 <th scope="col">Username</th>
                 <th scope="col">Email</th>
@@ -55,7 +73,7 @@
             </tr>
         </thead>
     </table>
-    <table class="table table-striped table-light table-bordered table-hover col-12">
+    <table class="mx-auto table table-striped table-light table-bordered table-hover col-10">
         <h2 class="alert alert-dark text-center mb-0 mx-auto">USUARIOS DE LA LIGA</h2>
         <thead class="thead-dark">
             <tr>
@@ -66,7 +84,9 @@
                 <th scope="col">Equipo</th>
             </tr>
         </thead>
-        <tbody class="text-center">
+        <tbody class="text-center" id="jugadores_confirmados">
         </tbody>
     </table>
+    <div id="paginacion" class="col-10 mx-auto">
+    </div>
 </div>

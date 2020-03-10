@@ -1,19 +1,39 @@
 #contenedor {
-    background-color: #fff;
-}
-
-table {
-    font-size: 1em;
+    background: rgba(255, 255, 255, 0.95);
 }
 
 table tr {
-    max-height: 10%;
+    max-height: 10px;
 }
 
-tr td {
+tr.datos td {
     width: 20%;
+    height: 10%;
+    margin: 0;
+    vertical-align: middle;
 }
 
-tr img {
-    width: 100px;
+tr.datos td p {
+    width: 100%;
+}
+
+tr td img {
+    width: 75px;
+}
+
+.eliminar {
+    font-size: 2em;
+}
+
+.añadir {
+    font-size: 2em;
+}
+
+.eliminar:hover , 
+.añadir:hover {
+    cursor: pointer;
+}
+
+td > img:hover {
+    cursor: pointer;
 }

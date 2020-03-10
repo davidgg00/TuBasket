@@ -26,7 +26,10 @@
         </div>
     </div>
 </div>
-
+<script>
+    let base_url = '<?= base_url() ?>';
+</script>
+<script src="<?php echo base_url('assets/js/admin.js') ?>"></script>
 <script>
     $(document).ready(function() {
         //PARA ABRIR EL FORMULARIO CON LIBRERIA VEX
@@ -54,7 +57,7 @@
                         let password = $("#contrasenia").val();
                         let administrador = $("#administrador").val();
                         //Creamos llamada a AJAX por POST
-                        $.post("<?php echo base_url('Registro_c/crear_liga') ?>", {
+                        $.post("<?php echo base_url('Admin_c/crear_liga') ?>", {
                             //Pasamos por parametro los valores
                             "liga": liga,
                             "clave": password,
@@ -91,33 +94,9 @@
                 }
             })
         });
-        $("#divgestionliga").on("click", function(evento) {
-            $.ajax({
-                type: "get",
-                url: "<?php echo base_url("Admin_c/obtenerLigas") ?>",
-                success: function(dato_devuelto) {
-                    let datos = JSON.parse(dato_devuelto);
-                    let mihtml = "";
-                    for (dato of datos) {
-                        mihtml += "<div class='card'><div class='card-header'>";
-                        mihtml += "<a href='<?php echo base_url('Admin_c/index/') ?>" + dato.nombre + "'>" + dato.nombre + "</a>";
-                        mihtml += "</div><div class='card-body'>";
-                        mihtml += dato.password;
-                        mihtml += "</div></div>";
-                        console.log(dato.nombre);
-                    }
-                    Swal.fire({
-                        backdrop: false,
-                        title: '<strong>Elige la liga</strong>',
-                        icon: '',
-                        html: mihtml,
-                        showCloseButton: true,
-                        showConfirmButton: false,
-                        focusConfirm: false,
-                    })
-                }
-            });
 
+        $("#divgestionliga").on("click", function(evento) {
+            obtenerLigas();
         })
     });
 </script>

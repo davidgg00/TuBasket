@@ -1,13 +1,19 @@
 body {
-    height: 100vh;
-    background-image: url("../img/equipo.jpg");
+    background-image: url("../img/background-liga.jpg");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
 }
 
+div.row {
+    flex: 1;
+}
+
 .container-fluid {
-    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 header {
@@ -35,10 +41,6 @@ aside {
     height: calc(100% - 86.66px - 52px);
 }
 
-div.row  {
-    padding: 0;
-}
-
 footer {
     background: #23282D;
     color: white;
@@ -64,3 +66,18 @@ footer {
 #aceptar , #denegar {
     font-size: 2em;
 }
+
+.carousel-item {
+    width: 100%;
+}
+
+.carousel-item img {
+    height: 200px;
+    width: 120px;
+}
+
+.carousel-control-next,
+.carousel-control-prev {
+    filter: invert(100%);
+}
+

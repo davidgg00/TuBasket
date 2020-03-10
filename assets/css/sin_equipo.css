@@ -1,0 +1,36 @@
+body {
+    height: 100vh;
+}
+
+.row {
+    flex: 0;
+}
+
+#lista_equipos {
+    padding: 10px;
+    background:  rgba(255, 255, 255, 0.6);
+    height: 60%;
+}
+
+#equipos {
+    height: calc(100% - 33px);
+}
+
+.equipo {
+    width: 17%;
+    height: 40%;
+}
+
+.equipo a {
+    width: 80%;
+    height: calc(100% - 24px)
+}
+
+.equipo a img {
+    width: 100%;
+    height: 100%;
+}
+
+.equipo p {
+    width: 100%;
+}

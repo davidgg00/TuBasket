@@ -79,14 +79,11 @@
                         );
                     }
                 })
-
             } else {
                 $("#group-liga").addClass("d-none");
                 $("#group-ligaclave").addClass("d-none");
             }
         })
-
-
     });
 </script>
 
@@ -104,7 +101,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
                             </div>
-                            <input type="text" required id="username" name="username" minlength="6" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                            <input type="text" autofocus required id="username" name="username" minlength="6" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
                             <span class="text-danger" id="error-username">&nbsp</span>
                         </div>
                         <div class="form-group text-center mx-auto input-group mb-4 mt-0">

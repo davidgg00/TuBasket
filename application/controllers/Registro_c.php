@@ -12,7 +12,7 @@ class Registro_c extends CI_Controller
 
     public function index()
     {
-        $this->load->view("modulos/head");
+        $this->load->view("modulos/head", array("css" => array("plantilla")));
         $this->load->view("registro_v");
     }
 
@@ -38,7 +38,7 @@ class Registro_c extends CI_Controller
 
     public function comprobar_liga()
     {
-        $resultado = $this->Registro_m->comprueba_liga($_GET['liga'], $_GET['clave']);
+        $resultado = $this->Registro_m->comprueba_liga($_GET['liga'], hash("sha512", $_GET['clave']));
         if ($resultado) {
             echo "Correcto";
         } else {
@@ -53,7 +53,7 @@ class Registro_c extends CI_Controller
             //Guardamos los datos en un array
             $datos_post = array(
                 'username' => $this->input->post()['username'],
-                'password' => $this->input->post()['password'],
+                'password' => hash("sha512", $this->input->post()['password']),
                 'email' => $this->input->post()['email'],
                 'apenom' => $this->input->post()['apenom'],
                 'fecha_nac' => $this->input->post()['fecha_nac'],
@@ -65,7 +65,8 @@ class Registro_c extends CI_Controller
             //Guardamos los datos enviados en un array
             $datos_post = array(
                 'username' => $this->input->post()['username'],
-                'password' => $this->input->post()['password'],
+                'password' => hash("sha512", $this->input->post()['password']),
+                'tipo' => $this->input->post()['tipocuenta'],
                 'email' => $this->input->post()['email'],
                 'apenom' => $this->input->post()['apenom'],
                 'fecha_nac' => $this->input->post()['fecha_nac'],
@@ -75,28 +76,6 @@ class Registro_c extends CI_Controller
             );
             $this->Registro_m->insert_jugador($datos_post);
             redirect(base_url());
-        }
-    }
-
-    public function crear_liga()
-    {
-        //Aunque es requerido los campos, si están vacíos y le damos a registrar y clickamos fuera de la alerta te lo registra.
-        //Con esta condición comprobamos que no esté vacío los campos
-        if ($_POST['liga'] == "" && $_POST['contrasenia'] = "") {
-            return false;
-        }
-        $resultado = $this->Registro_m->select_liga($_POST['liga']);
-        if ($resultado) {
-            echo "Existe";
-        } else {
-            $this->load->model("Registro_m");
-            $registros = array(
-                'nombre' => $_POST['liga'],
-                'password' => $_POST['clave'],
-                'administrador' => $_POST['administrador']
-            );
-            $this->Registro_m->insert_liga($registros);
-            echo "Creada";
         }
     }
 }

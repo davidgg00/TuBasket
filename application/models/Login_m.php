@@ -11,9 +11,8 @@ class Login_m extends CI_Model
     public function comprobar_usuario_clave($username, $password)
     {
         //Para evitar la inyeccion SQL hago una consulta preparada
-
         //Probamos a ver si la cuenta está en la tabla admin
-        $sqlAdmin = "SELECT *  FROM admin WHERE username=? AND password = ?";
+        $sqlAdmin = "SELECT * FROM admin WHERE username=? AND password = ?";
         $resultado = $this->db->query($sqlAdmin, array($username, $password));
         if ($resultado->row()) {
             return $resultado->row();

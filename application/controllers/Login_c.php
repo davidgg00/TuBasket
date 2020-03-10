@@ -19,8 +19,7 @@ class Login_c extends CI_Controller
         //cargamos el modelo
         $this->load->model("Login_m");
         //Si devuelve algo comprobar_usuario_clave es que el login es correcto
-        $cuenta = $this->Login_m->comprobar_usuario_clave($this->input->post()['username'], $this->input->post()['password']);
-
+        $cuenta = $this->Login_m->comprobar_usuario_clave($this->input->post()['username'], hash("sha512", $this->input->post()['password']));
         if ($cuenta) {
             if ($cuenta->tipo == "Jugador" && $cuenta->equipo != null && $cuenta->validado == 0) {
                 //Si es un jugador, tiene equipo pero no está validado no dejamos iniciar sesión

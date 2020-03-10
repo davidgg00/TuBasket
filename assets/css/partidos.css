@@ -1,0 +1,7 @@
+#contenedor {
+    width: 90%;
+    background: rgba(255, 255, 255, 0.9);
+}
+table {
+    border: 1px solid #ccc;
+}

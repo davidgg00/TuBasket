@@ -1,0 +1,18 @@
+div.row {
+    width: 90%;
+}
+
+.equipo {
+    width: 30%;
+    border: 2px solid black;
+}
+
+.equipo img {
+    width: 50%;
+    margin: 0 auto;
+}
+
+p {
+    margin: 0;
+    padding: 0;
+}
