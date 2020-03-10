@@ -9,8 +9,12 @@
     <script src="<?= base_url() . "assets/js/jquery-3.4.1.min.js" ?>"></script>
     <script src="<?= base_url() . "assets/js/popper.min.js" ?>">
     </script>
-    <script src="<?php echo base_url('assets/js/bootstrap.min.js') ?>" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="<?php echo base_url('assets/css/bootstrap.min.css') ?>">
+
+    <!--bootstrap-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
     <?php if (isset($css)) : ?>
         <?php foreach ($css as $hoja) : ?>
             <link rel="stylesheet" href="<?= base_url('assets/css/' . $hoja . '.css') ?>">
@@ -33,4 +37,8 @@
     <!--PAGINATION-->
     <script src="<?php echo base_url('assets/js/pagination.min.js') ?>"></script>
     <script src="<?php echo base_url('assets/js/jquery.bootpag.min.js') ?>"></script>
+    <!--Jquery UI-->
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+    <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+    
 </head>

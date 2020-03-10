@@ -81,14 +81,25 @@ class Partidos_c extends CI_Controller
     public function enviarResultado($id)
     {
         $this->load->model("Ajax_m");
-        //$this->Ajax_m->insertarEstadisticaPartido($id);
         for ($i = 0; $i < count($_POST['miform']); $i++) {
 
             if ($i % 6 == 0 && $i != 0) {
                 $valor = $i;
-                $this->Ajax_m->insertarEstadisticaPartido($id, $_POST['miform'][$valor - 6], $_POST['miform'][$valor - 5], $_POST['miform'][$valor - 4], $_POST['miform'][$valor - 3], $_POST['miform'][$valor - 2], $_POST['miform'][$valor - 1]);
+                $this->Partidos_m->insertarEstadisticaPartido($id, $_POST['miform'][$valor - 6], $_POST['miform'][$valor - 5], $_POST['miform'][$valor - 4], $_POST['miform'][$valor - 3], $_POST['miform'][$valor - 2], $_POST['miform'][$valor - 1]);
             }
             echo $_POST['miform'][$i];
         }
+    }
+
+    public function cambiarFecha()
+    {
+        $this->Partidos_m->cambiarFecha($_POST['idPartido'], $_POST['fecha']);
+        print_r($_POST);
+    }
+
+    public function cambiarHora()
+    {
+        $this->Partidos_m->cambiarHora($_POST['idPartido'], $_POST['hora']);
+        print_r($_POST);
     }
 }

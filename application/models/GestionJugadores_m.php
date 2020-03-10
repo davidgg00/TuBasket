@@ -42,6 +42,7 @@ class GestionJugadores_m extends CI_Model
         $this->db->from('view_usuarios_liga');
         $this->db->where("liga", $liga);
         $this->db->where("validado", 1);
+        $this->db->order_by('equipo', 'ASC');
         $query = $this->db->get();
         //Retornamo resultado
         return $query;

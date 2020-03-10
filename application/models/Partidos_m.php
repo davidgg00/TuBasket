@@ -58,4 +58,18 @@ class Partidos_m extends CI_Model
         $this->db->where('id', $id);
         $this->db->update('partido');
     }
+
+    public function cambiarFecha($idPartido, $fecha)
+    {
+        $this->db->set('fecha', $fecha);
+        $this->db->where('id', $idPartido);
+        $this->db->update('partido');
+    }
+
+    public function cambiarHora($idPartido, $hora)
+    {
+        $this->db->set('hora', $hora);
+        $this->db->where('id', $idPartido);
+        $this->db->update('partido');
+    }
 }
