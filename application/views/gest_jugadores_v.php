@@ -9,6 +9,7 @@
                 for (let dato of jugadores) {
                     $("thead.alert-warning").after("<tr><th scope='row'>" + dato.username + "</th><td>" + dato.email + "</td><td>" + dato.apenom + "</td><td>" + dato.fecha_nac + "</td> <td>" + dato.nombre_equipo + "</td><td class='d-flex justify-content-around'><i data-tippy-content='Aceptar Jugador' class='tippy fas fa-check-square aceptar' id='aceptar' data-username='" + dato.username + "'></i><i data-tippy-content='Denegar Jugador' class='fas fa-window-close denegar' id='denegar' data-username='" + dato.username + "'></i></td> </tr>");
                 }
+
                 $(".aceptar").on("click", function(evento) {
                     $.get(window.location.origin + "/TuBasket/GestionJugadores_c/aceptarJugador/" + $(this).data('username'), );
                     $(this).parent().parent().remove();
@@ -19,6 +20,9 @@
                     $.get(window.location.origin + "/TuBasket/GestionJugadores_c/eliminarJugador/" + $(this).data('username'), );
                     $(this).parent().parent().remove();
                 })
+
+                //Añadimos tooltip a los .aceptar y .denegar
+                tippy('.aceptar, .denegar');
             }
         );
     }
