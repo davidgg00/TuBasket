@@ -10,3 +10,7 @@ table {
     border: none;
     background: none;
 }
+
+.resultado:hover {
+    cursor: pointer;
+}

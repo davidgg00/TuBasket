@@ -23,21 +23,27 @@
                         let fecha = fechaArray[2] + '-' + fechaArray[1] + '-' + fechaArray[0];
 
                         //Si existe un resultado, que se muestre, sino que en vez del resultado te muestre un botón que te lleve al hacer click a escribir los datos del partido
-                        partido.resultado_local > 0 ? resultado_completo = partido.resultado_local + " - " + partido.resultado_visitante : resultado_completo = "<button class='btn-resultado' data-id='" + partido.id + "'>Escribir Resultado</button>"
+                        resultado_completo = partido.resultado_local + " - " + partido.resultado_visitante
+
+                        //Si el partido es divisible entre 4 crear un nuevo div porque es nueva jornada
                         if (npartido % 4 == 0 || npartido == 0) {
-                            $("#contenedor").append("<div class='jornada col-6 mt-2 table-responsive '><table class='table table-hover'><thead><tr class='text-center'><th colspan='5'>JORNADA " + jornada + "</th></tr><tr class='text-center'><th>Local</th><th>Resultado</th><th>Visitante</th><th class='w-25'>Fecha</th><th>Hora</th></th></tr></thead><tbody  id='jornada" + jornada + "'><tr class='text-center'><td>" + partido.equipo_local + "</td><td>" + resultado_completo + "</td><td>" + partido.equipo_visitante + "</td><td><input type='text' id='" + partido.id + "' class='datepick w-100 mx-auto' value='" + fecha + "'></td><td><input id='" + partido.id + "' class='hora w-100 mx-auto' type='time' step='1' value='" + partido.hora + "'></td></td></tr></tbody></table></div>")
+                            $("#contenedor").append("<div class='jornada col-6 mt-2 table-responsive '><table class='table table-hover'><thead><tr class='text-center'><th colspan='5'>JORNADA " + jornada + "</th></tr><tr class='text-center'><th>Local</th><th>Resultado</th><th>Visitante</th><th class='w-25'>Fecha</th><th>Hora</th></th></tr></thead><tbody  id='jornada" + jornada + "'><tr class='text-center'><td>" + partido.equipo_local + "</td><td class='resultado' data-id='" + partido.id + "' data-tippy-content='Haga click para escribir resultado'>" + resultado_completo + "</td><td>" + partido.equipo_visitante + "</td><td><input type='text' id='" + partido.id + "' class='datepick w-100 mx-auto' value='" + fecha + "'></td><td><input id='" + partido.id + "' class='hora w-100 mx-auto' type='time' step='1' value='" + partido.hora + "'></td></td></tr></tbody></table></div>")
                             jornada++;
                         } else {
-                            $("tbody").last().append("<tr class='text-center'><td>" + partido.equipo_local + "</td><td>" + resultado_completo + "</td><td>" + partido.equipo_visitante + "</td><td><p contenteditable='true'><input type='text' class='datepick w-100 mx-auto' id='" + partido.id + "' value='" + fecha + "'></p></td><td><input id='" + partido.id + "' class='hora w-100 mx-auto' type='time' step='1' value='" + partido.hora + "'></td></td></tr>")
+                            $("tbody").last().append("<tr class='text-center'><td>" + partido.equipo_local + "</td><td class='resultado' data-id='" + partido.id + "' data-tippy-content='Haga click para escribir resultado'>" + resultado_completo + "</td><td>" + partido.equipo_visitante + "</td><td><p contenteditable='true'><input type='text' class='datepick w-100 mx-auto' id='" + partido.id + "' value='" + fecha + "'></p></td><td><input id='" + partido.id + "' class='hora w-100 mx-auto' type='time' step='1' value='" + partido.hora + "'></td></td></tr>")
                         }
                         npartido++;
 
                     }
                 }
-                $(".btn-resultado").on("click", function() {
+                $("td.resultado").on("click", function() {
                     id = $(this).data('id');
                     window.location.href = "<?php echo base_url('Partidos_c/resultadoPartido/' . $liga) ?>" + "/" + id + "";
                 });
+
+                //Añadimos tooltip al resultado
+                tippy('.resultado');
+
                 $(".datepick").datepicker({
                     dateFormat: 'dd-mm-yy'
                 });
