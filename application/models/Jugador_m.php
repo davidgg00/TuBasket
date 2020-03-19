@@ -33,4 +33,12 @@ class Jugador_m extends CI_Model
         $query = $this->db->get_where('jugador_stats', array('jugador' => $username));
         return $query;
     }
+
+    public function proxPartido($liga, $equipo)
+    {
+        //Select que te muestra los escudos, la jornada y la fecha de los próximos partidos a disputar del equipo y liga. (Máximo 3 partidos muestra)
+        $this->db->select('escudo_local,escudo_visitante,jornada,fecha,hora FROM `view_partidos_liga` where liga = "' . $liga . '" and ((id_local = "' . $equipo . '") or (id_visitante="' . $equipo . '")) AND date(fecha) > date(curdate()) AND resultado_local LIKE "" ORDER BY jornada ASC LIMIT 3');
+        $query = $this->db->get();
+        return $query->result();
+    }
 }

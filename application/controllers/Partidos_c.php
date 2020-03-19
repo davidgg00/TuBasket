@@ -80,7 +80,6 @@ class Partidos_c extends CI_Controller
 
     public function enviarResultado($id)
     {
-        $this->load->model("Ajax_m");
         for ($i = 0; $i < count($_POST['miform']); $i++) {
 
             if ($i % 6 == 0 && $i != 0) {

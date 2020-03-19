@@ -19,6 +19,7 @@ class Jugador_c extends CI_Controller
         if ($_SESSION['validado'] == 1) {
             $this->load->view("modulos/head", array("css" => array("liga", "jugador")));
             $data["liga"] = $_SESSION['liga'];
+            $data["proxPartidos"] = self::proxPartido($_SESSION['liga'], $_SESSION['equipo']);
             $this->load->view("modulos/header_jugador", $data);
             $this->load->view("jugador_v", $data);
             $this->load->view("modulos/footer");
@@ -71,5 +72,12 @@ class Jugador_c extends CI_Controller
         //Destruimos sesión y redirigimos al login
         session_destroy();
         redirect(base_url());
+    }
+
+    //Funcion que devuelve los proximos partido de un equipo
+    public function proxPartido($liga, $equipo)
+    {
+        $resultado = $this->Jugador_m->proxPartido($liga, $equipo);
+        return $resultado;
     }
 }
