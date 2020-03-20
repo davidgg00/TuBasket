@@ -39,6 +39,22 @@ class Jugador_c extends CI_Controller
         $this->load->view("modulos/footer");
     }
 
+    public function clasificacion()
+    {
+        $this->load->view("modulos/head", array("css" => array("liga", "clasificacion")));
+        $data["liga"] = $_SESSION['liga'];
+        $data["clasificacion"] = self::getClasificacion($_SESSION["liga"]);
+        $this->load->view("modulos/header_jugador", $data);
+        $this->load->view("clasificacion_v");
+        $this->load->view("modulos/footer");
+    }
+
+    public function getClasificacion($liga)
+    {
+        $resultado = $this->Jugador_m->mostrarClasificacion($liga);
+        return $resultado;
+    }
+
     public function obtenerLigas()
     {
         //Obtenemos las ligas

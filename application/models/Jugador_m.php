@@ -15,6 +15,14 @@ class Jugador_m extends CI_Model
         return $query->result();
     }
 
+    public function mostrarClasificacion($liga)
+    {
+        $this->db->where('liga', $liga);
+        $this->db->order_by('puntos_clasificacion', 'DESC');
+        $query = $this->db->get('view_clasificacion');
+        return $query->result();
+    }
+
     public function obtenerEquipos($liga)
     {
         $query = $this->db->get_where('equipo', array('liga' => $liga));
