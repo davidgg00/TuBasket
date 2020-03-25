@@ -34,7 +34,8 @@ class Jugador_c extends CI_Controller
     {
         $this->load->view("modulos/head", array("css" => array("liga", "estadisticas")));
         $data["liga"] = $_SESSION['liga'];
-        $data["estadisticas"] = self::getEstadisticasJugador("jugadorBarcelona2");
+        $data["estadisticas"] = self::getEstadisticasJugador($_SESSION['username']);
+        $data["stats_ind"] = self::getEstadisticasJugadorPartido($_SESSION['username']);
         $this->load->view("modulos/header_jugador", $data);
         $this->load->view("estadisticas_v");
         $this->load->view("modulos/footer");
@@ -90,6 +91,12 @@ class Jugador_c extends CI_Controller
     public function getEstadisticasJugador($username)
     {
         $resultado = $this->Jugador_m->getStats($username);
+        return $resultado;
+    }
+
+    public function getEstadisticasJugadorPartido($username)
+    {
+        $resultado = $this->Jugador_m->getEstadisticasJugadorPartido($username);
         return $resultado;
     }
 

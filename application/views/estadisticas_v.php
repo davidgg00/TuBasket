@@ -1,5 +1,5 @@
-<div class="row justify-content-center align-items-center h-100" id="wrapper-stats">
-    <div class="col-10 h-75 d-flex flex-start flex-wrap border border-dark" id="estadisticas">
+<div class="row justify-content-center flex-start h-100" id="wrapper-stats">
+    <div class="col-10 h-75 d-flex flex-start flex-wrap mt-2" id="estadisticas">
         <div id="foto" class="w-100 text-center">
             <img src="https://e00-marca.uecdn.es/assets/multimedia/imagenes/2019/01/01/15463451815652.jpg" class="img-fluid" alt="">
         </div>
@@ -19,8 +19,37 @@
             <h4>Tapones: <?= $estadisticas->tapones ?></h4>
             <h4>Robos: <?= $estadisticas->robos ?></h4>
         </div>
-        <div id="partidos">
-
+        <h3 class="mx-auto mt-3">Estadisticas partidos</h3>
+        <div id="partidos" class="col-12">
+            <table class="table table-bordered bg-white text-center">
+                <thead>
+                    <tr>
+                        <th scope="col">Equipo</th>
+                        <th scope="col">Triples</th>
+                        <th scope="col">Tiros de 2</th>
+                        <th scope="col">Tiros libres</th>
+                        <th scope="col">Tapones</th>
+                        <th scope="col">Robos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    foreach ($stats_ind as $partido) {
+                        if ($partido->id_local === $_SESSION['equipo']) {
+                            echo "<td>$partido->equipo_visitante</td>";
+                        } else {
+                            echo "<td>$partido->equipo_local</td>";
+                        }
+                        echo "<td>$partido->triples_metidos</td>";
+                        echo "<td>$partido->tiros_2_metidos</td>";
+                        echo "<td>$partido->tiros_libres_metidos</td>";
+                        echo "<td>$partido->tapones</td>";
+                        echo "<td>$partido->robos</td>";
+                        echo "</tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
