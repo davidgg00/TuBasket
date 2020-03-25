@@ -38,8 +38,9 @@ class Jugador_m extends CI_Model
 
     public function getStats($username)
     {
-        $query = $this->db->get_where('jugador_stats', array('jugador' => $username));
-        return $query;
+        $this->db->select('SUM(triples_metidos) AS triples, SUM(tiros_2_metidos) AS tiros_2, SUM(tiros_libres_metidos) AS tiros_libres, SUM(tapones) AS tapones, SUM(robos) AS robos, COUNT(jugador) partidos_jugados FROM `jugador_stats` WHERE jugador="' . $username . '"');
+        $query = $this->db->get();
+        return $query->row();
     }
 
     public function proxPartido($liga, $equipo)

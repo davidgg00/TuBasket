@@ -24,6 +24,11 @@ class Partidos_m extends CI_Model
         return $query;
     }
 
+    public function obtenerEquiposLiga($liga)
+    {
+        $query = $this->db->get_where('equipo', array('liga' => $liga));
+        return $query->result();
+    }
 
     public function getPartido($id)
     {
@@ -49,6 +54,19 @@ class Partidos_m extends CI_Model
         );
 
         $this->db->insert('jugador_stats', $data);
+    }
+
+    public function insertPartidos($local, $visitante, $jornada, $liga)
+    {
+        $data = array(
+            'id' => null,
+            'local' => $local,
+            'visitante' => $visitante,
+            'jornada' => $jornada,
+            'liga' => $liga,
+        );
+
+        $this->db->insert('partido', $data);
     }
 
     public function insertarResultadoPartido($id, $local, $visitante)

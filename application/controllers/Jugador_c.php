@@ -16,6 +16,7 @@ class Jugador_c extends CI_Controller
 
     public function index()
     {
+        //Si el jugador está validado
         if ($_SESSION['validado'] == 1) {
             $this->load->view("modulos/head", array("css" => array("liga", "jugador")));
             $data["liga"] = $_SESSION['liga'];
@@ -33,7 +34,7 @@ class Jugador_c extends CI_Controller
     {
         $this->load->view("modulos/head", array("css" => array("liga", "estadisticas")));
         $data["liga"] = $_SESSION['liga'];
-        $data["estadisticas"] = self::getEstadisticasJugador($_SESSION["username"]);
+        $data["estadisticas"] = self::getEstadisticasJugador("jugadorBarcelona2");
         $this->load->view("modulos/header_jugador", $data);
         $this->load->view("estadisticas_v");
         $this->load->view("modulos/footer");
@@ -46,6 +47,15 @@ class Jugador_c extends CI_Controller
         $data["clasificacion"] = self::getClasificacion($_SESSION["liga"]);
         $this->load->view("modulos/header_jugador", $data);
         $this->load->view("clasificacion_v");
+        $this->load->view("modulos/footer");
+    }
+
+    public function partidos($liga)
+    {
+        $datos["liga"] = $liga;
+        $this->load->view("modulos/head", array("css" => array("liga", "partidos")));
+        $this->load->view("modulos/header_admin", $datos);
+        $this->load->view('partidos_v');
         $this->load->view("modulos/footer");
     }
 
@@ -80,7 +90,7 @@ class Jugador_c extends CI_Controller
     public function getEstadisticasJugador($username)
     {
         $resultado = $this->Jugador_m->getStats($username);
-        return $resultado->row();
+        return $resultado;
     }
 
     public function cerrarsesion()

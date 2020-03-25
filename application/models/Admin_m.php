@@ -19,10 +19,11 @@ class Admin_m extends CI_Model
     {
         $this->db->select('*');
         $this->db->where('liga', $liga);
-        $this->db->order_by('fecha', 'DESC');
+        $this->db->order_by('jornada', 'ASC');
+        $this->db->order_by('fecha', 'ASC');
         $this->db->limit(4);
         $query = $this->db->get('view_partidos_liga');
-        return $query;
+        return $query->result();
     }
 
     public function num_equipos_liga($liga)

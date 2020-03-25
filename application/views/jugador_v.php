@@ -12,7 +12,7 @@
             <?php if (!isset($proxPartidos)) : ?>
                 <h2>¡La liga aún no ha empezado!</h2>
             <?php else : ?>
-                <div id="carouselExampleControls" class="carousel slide w-100" data-ride="carousel">
+                <div id="carouselExampleControls" class="carousel slide w-100 " data-ride="carousel">
                     <div class="carousel-inner">
                         <h3 class="col-12 text-center">Liga: <?= $liga ?></h3>
                         <h3 class="col-12 text-center">Próximos Partidos</h3>

@@ -11,7 +11,7 @@
             },
             function(dato_devuelto) {
                 if (dato_devuelto == "[]") {
-                    $("#contenedor").append("<h2 class='w-100 text-center'>NO SE HA INICIADO LA LIGA</h2><button id='generarLiga'>Generar Liga</button>");
+                    $("#contenedor").append("<h2 class='w-100 text-center'>NO SE HA INICIADO LA LIGA</h2><button id='generarLiga'>Generar Liga 8 EQUIPOS</button>");
                 } else {
                     let partidos = JSON.parse(dato_devuelto);
                     //Creo unas variables para controlar el numero de la jornada y que cree una tabla nueva cada x partidos
@@ -76,3 +76,4 @@
         );
     </script>
 </div>
+<?php print_r($_SESSION['tipo_cuenta']) ?>

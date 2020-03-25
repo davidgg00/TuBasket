@@ -1,3 +1,8 @@
 #wrapper-stats {
     background: rgba(255, 255, 255, 0.9);
 }
+
+#foto img {
+    width: 150px;
+    height: 250px;
+}

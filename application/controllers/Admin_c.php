@@ -19,6 +19,7 @@ class Admin_c extends CI_Controller
             $this->load->view("admin_v");
         } else {
             $datos["liga"] = $liga;
+            $datos["proxPartidos"] = self::getPartidosCarrusel($liga);
             //Cargamos los modulos junto con $datos que tiene el nombre de la liga
             $this->load->view("modulos/head", array("css" => array("liga")));
             $this->load->view("modulos/header_admin", $datos);
@@ -97,7 +98,7 @@ class Admin_c extends CI_Controller
         //cargamos el modelo
         $this->load->model("Admin_m");
         //Obtenemos las ligas para después mostrarlas en la linea 21
-        $data = $this->Admin_m->getProx5Partidos($liga);
-        echo json_encode($data->result());
+        $resultado = $this->Admin_m->getProx5Partidos($liga);
+        return $resultado;
     }
 }

@@ -5,8 +5,10 @@ $.ajax({
     url: base_url + "Partidos_c/getJugadoresPartidos/" + idpartido,
     success: function (response) {
         let datos = JSON.parse(response);
+        console.log(datos);
         //Creamos el html y lo añadimos después del tbody
         for (let dato of datos) {
+
             let html = "<tr class='text-center'>";
             html += "<td class='d-none'>" + dato.username + "</td><td class='datos'> " + dato.apenom + "</td><td class='datos'>" + dato.equipo + "</td><td><input value='0' data-equipo='" + dato.equipo + "' min='0' class='w-50' class='w-50' size='10' type='number' name='triples'></td><td><input value='0' data-equipo='" + dato.equipo + "' min='0' class='w-50' size='10' type='number' name='tiros2'></td><td><input value='0' <input value='0' data-equipo='" + dato.equipo + "' min='0' class='w-50' size='10' type='number' name='tiroslibres'></td><td><input value='0' <input value='0' data-equipo='" + dato.equipo + "' min='0' class='w-50' size='10' type='number' name='tapones'></td><td><input value='0' <input value='0' data-equipo='" + dato.equipo + "' min='0' class='w-50' size='10' type='number' name='robos'></td>"
             html += "</tr>";

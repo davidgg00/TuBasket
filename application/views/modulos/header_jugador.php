@@ -4,7 +4,7 @@
         <a href="<?php echo base_url('Jugador_c/index/') ?>">Inicio</a>
         <a href="<?php echo base_url('Jugador_c/clasificacion/' . $liga) ?>">Clasificación</a>
         <a href="<?php echo base_url('Jugador_c/estadisticas/') ?>">Tus estadísticas</a>
-        <a href="#">Partidos</a>
+        <a href="<?php echo base_url('Jugador_c/partidos/' . $liga) ?>">Partidos</a>
         <a href="#"><img src="<?php echo base_url('assets/img/perfil.png') ?>" class="img-fluid rounded-circle"></a>
         <a href="<?php echo base_url('Jugador_c/cerrarsesion') ?>"><img src="<?php echo base_url('assets/img/cerrarsesion2.png') ?>" class="img-fluid rounded-circle"></a>
     </header>
