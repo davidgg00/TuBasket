@@ -87,6 +87,8 @@ class Admin_c extends CI_Controller
     public function partidos($liga)
     {
         $datos["liga"] = $liga;
+        $datos["partidos"] = self::mostrarPartidos($liga);
+        $datos["nequipos"] = self::numeroEquiposLiga($liga);
         $this->load->view("modulos/head", array("css" => array("liga", "partidos")));
         $this->load->view("modulos/header_admin", $datos);
         $this->load->view('partidos_v');
@@ -95,10 +97,23 @@ class Admin_c extends CI_Controller
 
     public function getPartidosCarrusel($liga)
     {
-        //cargamos el modelo
-        $this->load->model("Admin_m");
+
         //Obtenemos las ligas para después mostrarlas en la linea 21
         $resultado = $this->Admin_m->getProx5Partidos($liga);
         return $resultado;
+    }
+
+    //Función que devuelve el calendario de partidos de una liga
+    public function mostrarPartidos($liga)
+    {
+        $partidos = $this->Admin_m->getPartidos($liga);
+        return $partidos->result();
+        $this->output->enable_profiler(TRUE);
+    }
+
+    public function numeroEquiposLiga($liga)
+    {
+        $nequipos = $this->Admin_m->getNumEquipos($liga);
+        return $nequipos;
     }
 }

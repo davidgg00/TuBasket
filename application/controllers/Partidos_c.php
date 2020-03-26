@@ -10,17 +10,6 @@ class Partidos_c extends CI_Controller
         $this->load->model("Partidos_m");
     }
 
-    public function mostrarPartidos()
-    {
-        $partidos = $this->Partidos_m->getPartidos($_POST['liga']);
-        if ($partidos) {
-            echo json_encode($partidos->result());
-        } else {
-            echo "Nada";
-        }
-    }
-
-
     //MÉTODOS PARTIDO INDIVIDUAL SELECCIONADO
     public function getJugadoresPartidos($id)
     {

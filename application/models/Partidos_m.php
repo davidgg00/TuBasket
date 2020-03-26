@@ -8,15 +8,6 @@ class Partidos_m extends CI_Model
         parent::__construct();
     }
 
-    public function getPartidos($liga)
-    {
-        //Creamos la sentencia sql
-        $this->db->order_by('id', 'ASC');
-        $query = $this->db->get_where('view_partidos_liga ', array('liga' => $liga));
-        //Retornamos
-        return $query;
-    }
-
     public function getJugadoresPartidos($id)
     {
         //Creamos la sentencia sql

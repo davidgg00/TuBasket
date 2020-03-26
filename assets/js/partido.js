@@ -6,16 +6,25 @@ $.ajax({
     success: function (response) {
         let datos = JSON.parse(response);
         console.log(datos);
+        let disabled = tipocuenta == 'Jugador' ? " disabled " : "";
         //Creamos el html y lo añadimos después del tbody
         for (let dato of datos) {
-
             let html = "<tr class='text-center'>";
-            html += "<td class='d-none'>" + dato.username + "</td><td class='datos'> " + dato.apenom + "</td><td class='datos'>" + dato.equipo + "</td><td><input value='0' data-equipo='" + dato.equipo + "' min='0' class='w-50' class='w-50' size='10' type='number' name='triples'></td><td><input value='0' data-equipo='" + dato.equipo + "' min='0' class='w-50' size='10' type='number' name='tiros2'></td><td><input value='0' <input value='0' data-equipo='" + dato.equipo + "' min='0' class='w-50' size='10' type='number' name='tiroslibres'></td><td><input value='0' <input value='0' data-equipo='" + dato.equipo + "' min='0' class='w-50' size='10' type='number' name='tapones'></td><td><input value='0' <input value='0' data-equipo='" + dato.equipo + "' min='0' class='w-50' size='10' type='number' name='robos'></td>"
+            html += "<td class='d-none'>" + dato.username + "</td><td class='datos'> " + dato.apenom + "</td><td class='datos'>" + dato.equipo + "</td><td><input " + disabled + " value='0' data-equipo='" + dato.equipo + "' min='0' class='w-50' class='w-50' size='10' type='number' name='triples'></td><td><input " + disabled + " value='0' data-equipo='" + dato.equipo + "' min='0' class='w-50' size='10' type='number' name='tiros2'></td><td><input " + disabled + " value='0' <input " + disabled + " value='0' data-equipo='" + dato.equipo + "' min='0' class='w-50' size='10' type='number' name='tiroslibres'></td><td><input " + disabled + " value='0' <input " + disabled + " value='0' data-equipo='" + dato.equipo + "' min='0' class='w-50' size='10' type='number' name='tapones'></td><td><input " + disabled + " value='0' <input " + disabled + " value='0' data-equipo='" + dato.equipo + "' min='0' class='w-50' size='10' type='number' name='robos'></td>"
             html += "</tr>";
             $("tbody").prepend(html);
         }
-        //Añadimos un botón para guardar el partido
-        $("table").after("<button id='boton' type='button' class='btn btn-outline-success btn-lg'>Guardar Partido</button>");
+
+        //Si el tipo de cuenta es administrador, aparecerá un botón para guardar partido, de lo contrario, un botón para volver
+        if (tipocuenta != 'Jugador') {
+            $("table").after("<button id='boton' type='button' class='btn btn-outline-success btn-lg'>Guardar Partido</button>");
+        } else {
+            $("table").after("<button id='btn-volver' type='button' class='btn btn-outline-info btn-lg'>Volver Partido</button>");
+        }
+        //Creamos evento al boton de volver partido
+        $("#btn-volver").on("click", function (evento) {
+            location.href = base_url + "Admin_c/partidos/" + liga_actual;
+        })
 
         //Creamos evento al boton de enviar para enviar los datos del partido
         $("#boton").on("click", function (evento) {

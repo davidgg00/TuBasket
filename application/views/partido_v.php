@@ -2,6 +2,7 @@
     let idpartido = '<?= $id ?>';
     let liga_actual = '<?= $liga ?>';
     let base_url = '<?= base_url() ?>';
+    let tipocuenta = '<?= $_SESSION['tipo_cuenta'] ?>';
 </script>
 <script src="<?php echo base_url('assets/js/partido.js'); ?>"></script>
 

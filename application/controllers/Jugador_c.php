@@ -54,8 +54,10 @@ class Jugador_c extends CI_Controller
     public function partidos($liga)
     {
         $datos["liga"] = $liga;
+        $datos["partidos"] = self::mostrarPartidos($_SESSION["liga"]);
+        $datos["nequipos"] = self::numeroEquiposLiga($_SESSION["liga"]);
         $this->load->view("modulos/head", array("css" => array("liga", "partidos")));
-        $this->load->view("modulos/header_admin", $datos);
+        $this->load->view("modulos/header_jugador", $datos);
         $this->load->view('partidos_v');
         $this->load->view("modulos/footer");
     }
@@ -112,5 +114,19 @@ class Jugador_c extends CI_Controller
     {
         $resultado = $this->Jugador_m->proxPartido($liga, $equipo);
         return $resultado;
+    }
+
+    //Función que devuelve el calendario de partidos de una liga
+    public function mostrarPartidos($liga)
+    {
+        $partidos = $this->Jugador_m->getPartidos($liga);
+        return $partidos->result();
+        $this->output->enable_profiler(TRUE);
+    }
+
+    public function numeroEquiposLiga($liga)
+    {
+        $nequipos = $this->Jugador_m->getNumEquipos($liga);
+        return $nequipos;
     }
 }
