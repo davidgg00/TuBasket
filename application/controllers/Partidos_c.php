@@ -24,7 +24,7 @@ class Partidos_c extends CI_Controller
     public function getPartido($id)
     {
         $partido = $this->Partidos_m->getPartido($id);
-        echo json_encode($partido->result());
+        echo json_encode($partido);
     }
 
     public function insertarResultadoEquipos()

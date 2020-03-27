@@ -1,3 +1,18 @@
+
+
+//Llamada ajax que también se ejecuta nada mas abrir el documento 
+//Que nos muestra las imagenes de los equipos y sus nombres
+$.ajax({
+    type: "POST",
+    url: base_url + "Partidos_c/getPartido/" + idpartido,
+    success: function (response) {
+        let dato = JSON.parse(response);
+        $("#equipos").append("<div class='equipo d-flex justify-content-center flex-wrap align-items-center'><img id='" + dato.id_local + "' class='img-fluid' src=" + base_url + dato.escudo_local + " > <p class='w-100 text-center'>" + dato.equipo_local + "</p> <input value='0' type='number' class='w-25 mx-auto' disabled id='" + dato.id_local + "' data-id='" + dato.equipo_local + "'></div>");
+        $("#equipos").append("<div class='equipo d-flex justify-content-center flex-wrap align-items-center'><img id='" + dato.id_visitante + "' class='img-fluid' src=" + base_url + dato.escudo_visitante + " > <p class='w-100 text-center'>" + dato.equipo_visitante + "</p> <input value='0' type='number' class='w-25 mx-auto' disabled id='" + dato.id_visitante + "' data-id='" + dato.equipo_visitante + "'></div>");
+        $("div.equipo:first-child").after("<div class='equipo d-flex justify-content-center flex-wrap'><img class='img-fluid' src='" + base_url + "assets/img/vs.png'></div> ")
+    }
+});
+
 //Ajax que se ejecuta nada mas cargar la página que te muestra la tabla con los usuarios 
 //que han jugado el partido
 $.ajax({
@@ -5,14 +20,23 @@ $.ajax({
     url: base_url + "Partidos_c/getJugadoresPartidos/" + idpartido,
     success: function (response) {
         let datos = JSON.parse(response);
-        console.log(datos);
         let disabled = tipocuenta == 'Jugador' ? " disabled " : "";
         //Creamos el html y lo añadimos después del tbody
         for (let dato of datos) {
-            let html = "<tr class='text-center'>";
-            html += "<td class='d-none'>" + dato.username + "</td><td class='datos'> " + dato.apenom + "</td><td class='datos'>" + dato.equipo + "</td><td><input " + disabled + " value='0' data-equipo='" + dato.equipo + "' min='0' class='w-50' class='w-50' size='10' type='number' name='triples'></td><td><input " + disabled + " value='0' data-equipo='" + dato.equipo + "' min='0' class='w-50' size='10' type='number' name='tiros2'></td><td><input " + disabled + " value='0' <input " + disabled + " value='0' data-equipo='" + dato.equipo + "' min='0' class='w-50' size='10' type='number' name='tiroslibres'></td><td><input " + disabled + " value='0' <input " + disabled + " value='0' data-equipo='" + dato.equipo + "' min='0' class='w-50' size='10' type='number' name='tapones'></td><td><input " + disabled + " value='0' <input " + disabled + " value='0' data-equipo='" + dato.equipo + "' min='0' class='w-50' size='10' type='number' name='robos'></td>"
-            html += "</tr>";
-            $("tbody").prepend(html);
+            //Si el id del equipo es igual que el del local, que el html haga prepend al tbody de lo contrario append
+            //Esto se hace para que salgan siempre primero los jugadores locales antes que los visitantes.
+            if (dato.idequipo == $(".equipo:nth-child(1) img").attr('id')) {
+                let html = "<tr class='text-center'>";
+                html += "<td class='d-none'>" + dato.username + "</td><td class='datos'> " + dato.apenom + "</td><td class='datos'>" + dato.equipo + "</td><td><input " + disabled + " value='0' data-equipo='" + dato.equipo + "' min='0' class='w-50' class='w-50' size='10' type='number' name='triples'></td><td><input " + disabled + " value='0' data-equipo='" + dato.equipo + "' min='0' class='w-50' size='10' type='number' name='tiros2'></td><td><input " + disabled + " value='0' <input " + disabled + " value='0' data-equipo='" + dato.equipo + "' min='0' class='w-50' size='10' type='number' name='tiroslibres'></td><td><input " + disabled + " value='0' <input " + disabled + " value='0' data-equipo='" + dato.equipo + "' min='0' class='w-50' size='10' type='number' name='tapones'></td><td><input " + disabled + " value='0' <input " + disabled + " value='0' data-equipo='" + dato.equipo + "' min='0' class='w-50' size='10' type='number' name='robos'></td>"
+                html += "</tr>";
+                $("tbody").prepend(html);
+            } else {
+                let html = "<tr class='text-center'>";
+                html += "<td class='d-none'>" + dato.username + "</td><td class='datos'> " + dato.apenom + "</td><td class='datos'>" + dato.equipo + "</td><td><input " + disabled + " value='0' data-equipo='" + dato.equipo + "' min='0' class='w-50' class='w-50' size='10' type='number' name='triples'></td><td><input " + disabled + " value='0' data-equipo='" + dato.equipo + "' min='0' class='w-50' size='10' type='number' name='tiros2'></td><td><input " + disabled + " value='0' <input " + disabled + " value='0' data-equipo='" + dato.equipo + "' min='0' class='w-50' size='10' type='number' name='tiroslibres'></td><td><input " + disabled + " value='0' <input " + disabled + " value='0' data-equipo='" + dato.equipo + "' min='0' class='w-50' size='10' type='number' name='tapones'></td><td><input " + disabled + " value='0' <input " + disabled + " value='0' data-equipo='" + dato.equipo + "' min='0' class='w-50' size='10' type='number' name='robos'></td>"
+                html += "</tr>";
+                $("tbody").append(html);
+            }
+
         }
 
         //Si el tipo de cuenta es administrador, aparecerá un botón para guardar partido, de lo contrario, un botón para volver
@@ -113,19 +137,5 @@ $.ajax({
             $(".equipo:first-child input").val(totalLocal);
             $(".equipo:last-child input").val(totalVisitante);
         });
-    }
-});
-
-//Llamada ajax que también se ejecuta nada mas abrir el documento 
-//Que nos muestra las imagenes de los equipos y sus nombres
-$.ajax({
-    type: "POST",
-    url: base_url + "Partidos_c/getPartido/" + idpartido,
-    success: function (response) {
-        let datos = JSON.parse(response);
-        for (let dato of datos) {
-            $("#equipos").append("<div class='equipo d-flex justify-content-center flex-wrap align-items-center'><img class='img-fluid' src=" + base_url + dato.escudo_ruta + " > <p class='w-100 text-center'>" + dato.equipo + "</p> <input value='0' type='number' class='w-25 mx-auto' disabled id='" + dato.id + "' data-id='" + dato.equipo + "'></div>");
-        }
-        $("div.equipo:first-child").after("<div class='equipo d-flex justify-content-center flex-wrap'><img class='img-fluid' src='" + base_url + "assets/img/vs.png'></div> ")
     }
 });

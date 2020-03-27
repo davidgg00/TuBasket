@@ -14,3 +14,12 @@ table {
 .resultado:hover {
     cursor: pointer;
 }
+
+.fa-edit, .fa-sync {
+    width: 100%;
+    font-size: 1.3em;
+}
+
+#fecha {
+    width: 50%;
+}

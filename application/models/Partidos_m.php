@@ -11,7 +11,7 @@ class Partidos_m extends CI_Model
     public function getJugadoresPartidos($id)
     {
         //Creamos la sentencia sql
-        $query = $this->db->get_where('view_usuarios_partidos', array('idpartido' => $id));
+        $query = $this->db->get_where('view_jugadores_partidos', array('idpartido' => $id));
         return $query;
     }
 
@@ -23,13 +23,8 @@ class Partidos_m extends CI_Model
 
     public function getPartido($id)
     {
-        //Creamos la sentencia sql
-        $this->db->select('e.equipo, e.escudo_ruta, e.id');
-        $this->db->from('equipo e');
-        $this->db->join('partido p', 'p.local = e.id or p.visitante = e.id');
-        $this->db->where('p.id', $id);
-        $query = $this->db->get();
-        return $query;
+        $query = $this->db->get_where('view_partidos_liga', array('id' => $id));
+        return $query->row();
     }
 
     public function insertarEstadisticaPartido($id, $jugador, $triples, $tiros2, $tiroslibres, $tapones, $robos)
