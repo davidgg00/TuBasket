@@ -11,7 +11,8 @@ table {
     background: none;
 }
 
-.resultado:hover {
+.fa-edit:hover,
+.fa-sync:hover{
     cursor: pointer;
 }
 

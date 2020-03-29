@@ -10,9 +10,17 @@ class Partidos_m extends CI_Model
 
     public function getJugadoresPartidos($id)
     {
-        //Creamos la sentencia sql
-        $query = $this->db->get_where('view_jugadores_partidos', array('idpartido' => $id));
-        return $query;
+        $this->db->select('apenom,username,equipo.equipo,triples_metidos,tiros_2_metidos,tiros_libres_metidos,tapones,robos');
+        $this->db->from('jugador_stats');
+        $this->db->join('usuarios', 'username = jugador');
+        $this->db->join('equipo', 'usuarios.equipo = equipo.id');
+        $this->db->where('id_partido', $id);
+        $query = $this->db->get();
+        if (!empty($query->result())) {
+            return $query->result();
+        } else {
+            return $this->db->get_where('view_jugadores_partidos', array('idpartido' => $id))->result();
+        }
     }
 
     public function obtenerEquiposLiga($liga)
@@ -74,6 +82,14 @@ class Partidos_m extends CI_Model
     {
         $this->db->set('hora', $hora);
         $this->db->where('id', $idPartido);
+        $this->db->update('partido');
+    }
+
+    public function resetPartido($id)
+    {
+        $this->db->set('resultado_local', "");
+        $this->db->set('resultado_visitante', "");
+        $this->db->where('id', $id);
         $this->db->update('partido');
     }
 }

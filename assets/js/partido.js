@@ -20,19 +20,27 @@ $.ajax({
     url: base_url + "Partidos_c/getJugadoresPartidos/" + idpartido,
     success: function (response) {
         let datos = JSON.parse(response);
+        console.log(response);
         let disabled = tipocuenta == 'Jugador' ? " disabled " : "";
         //Creamos el html y lo añadimos después del tbody
+        let valuetriples, valuetiros2, valuetiroslibres, tapones, robos;
         for (let dato of datos) {
+            valuetriples = dato.triples_metidos ? dato.triples_metidos : "0";
+            valuetiros2 = dato.tiros_2_metidos ? dato.tiros_2_metidos : "0";
+            valuetiroslibres = dato.tiros_libres_metidos ? dato.tiros_libres_metidos : "0";
+            tapones = dato.tapones ? dato.tapones : "0";
+            robos = dato.robos ? dato.robos : "0";
+
             //Si el id del equipo es igual que el del local, que el html haga prepend al tbody de lo contrario append
             //Esto se hace para que salgan siempre primero los jugadores locales antes que los visitantes.
             if (dato.idequipo == $(".equipo:nth-child(1) img").attr('id')) {
                 let html = "<tr class='text-center'>";
-                html += "<td class='d-none'>" + dato.username + "</td><td class='datos'> " + dato.apenom + "</td><td class='datos'>" + dato.equipo + "</td><td><input " + disabled + " value='0' data-equipo='" + dato.equipo + "' min='0' class='w-50' class='w-50' size='10' type='number' name='triples'></td><td><input " + disabled + " value='0' data-equipo='" + dato.equipo + "' min='0' class='w-50' size='10' type='number' name='tiros2'></td><td><input " + disabled + " value='0' <input " + disabled + " value='0' data-equipo='" + dato.equipo + "' min='0' class='w-50' size='10' type='number' name='tiroslibres'></td><td><input " + disabled + " value='0' <input " + disabled + " value='0' data-equipo='" + dato.equipo + "' min='0' class='w-50' size='10' type='number' name='tapones'></td><td><input " + disabled + " value='0' <input " + disabled + " value='0' data-equipo='" + dato.equipo + "' min='0' class='w-50' size='10' type='number' name='robos'></td>"
+                html += "<td class='d-none'>" + dato.username + "</td><td class='datos'> " + dato.apenom + "</td><td class='datos'>" + dato.equipo + "</td><td><input " + disabled + " value='" + valuetriples + "' data-equipo='" + dato.equipo + "' min='0' class='w-50' class='w-50' size='10' type='number' name='triples'></td><td><input " + disabled + " value='" + valuetiros2 + "' data-equipo='" + dato.equipo + "' min='0' class='w-50' size='10' type='number' name='tiros2'></td><td><input " + disabled + " value='" + valuetiroslibres + "' data-equipo='" + dato.equipo + "' min='0' class='w-50' size='10' type='number' name='tiroslibres'></td><td><input " + disabled + " value='" + tapones + "' data-equipo='" + dato.equipo + "' min='0' class='w-50' size='10' type='number' name='tapones'></td><td><input " + disabled + "value='" + robos + "' data-equipo='" + dato.equipo + "' min='0' class='w-50' size='10' type='number' name='robos'></td>"
                 html += "</tr>";
                 $("tbody").prepend(html);
             } else {
                 let html = "<tr class='text-center'>";
-                html += "<td class='d-none'>" + dato.username + "</td><td class='datos'> " + dato.apenom + "</td><td class='datos'>" + dato.equipo + "</td><td><input " + disabled + " value='0' data-equipo='" + dato.equipo + "' min='0' class='w-50' class='w-50' size='10' type='number' name='triples'></td><td><input " + disabled + " value='0' data-equipo='" + dato.equipo + "' min='0' class='w-50' size='10' type='number' name='tiros2'></td><td><input " + disabled + " value='0' <input " + disabled + " value='0' data-equipo='" + dato.equipo + "' min='0' class='w-50' size='10' type='number' name='tiroslibres'></td><td><input " + disabled + " value='0' <input " + disabled + " value='0' data-equipo='" + dato.equipo + "' min='0' class='w-50' size='10' type='number' name='tapones'></td><td><input " + disabled + " value='0' <input " + disabled + " value='0' data-equipo='" + dato.equipo + "' min='0' class='w-50' size='10' type='number' name='robos'></td>"
+                html += "<td class='d-none'>" + dato.username + "</td><td class='datos'> " + dato.apenom + "</td><td class='datos'>" + dato.equipo + "</td><td><input " + disabled + " value='" + valuetriples + "' data-equipo='" + dato.equipo + "' min='0' class='w-50' class='w-50' size='10' type='number' name='triples'></td><td><input " + disabled + " value='" + valuetiros2 + "' data-equipo='" + dato.equipo + "' min='0' class='w-50' size='10' type='number' name='tiros2'></td><td><input " + disabled + " value='" + valuetiroslibres + "' data-equipo='" + dato.equipo + "' min='0' class='w-50' size='10' type='number' name='tiroslibres'></td><td><input " + disabled + " value='" + tapones + "' data-equipo='" + dato.equipo + "' min='0' class='w-50' size='10' type='number' name='tapones'></td><td><input " + disabled + "value='" + robos + "' data-equipo='" + dato.equipo + "' min='0' class='w-50' size='10' type='number' name='robos'></td>"
                 html += "</tr>";
                 $("tbody").append(html);
             }
@@ -94,48 +102,56 @@ $.ajax({
 
         //Si hay un cambio en un input
         $("input").change(function (e) {
-            let totalLocal = 0;
-            let totalVisitante = 0;
-            //Y no está disabled (los marcadores)
-            $("input:not([disabled])").each(function () {
-                //Miramos su atributo name y dependiendo de este se hace una acción u otra
-                switch ($(this).attr('name')) {
-                    case "triples":
-                        //Si es el equipo local se añade la puntuación a este, sino al visitante
-                        if ($(this).data('equipo') == $(".equipo:first-child input").data('id')) {
-                            let valor = parseInt($(this).val() * 3);
-                            totalLocal += (parseInt(valor));
-                        } else {
-                            let valor = parseInt($(this).val() * 3);
-                            totalVisitante += parseInt(valor);
-                        }
-                        break;
-                    case "tiros2":
-                        //Si es el equipo local se añade la puntuación a este, sino al visitante
-                        if ($(this).data('equipo') == $(".equipo:first-child input").data('id')) {
-                            let valor = parseInt($(this).val() * 2);
-                            totalLocal += (parseInt(valor));
-                        } else {
-                            let valor = parseInt($(this).val() * 2);
-                            totalVisitante += parseInt(valor);
-                        }
-                        break;
-                    case "tiroslibres":
-                        //Si es el equipo local se añade la puntuación a este, sino al visitante
-                        if ($(this).data('equipo') == $(".equipo:first-child input").data('id')) {
-                            let valor = parseInt($(this).val());
-                            totalLocal += (parseInt(valor));
-
-                        } else {
-                            let valor = parseInt($(this).val());
-                            totalVisitante += parseInt(valor);
-                        }
-                        break;
-                }
-            })
-            //Añadimos el valor total a los marcadores
-            $(".equipo:first-child input").val(totalLocal);
-            $(".equipo:last-child input").val(totalVisitante);
-        });
+            //Ejecutamos funcion sumarMarcador()
+            sumarMarcador();
+        })
+        //Nada mas que termine el ajax ejecutamos la función de sumarMarcador porque puede ser que esté editando
+        //Una estadística en concreto y entonces NO aparecerán las estadísticas a 0
+        sumarMarcador();
     }
 });
+
+function sumarMarcador() {
+    let totalLocal = 0;
+    let totalVisitante = 0;
+    //Y no está disabled (los marcadores)
+    $("input:not([disabled])").each(function () {
+        //Miramos su atributo name y dependiendo de este se hace una acción u otra
+        switch ($(this).attr('name')) {
+            case "triples":
+                //Si es el equipo local se añade la puntuación a este, sino al visitante
+                if ($(this).data('equipo') == $(".equipo:first-child input").data('id')) {
+                    let valor = parseInt($(this).val() * 3);
+                    totalLocal += (parseInt(valor));
+                } else {
+                    let valor = parseInt($(this).val() * 3);
+                    totalVisitante += parseInt(valor);
+                }
+                break;
+            case "tiros2":
+                //Si es el equipo local se añade la puntuación a este, sino al visitante
+                if ($(this).data('equipo') == $(".equipo:first-child input").data('id')) {
+                    let valor = parseInt($(this).val() * 2);
+                    totalLocal += (parseInt(valor));
+                } else {
+                    let valor = parseInt($(this).val() * 2);
+                    totalVisitante += parseInt(valor);
+                }
+                break;
+            case "tiroslibres":
+                //Si es el equipo local se añade la puntuación a este, sino al visitante
+                if ($(this).data('equipo') == $(".equipo:first-child input").data('id')) {
+                    let valor = parseInt($(this).val());
+                    totalLocal += (parseInt(valor));
+
+                } else {
+                    let valor = parseInt($(this).val());
+                    totalVisitante += parseInt(valor);
+                }
+                break;
+        }
+        //Añadimos el valor total a los marcadores
+        $(".equipo:first-child input").val(totalLocal);
+        $(".equipo:last-child input").val(totalVisitante);
+    })
+}
