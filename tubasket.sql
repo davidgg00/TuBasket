@@ -1,0 +1,528 @@
+-- phpMyAdmin SQL Dump
+-- version 4.6.6deb5
+-- https://www.phpmyadmin.net/
+--
+-- Servidor: localhost:3306
+-- Tiempo de generación: 31-03-2020 a las 13:14:05
+-- Versión del servidor: 5.7.28-0ubuntu0.19.04.2
+-- Versión de PHP: 7.2.24-0ubuntu0.19.04.2
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Base de datos: `tubasket`
+--
+CREATE DATABASE IF NOT EXISTS `tubasket` DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci;
+USE `tubasket`;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `admin`
+--
+
+CREATE TABLE `admin` (
+  `username` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
+  `apenom` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
+  `fecha_nac` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `admin`
+--
+
+INSERT INTO `admin` (`username`, `password`, `email`, `apenom`, `fecha_nac`) VALUES
+('admin', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'admin@admin.com', 'admin', '3000-03-12');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `equipo`
+--
+
+CREATE TABLE `equipo` (
+  `id` int(11) NOT NULL,
+  `equipo` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
+  `pabellon` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
+  `ciudad` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
+  `escudo_ruta` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
+  `liga` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
+  `partidos_ganados` int(3) NOT NULL,
+  `partidos_perdidos` int(3) NOT NULL,
+  `puntos_favor` int(10) NOT NULL,
+  `puntos_contra` int(10) NOT NULL,
+  `puntos_clasificacion` int(3) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `equipo`
+--
+
+INSERT INTO `equipo` (`id`, `equipo`, `pabellon`, `ciudad`, `escudo_ruta`, `liga`, `partidos_ganados`, `partidos_perdidos`, `puntos_favor`, `puntos_contra`, `puntos_clasificacion`) VALUES
+(1, 'Barcelona', 'Pabellon Barcelona', 'Barcelona', 'assets/uploads/escudos/97barcelona.png', 'miliga', 0, 0, 0, 0, 0),
+(2, 'Real Madrid', 'Pabellon Real Madrid', 'Madrid', 'assets/uploads/escudos/151realmadrid.png', 'miliga', 0, 0, 0, 0, 0),
+(3, 'Valencia', 'Pabellón Valencia', 'Valencia', 'assets/uploads/escudos/174valencia.png', 'miliga', 0, 0, 0, 0, 0),
+(4, 'Almería', 'Pabellon Almería', 'Almería', 'assets/uploads/escudos/451almeria.png', 'miliga', 0, 0, 0, 0, 0),
+(5, 'Sevilla', 'Pabellon Sevilla', 'Sevilla', 'assets/uploads/escudos/116sevilla.png', 'miliga', 0, 0, 0, 0, 0),
+(6, 'Bilbao Basket', 'Pabellon Bilbao', 'Bilbao', 'assets/uploads/escudos/179bilbao.png', 'miliga', 0, 0, 0, 0, 0),
+(7, 'Betis', 'Pabellon Betis', 'Ciudad Betis', 'assets/uploads/escudos/324betis.png', 'miliga', 0, 0, 0, 0, 0),
+(8, 'Manresa', 'Pabellon Manresa', 'Manresa', 'assets/uploads/escudos/266manresa.png', 'miliga', 0, 0, 0, 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `jugador_stats`
+--
+
+CREATE TABLE `jugador_stats` (
+  `id_partido` int(255) NOT NULL,
+  `jugador` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
+  `triples_metidos` int(255) NOT NULL,
+  `tiros_2_metidos` int(255) NOT NULL,
+  `tiros_libres_metidos` int(255) NOT NULL,
+  `tapones` int(255) NOT NULL,
+  `robos` int(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `liga`
+--
+
+CREATE TABLE `liga` (
+  `nombre` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
+  `administrador` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
+  `ganador` varchar(255) COLLATE utf8_spanish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `liga`
+--
+
+INSERT INTO `liga` (`nombre`, `password`, `administrador`, `ganador`) VALUES
+('miliga', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'admin', '');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `partido`
+--
+
+CREATE TABLE `partido` (
+  `id` int(255) NOT NULL,
+  `local` int(255) NOT NULL,
+  `visitante` int(255) NOT NULL,
+  `resultado_local` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
+  `resultado_visitante` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
+  `fecha` date NOT NULL,
+  `Hora` time DEFAULT NULL,
+  `jornada` int(11) NOT NULL,
+  `liga` varchar(255) COLLATE utf8_spanish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `partido`
+--
+
+INSERT INTO `partido` (`id`, `local`, `visitante`, `resultado_local`, `resultado_visitante`, `fecha`, `Hora`, `jornada`, `liga`) VALUES
+(58, 4, 2, '', '', '2020-03-30', NULL, 1, 'miliga'),
+(59, 7, 8, '', '', '2020-03-31', '15:15:00', 1, 'miliga'),
+(60, 6, 1, '', '', '2020-03-31', NULL, 1, 'miliga'),
+(61, 3, 5, '', '', '2020-03-31', NULL, 1, 'miliga'),
+(62, 7, 6, '', '', '0000-00-00', NULL, 2, 'miliga'),
+(63, 1, 2, '', '', '0000-00-00', NULL, 2, 'miliga'),
+(64, 4, 3, '', '', '0000-00-00', NULL, 2, 'miliga'),
+(65, 5, 8, '', '', '0000-00-00', NULL, 2, 'miliga'),
+(66, 6, 7, '', '', '0000-00-00', NULL, 3, 'miliga'),
+(67, 3, 2, '', '', '0000-00-00', NULL, 3, 'miliga'),
+(68, 8, 4, '', '', '2020-03-31', '16:00:00', 3, 'miliga'),
+(69, 5, 1, '', '', '2020-03-29', NULL, 3, 'miliga'),
+(70, 3, 1, '', '', '2020-03-30', NULL, 4, 'miliga'),
+(71, 2, 6, '', '', '0000-00-00', NULL, 4, 'miliga'),
+(72, 7, 4, '', '', '0000-00-00', NULL, 4, 'miliga'),
+(73, 5, 8, '', '', '0000-00-00', NULL, 4, 'miliga'),
+(74, 3, 6, '', '', '0000-00-00', NULL, 5, 'miliga'),
+(75, 5, 8, '', '', '0000-00-00', NULL, 5, 'miliga'),
+(76, 1, 4, '', '', '0000-00-00', NULL, 5, 'miliga'),
+(77, 7, 2, '', '', '0000-00-00', NULL, 5, 'miliga'),
+(78, 6, 7, '', '', '0000-00-00', NULL, 6, 'miliga'),
+(79, 5, 1, '', '', '0000-00-00', NULL, 6, 'miliga'),
+(80, 4, 8, '', '', '0000-00-00', NULL, 6, 'miliga'),
+(81, 3, 2, '', '', '0000-00-00', NULL, 6, 'miliga'),
+(82, 5, 4, '', '', '0000-00-00', NULL, 7, 'miliga'),
+(83, 1, 7, '', '', '0000-00-00', NULL, 7, 'miliga'),
+(84, 2, 6, '', '', '0000-00-00', NULL, 7, 'miliga'),
+(85, 8, 3, '', '', '0000-00-00', NULL, 7, 'miliga');
+
+--
+-- Disparadores `partido`
+--
+DELIMITER $$
+CREATE TRIGGER `puntos_clasificacion` AFTER UPDATE ON `partido` FOR EACH ROW /*TRIGGER que al cambiar un resultado o insertalo (realmente siempre se hace UPDATE, se suman los puntos a favor, en contra y puntos de la clasificación*/
+
+BEGIN
+/*Si había un resultado valido (no vacío) y el local gana al visitante*/
+IF (old.resultado_local > 0 AND old.resultado_local > old.resultado_visitante) THEN
+/*Restamos las estadísticas que tenía el local*/
+UPDATE equipo SET
+partidos_ganados = partidos_ganados - 1,
+puntos_favor = puntos_favor - old.resultado_local,
+puntos_contra = puntos_contra - old.resultado_visitante,
+puntos_clasificacion = puntos_clasificacion - 2
+WHERE id = old.local;
+/*Restamos las estadísticas que tenía el visitante*/
+UPDATE equipo SET 
+partidos_perdidos = partidos_perdidos - 1,
+puntos_favor = puntos_favor - old.resultado_visitante,
+puntos_contra = puntos_contra - old.resultado_local,
+puntos_clasificacion = puntos_clasificacion - 1
+WHERE id = old.visitante;
+
+/*Si había un resultado valido (no vacío) y el visitante gana al local*/
+ELSEIF (old.resultado_local > 0 AND old.resultado_visitante > old.resultado_local) THEN
+/*Restamos las estadísticas que tenía el visitante*/
+UPDATE equipo SET 
+partidos_ganados = partidos_ganados - 1,
+puntos_favor = puntos_favor - old.resultado_visitante,
+puntos_contra = puntos_contra - old.resultado_local,
+puntos_clasificacion = puntos_clasificacion - 2
+WHERE id = old.visitante;
+/*Restamos las estadísticas que tenía el local*/
+UPDATE equipo SET 
+partidos_perdidos = partidos_perdidos - 1,
+puntos_favor = puntos_favor - old.resultado_local,
+puntos_contra = puntos_contra - old.resultado_visitante,
+puntos_clasificacion = puntos_clasificacion - 1
+WHERE id = old.local;
+END IF;
+
+/*Ahora sumaremos las nuevas estadísticas del partido.
+Si gana el local */
+IF (new.resultado_local > new.resultado_visitante) THEN
+/*Sumamos las estadísticas al local*/
+UPDATE equipo SET 
+partidos_ganados = partidos_ganados + 1,
+puntos_favor = puntos_favor + new.resultado_local,
+puntos_contra = puntos_contra + new.resultado_visitante,
+puntos_clasificacion = puntos_clasificacion + 2
+WHERE id = old.local;
+/*Sumamos las estadísticas al visitante*/
+UPDATE equipo SET 
+partidos_perdidos = partidos_perdidos + 1,
+puntos_favor = puntos_favor + new.resultado_visitante,
+puntos_contra = puntos_contra + new.resultado_local,
+puntos_clasificacion = puntos_clasificacion + 1
+WHERE id = old.visitante;
+ELSEIF (new.resultado_visitante > new.resultado_local) THEN
+/*Sumamos las estadísticas al visitante*/
+UPDATE equipo SET 
+partidos_ganados = partidos_ganados + 1,
+puntos_favor = puntos_favor + new.resultado_visitante,
+puntos_contra = puntos_contra + new.resultado_local,
+puntos_clasificacion = puntos_clasificacion + 2
+WHERE id = old.visitante;
+/*Sumamos las estadísticas al local*/
+UPDATE equipo SET 
+partidos_perdidos = partidos_perdidos + 1,
+puntos_favor = puntos_favor + new.resultado_local,
+puntos_contra = puntos_contra + new.resultado_visitante,
+puntos_clasificacion = puntos_clasificacion + 1
+WHERE id = old.local;
+END IF;
+
+/*Si resetea el partido borramos las stats de los jugadores*/
+
+IF (new.resultado_local = '' AND new.resultado_visitante ='') THEN
+DELETE FROM jugador_stats WHERE id_partido = old.id;
+END IF;
+END
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `usuarios`
+--
+
+CREATE TABLE `usuarios` (
+  `username` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
+  `tipo` set('Jugador','Entrenador') COLLATE utf8_spanish_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
+  `apenom` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
+  `fecha_nac` date NOT NULL,
+  `liga` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
+  `equipo` int(11) DEFAULT NULL,
+  `validado` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `usuarios`
+--
+
+INSERT INTO `usuarios` (`username`, `password`, `tipo`, `email`, `apenom`, `fecha_nac`, `liga`, `equipo`, `validado`) VALUES
+('elnuger', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'elnuger@elnuger.com', 'el nuger', '2020-03-03', 'miliga', 7, 1),
+('jugador_barcelona', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugador_barcelona@jugadorbarcelona.com', 'barcelona player', '2020-03-05', 'miliga', 1, 1),
+('jugadorAlmeria', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorAlmeria@jugadorAlmeria.com', 'jugador Almeria', '2020-03-05', 'miliga', 4, 1),
+('jugadorAlmeria2', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorAlmeria2@jugadorAlmeria.com', 'jugador Almeria 2', '2020-03-06', 'miliga', 4, 1),
+('jugadorAlmeria3', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorAlmeria3@jugadorAlmeria.com', 'jugador Almeria 3', '2020-03-13', 'miliga', 4, 1),
+('jugadorAlmeria4', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorAlmeria4@jugadorAlmeria.com', 'jugador Almeria 4', '2020-03-18', 'miliga', 4, 1),
+('jugadorAlmeria5', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorAlmeria5@gmail.com', 'jugador Almeria 5', '2020-03-03', 'miliga', 4, 1),
+('jugadorBarcelona', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorBarcelona@jugadorBarcelona.com', 'jugador Barcelona', '2020-03-06', 'miliga', 1, 1),
+('jugadorBarcelona2', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorBarcelona2@jugadorBarcelona.com', 'jugador Barcelona 2', '2020-02-26', 'miliga', 1, 1),
+('jugadorBarcelona3', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorBarcelona3@jugadorBarcelona.com', 'jugador Barcelona 3', '2020-02-28', 'miliga', 1, 1),
+('jugadorBarcelona4', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorBarcelona4@jugadorBarcelona.com', 'jugador Barcelona 4', '2020-02-27', 'miliga', 1, 1),
+('jugadorBarcelona5', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorBarcelona5@jugadorBarcelona.com', 'jugador Barcelona 5', '2020-02-29', 'miliga', 1, 1),
+('jugadorBetis', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorBetis@jugadorBetis.com', 'jugador Betis', '2020-03-05', 'miliga', 7, 1),
+('jugadorBetis2', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorBetis2@jugadorBetis.com', 'jugador Betis 2', '2020-03-01', 'miliga', 7, 1),
+('jugadorBetis3', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorBetis3@jugadorBetis.com', 'jugador Betis 3', '2020-02-28', 'miliga', 7, 1),
+('jugadorBetis4', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorBetis4@jugadorBetis.com', 'jugador Betis 4', '2020-02-28', 'miliga', 7, 1),
+('jugadorBetis5', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorBetis5@jugadorBetis.com', 'jugador Betis 5', '2020-02-25', 'miliga', 7, 1),
+('jugadorBilbao', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorBilbao@jugadorBilbao.com', 'jugador Bilbao', '2020-03-04', 'miliga', 6, 1),
+('jugadorBilbao2', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorBilbao2@jugadorBilbao.com', 'jugador Bilbao 2', '2020-03-06', 'miliga', 6, 1),
+('jugadorBilbao3', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorBilbao3@jugadorBilbao.com', 'jugador Bilbao 3', '2020-03-01', 'miliga', 6, 1),
+('jugadorBilbao4', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorBilbao4@jugadorBilbao.com', 'jugador Bilbao 4', '2020-03-01', 'miliga', 6, 1),
+('jugadorBilbao5', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorBilbao5@jugadorBilbao.com', 'jugador Bilbao 5', '2020-03-01', 'miliga', 6, 1),
+('jugadorManresa', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorManresa@jugadorManresa.com', 'jugador Manresa', '2020-03-01', 'miliga', 8, 1),
+('jugadorManresa2', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorManresa2@jugadorManresa.com', 'jugador Manresa 2', '2020-02-28', 'miliga', 8, 1),
+('jugadorManresa3', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorManresa3@jugadorManresa.com', 'jugador Manresa 3', '2020-03-05', 'miliga', 8, 1),
+('jugadorManresa4', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorManresa4@jugadorManresa.com', 'jugador Manresa 4', '2020-03-11', 'miliga', 8, 1),
+('jugadorManresa5', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorManresa5@jugadorManresa.com', 'jugador Manresa 5', '2020-03-01', 'miliga', 8, 1),
+('jugadorRealMadrid', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorRealMadrid@jugadorRealMadrid.com', 'jugador RealMadrid', '2020-02-26', 'miliga', 2, 1),
+('jugadorRealMadrid2', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorRealMadrid2@jugadorRealMadrid.com', 'jugador RealMadrid 2', '2020-03-07', 'miliga', 2, 1),
+('jugadorRealMadrid3', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorRealMadrid3@jugadorRealMadrid.com', 'jugador RealMadrid 3', '2020-03-01', 'miliga', 2, 1),
+('jugadorRealMadrid4', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorRealMadrid4@jugadorRealMadrid.com', 'jugador RealMadrid 4', '2020-02-29', 'miliga', 2, 1),
+('jugadorRealMadrid5', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorRealMadrid5@jugadorRealMadrid.com', 'jugador RealMadrid 5', '2020-03-04', 'miliga', 2, 1),
+('jugadorSevilla', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorSevilla@jugadorSevilla.com', 'jugador Sevilla', '2020-03-05', 'miliga', 5, 1),
+('jugadorSevilla2', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorSevilla2@jugadorSevilla.com', 'jugador Sevilla2', '2020-03-05', 'miliga', 5, 1),
+('jugadorSevilla3', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorSevilla3@jugadorSevilla.com', 'jugador Sevilla3', '2020-03-18', 'miliga', 5, 1),
+('jugadorSevilla4', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorSevilla4@jugadorSevilla.com', 'jugador Sevilla 4', '2020-03-12', 'miliga', 5, 1),
+('jugadorSevilla5', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorSevilla5@jugadorSevilla.com', 'jugador Sevilla 5', '2020-03-04', 'miliga', 5, 1),
+('jugadorValencia', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorValencia@jugadorValencia.com', 'jugador Valencia', '2020-02-28', 'miliga', 3, 1),
+('jugadorValencia2', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorValencia2@jugadorValencia.com', 'jugador Valencia', '2020-03-01', 'miliga', 3, 1),
+('jugadorValencia3', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorValencia3@jugadorValencia.com', 'jugador Valencia', '2020-02-29', 'miliga', 3, 1),
+('jugadorValencia4', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorValencia4@jugadorValencia.com', 'jugador Valencia 4', '2020-03-01', 'miliga', 3, 1),
+('jugadorValencia5', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorValencia5@jugadorValencia.com', 'jugador Valencia 5', '2020-02-28', 'miliga', 3, 1),
+('unai_2000', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', '412341234@1234.com', 'unai carlos', '2020-03-04', 'miliga', 3, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura Stand-in para la vista `view_clasificacion`
+-- (Véase abajo para la vista actual)
+--
+CREATE TABLE `view_clasificacion` (
+`equipo` varchar(255)
+,`partidos_ganados` int(3)
+,`partidos_perdidos` int(3)
+,`puntos_favor` int(10)
+,`puntos_contra` int(10)
+,`puntos_clasificacion` int(3)
+,`liga` varchar(255)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura Stand-in para la vista `view_jugadores_partidos`
+-- (Véase abajo para la vista actual)
+--
+CREATE TABLE `view_jugadores_partidos` (
+`idpartido` int(255)
+,`apenom` varchar(255)
+,`username` varchar(255)
+,`idequipo` int(11)
+,`equipo` varchar(255)
+,`escudo_ruta_local` varchar(255)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura Stand-in para la vista `view_partidos_liga`
+-- (Véase abajo para la vista actual)
+--
+CREATE TABLE `view_partidos_liga` (
+`id` int(255)
+,`id_local` int(11)
+,`equipo_local` varchar(255)
+,`escudo_local` varchar(255)
+,`id_visitante` int(11)
+,`equipo_visitante` varchar(255)
+,`escudo_visitante` varchar(255)
+,`resultado_local` varchar(255)
+,`resultado_visitante` varchar(255)
+,`jornada` int(11)
+,`fecha` date
+,`hora` time
+,`liga` varchar(255)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura Stand-in para la vista `view_usuarios_liga`
+-- (Véase abajo para la vista actual)
+--
+CREATE TABLE `view_usuarios_liga` (
+`username` varchar(255)
+,`password` varchar(255)
+,`tipo` set('Jugador','Entrenador')
+,`email` varchar(255)
+,`apenom` varchar(255)
+,`fecha_nac` date
+,`liga` varchar(255)
+,`equipo` int(11)
+,`validado` tinyint(1)
+,`nombre_equipo` varchar(255)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `view_clasificacion`
+--
+DROP TABLE IF EXISTS `view_clasificacion`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_clasificacion`  AS  select `e`.`equipo` AS `equipo`,`e`.`partidos_ganados` AS `partidos_ganados`,`e`.`partidos_perdidos` AS `partidos_perdidos`,`e`.`puntos_favor` AS `puntos_favor`,`e`.`puntos_contra` AS `puntos_contra`,`e`.`puntos_clasificacion` AS `puntos_clasificacion`,`l`.`nombre` AS `liga` from (`equipo` `e` join `liga` `l` on((`l`.`nombre` = `e`.`liga`))) ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `view_jugadores_partidos`
+--
+DROP TABLE IF EXISTS `view_jugadores_partidos`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_jugadores_partidos`  AS  select `p`.`id` AS `idpartido`,`u`.`apenom` AS `apenom`,`u`.`username` AS `username`,`u`.`equipo` AS `idequipo`,`e`.`equipo` AS `equipo`,`e`.`escudo_ruta` AS `escudo_ruta_local` from ((`equipo` `e` join `usuarios` `u` on((`e`.`id` = `u`.`equipo`))) join `partido` `p` on(((`e`.`id` = `p`.`local`) or (`e`.`id` = `p`.`visitante`)))) order by `p`.`id` ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `view_partidos_liga`
+--
+DROP TABLE IF EXISTS `view_partidos_liga`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_partidos_liga`  AS  select `p`.`id` AS `id`,`e`.`id` AS `id_local`,`e`.`equipo` AS `equipo_local`,`e`.`escudo_ruta` AS `escudo_local`,`e2`.`id` AS `id_visitante`,`e2`.`equipo` AS `equipo_visitante`,`e2`.`escudo_ruta` AS `escudo_visitante`,`p`.`resultado_local` AS `resultado_local`,`p`.`resultado_visitante` AS `resultado_visitante`,`p`.`jornada` AS `jornada`,`p`.`fecha` AS `fecha`,`p`.`Hora` AS `hora`,`l`.`nombre` AS `liga` from (((`partido` `p` join `equipo` `e` on((`p`.`local` = `e`.`id`))) join `equipo` `e2` on((`p`.`visitante` = `e2`.`id`))) join `liga` `l` on((`l`.`nombre` = `e`.`liga`))) ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `view_usuarios_liga`
+--
+DROP TABLE IF EXISTS `view_usuarios_liga`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_usuarios_liga`  AS  select `u`.`username` AS `username`,`u`.`password` AS `password`,`u`.`tipo` AS `tipo`,`u`.`email` AS `email`,`u`.`apenom` AS `apenom`,`u`.`fecha_nac` AS `fecha_nac`,`u`.`liga` AS `liga`,`u`.`equipo` AS `equipo`,`u`.`validado` AS `validado`,`e`.`equipo` AS `nombre_equipo` from (`usuarios` `u` join `equipo` `e` on((`u`.`equipo` = `e`.`id`))) ;
+
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`username`);
+
+--
+-- Indices de la tabla `equipo`
+--
+ALTER TABLE `equipo`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `liga` (`liga`);
+
+--
+-- Indices de la tabla `jugador_stats`
+--
+ALTER TABLE `jugador_stats`
+  ADD PRIMARY KEY (`id_partido`,`jugador`),
+  ADD KEY `jugador` (`jugador`);
+
+--
+-- Indices de la tabla `liga`
+--
+ALTER TABLE `liga`
+  ADD PRIMARY KEY (`nombre`),
+  ADD KEY `administrador` (`administrador`);
+
+--
+-- Indices de la tabla `partido`
+--
+ALTER TABLE `partido`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `local` (`local`,`visitante`),
+  ADD KEY `visitante` (`visitante`),
+  ADD KEY `liga` (`liga`);
+
+--
+-- Indices de la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  ADD PRIMARY KEY (`username`),
+  ADD KEY `liga` (`liga`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `equipo`
+--
+ALTER TABLE `equipo`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+--
+-- AUTO_INCREMENT de la tabla `partido`
+--
+ALTER TABLE `partido`
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `equipo`
+--
+ALTER TABLE `equipo`
+  ADD CONSTRAINT `equipo_ibfk_1` FOREIGN KEY (`liga`) REFERENCES `liga` (`nombre`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `jugador_stats`
+--
+ALTER TABLE `jugador_stats`
+  ADD CONSTRAINT `jugador_stats_ibfk_1` FOREIGN KEY (`jugador`) REFERENCES `usuarios` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `jugador_stats_ibfk_2` FOREIGN KEY (`id_partido`) REFERENCES `partido` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `liga`
+--
+ALTER TABLE `liga`
+  ADD CONSTRAINT `liga_ibfk_1` FOREIGN KEY (`administrador`) REFERENCES `admin` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `partido`
+--
+ALTER TABLE `partido`
+  ADD CONSTRAINT `partido_ibfk_1` FOREIGN KEY (`local`) REFERENCES `equipo` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `partido_ibfk_2` FOREIGN KEY (`visitante`) REFERENCES `equipo` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `partido_ibfk_3` FOREIGN KEY (`liga`) REFERENCES `liga` (`nombre`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  ADD CONSTRAINT `usuarios_ibfk_1` FOREIGN KEY (`liga`) REFERENCES `liga` (`nombre`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
