@@ -16,9 +16,13 @@ class Partidos_m extends CI_Model
         $this->db->join('equipo', 'usuarios.equipo = equipo.id');
         $this->db->where('id_partido', $id);
         $query = $this->db->get();
+        /* Con la anterior consulta se comprueba si hay estadisticas de los jugadores en la tabla jugador_stats
+        *  En ese caso, el encuentro se ha disputado pero el admin quiere editar alguna estadística, entonces
+        *  Deberá de mostrar las estadísticas REALES del partido y no los campos a 0 */
         if (!empty($query->result())) {
             return $query->result();
         } else {
+            //Si no retorna la anterior consulta nada, es que se va a escribir las estadísticas de un partido NO DISPUTADO.
             return $this->db->get_where('view_jugadores_partidos', array('idpartido' => $id))->result();
         }
     }
@@ -46,8 +50,9 @@ class Partidos_m extends CI_Model
             'tapones' => $tapones,
             'robos' => $robos
         );
-
-        $this->db->insert('jugador_stats', $data);
+        //Hacemos un replace si no existen los datos se insertan y si existen es que se va a actualizar alguna estadística
+        //Entonces se borra la fila antigua y se inserta la nueva
+        $this->db->replace('jugador_stats', $data);
     }
 
     public function insertPartidos($local, $visitante, $jornada, $liga)

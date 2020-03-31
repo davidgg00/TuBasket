@@ -25,7 +25,6 @@ class Registro_m extends CI_Model
 
     public function comprueba_liga($liga, $clave)
     {
-        //En caso de que no exista en usuarios comprobamos en tabla admin
         $this->db->where('nombre', $liga);
         $this->db->where('password', $clave);
         $query = $this->db->get('liga');
@@ -38,7 +37,6 @@ class Registro_m extends CI_Model
 
     public function select_liga($liga)
     {
-        //En caso de que no exista en usuarios comprobamos en tabla admin
         $this->db->where('nombre', $liga);
         $query = $this->db->get('liga');
         if ($query) {
@@ -50,24 +48,28 @@ class Registro_m extends CI_Model
 
     public function select_username($username)
     {
-        //En caso de que no exista en usuarios comprobamos en tabla admin
-        $query = $this->db->get_where('admin', array('username' => $username));
-        if ($query) {
-            return $query->row();
-        } else {
-            return false;
+        //Comprobamos si existe el email tanto de cuenta administrador como de cuenta jugador
+        $queryAdmin = $this->db->get_where('admin', array('username' => $username))->row();
+        $queryUsuarios = $this->db->get_where('usuarios', array('username' => $username))->row();
+        if ($queryAdmin) {
+            return $queryAdmin;
+        }
+        if ($queryUsuarios) {
+            return $queryUsuarios;
         }
     }
 
 
     public function select_email($email)
     {
-        //En caso de que no exista en usuarios comprobamos en tabla admin
-        $query = $this->db->get_where('admin', array('email' => $email));
-        if ($query) {
-            return $query->row();
-        } else {
-            return false;
+        //Comprobamos si existe el email tanto de cuenta administrador como de cuenta jugador
+        $queryAdmin = $this->db->get_where('admin', array('email' => $email))->row();
+        $queryUsuarios = $this->db->get_where('usuarios', array('email' => $email))->row();
+        if ($queryAdmin) {
+            return $queryAdmin;
+        }
+        if ($queryUsuarios) {
+            return $queryUsuarios;
         }
     }
 }

@@ -8,6 +8,7 @@
                         "username": $(this).val()
                     },
                     function(dato_devuelto) {
+                        console.log(dato_devuelto);
                         //Si devuelve existe ponemos el input invalido, mostramos span y el submit está desactivado
                         if (dato_devuelto == "Existe") {
                             $("#username").addClass("is-invalid");
@@ -18,7 +19,10 @@
                             //De lo contrario quitamos la clave invalido al input y ponemos el submit en enabled
                             $("#username").removeClass("is-invalid");
                             $("#error-username").html("&nbsp");
-                            $("#btn-registro").prop('disabled', false);
+                            //Si aparte de que el username sea válido el email también lo es, habilitamos el submit del envio
+                            if (!$("#email").hasClass("is-invalid")) {
+                                $("#btn-registro").prop('disabled', false);
+                            }
                         }
                     }
                 );
@@ -44,7 +48,10 @@
                             //De lo contrario quitamos la clave invalido al input y ponemos el submit en enabled
                             $("#email").removeClass("is-invalid");
                             $("#error-email").html("&nbsp");
-                            $("#btn-registro").prop('disabled', false);
+                            //Si aparte de que el email sea válido el username también lo es, habilitamos el submit del envio
+                            if (!$("#username").hasClass("is-invalid")) {
+                                $("#btn-registro").prop('disabled', false);
+                            }
                         }
                     }
                 );
