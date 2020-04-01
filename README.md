@@ -64,25 +64,25 @@ que los demás entrenadores puedan verlo y plantear mejor el partido.
 ### Función según usuario
 
 #### Administrador:
--Crear ligas
--Añadir, editar o borrar equipos de la liga
--Aceptar a Jugadores y Entrenadores que soliciten unirse a la liga
--Decidir cuando se genera la liga
--Elegir fecha y hora de cada partido
--Insertar las estadísticas de los partidos
+-Crear ligas <br>
+-Añadir, editar o borrar equipos de la liga <br>
+-Aceptar a Jugadores y Entrenadores que soliciten unirse a la liga <br>
+-Decidir cuando se genera la liga <br>
+-Elegir fecha y hora de cada partido <br>
+-Insertar las estadísticas de los partidos <br>
 
 #### Jugador:
--Solicitar unirse a un equipo de la liga (nada más registrarse)
--No podrá acceder a la plataforma hasta que el administrador le acepte.
--Podrá ver el calendario de liga. 
--Podrá ver sus estadísticas individuales de cada partido y la media.
--Recibirá notificación cuando estén los datos de los partidos subidos.
+-Solicitar unirse a un equipo de la liga (nada más registrarse). <br>
+-No podrá acceder a la plataforma hasta que el administrador le acepte. <br>
+-Podrá ver el calendario de liga. <br>
+-Podrá ver sus estadísticas individuales de cada partido y la media. <br>
+-Recibirá notificación cuando estén los datos de los partidos subidos. <br>
 
 #### Entrenador:
--Solicitar unirse a un equipo de la liga (nada más registrarse)
--No podrá acceder a la plataforma hasta que el administrador le acepte.
--Podrá ver el calendario de liga
--Podrá ver las estadísticas de todos sus jugadores.
--Tiene la posibilidad de fichar a un jugador ofreciendole él un jugador suyo (trueque).
--Notificar si tiene algun jugador lesionado, especificiar quien y hasta que fecha.
--Al acceder a un partido no disputado puede ver la plantilla del otro equipo y ver si hay algún jugador lesionado.
+-Solicitar unirse a un equipo de la liga (nada más registrarse). <br>
+-No podrá acceder a la plataforma hasta que el administrador le acepte. <br>
+-Podrá ver el calendario de liga. <br>
+-Podrá ver las estadísticas de todos sus jugadores. <br>
+-Tiene la posibilidad de fichar a un jugador ofreciendole él un jugador suyo (trueque). <br>
+-Notificar si tiene algun jugador lesionado, especificiar quien y hasta que fecha. <br>
+-Al acceder a un partido no disputado puede ver la plantilla del otro equipo y ver si hay algún jugador lesionado. <br>
