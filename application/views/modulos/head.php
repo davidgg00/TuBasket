@@ -23,17 +23,9 @@
     <script src="<?= base_url() . "assets/js/efectoform.js" ?>"></script>
     <script src="https://kit.fontawesome.com/bebbcbf4a0.js" crossorigin="anonymous"></script>
 
-    <!-------------------------------------------LIBRERÍAS VEX PARA LAS ALERTAS Y FORMULARIOS------------------------------->
-
-    <script src="<?= base_url('assets/js/vex-master/dist/js/vex.combined.min.js') ?>"></script>
-    <script>
-        vex.defaultOptions.className = 'vex-theme-os'
-    </script>
-    <link rel="stylesheet" href="<?= base_url('assets/js/vex-master/dist/css/vex.css') ?>">
-    <link rel="stylesheet" href="<?= base_url('assets/js/vex-master/dist/css/vex-theme-os.css') ?>">
+    <!-------------------------------------------LIBRERÍAS PARA LAS ALERTAS Y FORMULARIOS Y MÁS------------------------------->
     <!--Sweet Alert-->
     <script src="<?php echo base_url('assets/js/sweetalert2.js') ?>"></script>
-    <script src="<?php echo base_url('assets/js/sweetalert.js') ?>"></script>
     <!--PAGINATION-->
     <script src="<?php echo base_url('assets/js/pagination.min.js') ?>"></script>
     <script src="<?php echo base_url('assets/js/jquery.bootpag.min.js') ?>"></script>

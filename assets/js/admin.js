@@ -1,3 +1,9 @@
+$(document).ready(function () {
+    $("#divgestionliga").on("click", function (evento) {
+        obtenerLigas();
+    })
+});
+
 function obtenerLigas() {
     console.log(base_url);
     //Este ajax nos trae de vuelta un listado con las ligas y si ha terminado la liga el ganador.
@@ -26,3 +32,45 @@ function obtenerLigas() {
         }
     });
 }
+
+//Función que creará la liga por ajax.
+function crearLiga() {
+    //Si los campos nombre de liga y contraseña no están vacíos abrimos ajax
+    if ($("#contrasenia").val() && $("#nombre").val()) {
+
+        let liga = $("#nombre").val();
+        let password = $("#contrasenia").val();
+        let administrador = $("#administrador").val();
+        console.log(liga);
+        $.post(base_url + "Admin_c/crear_liga", { "liga": liga, "password": password, "administrador": administrador },
+            function (dato_devuelto) {
+                //Si devolvemos "Existe", mostramos error con sweetalert
+                if (dato_devuelto == "Existe") {
+                    Swal.fire({
+                        backdrop: false,
+                        icon: 'error',
+                        title: 'Ooops....',
+                        text: 'Esa liga ya existe, prueba a crear una con otro nombre',
+                    }, function () {
+                        //Cuando se cierre el modal del formulario hacemos que se vuelva a abrir.
+                        $("#crearligadiv").click()
+                    })
+                    //Si devuelve "Creada" mostramos sweetAlert success
+                } else if (dato_devuelto == "Creada") {
+                    //Cerramos modal
+                    $('#miModal').modal('toggle');
+
+                    //Mostramos alerta correcta
+                    Swal.fire({
+                        backdrop: false,
+                        icon: 'success',
+                        title: 'Liga creada con éxito....',
+                        text: 'Puede acceder a su liga en el apartado Gestionar Liga',
+                    })
+                }
+            }
+        );
+    }
+
+}
+

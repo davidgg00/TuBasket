@@ -8,6 +8,22 @@ class Admin_m extends CI_Model
         parent::__construct();
     }
 
+    public function comprobarNombreLiga($liga)
+    {
+        $this->db->where('nombre', $liga);
+        $query = $this->db->get('liga');
+        if ($query) {
+            return $query->row();
+        } else {
+            return false;
+        }
+    }
+
+    public function crearLiga($datos)
+    {
+        $this->db->insert('liga', $datos);
+    }
+
     public function mostrar_ligas($username)
     {
         $this->db->where('administrador', $username);

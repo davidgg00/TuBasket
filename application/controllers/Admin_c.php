@@ -33,28 +33,26 @@ class Admin_c extends CI_Controller
     {
         //Aunque es requerido los campos, si están vacíos y le damos a registrar y clickamos fuera de la alerta te lo registra.
         //Con esta condición comprobamos que no esté vacío los campos
-        if ($_POST['liga'] == "" && $_POST['contrasenia'] = "") {
+        if ($_POST['liga'] == "" && $_POST['password'] = "") {
             return false;
         }
-        $resultado = $this->Registro_m->select_liga($_POST['liga']);
+        $resultado = $this->Admin_m->comprobarNombreLiga($_POST['liga']);
         if ($resultado) {
             echo "Existe";
         } else {
-            $this->load->model("Registro_m");
             $registros = array(
                 'nombre' => $_POST['liga'],
-                'password' => hash("sha512", $_POST['clave']),
+                'password' => hash("sha512", $_POST['password']),
                 'administrador' => $_POST['administrador']
             );
-            $this->Registro_m->insert_liga($registros);
+            $this->Admin_m->crearLiga($registros);
             echo "Creada";
         }
     }
 
     public function obtenerLigas()
-    {   //cargamos el modelo
-        $this->load->model("Admin_m");
-        //Obtenemos las ligas para después mostrarlas en la linea 21
+    {
+        //Obtenemos las ligas para después mostrarlas
         $data = $this->Admin_m->mostrar_ligas($_SESSION['username']);
         echo json_encode($data->result());
     }

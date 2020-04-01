@@ -18,26 +18,10 @@ class Registro_m extends CI_Model
         $this->db->insert('usuarios', $datos);
     }
 
-    public function insert_liga($datos)
-    {
-        $this->db->insert('liga', $datos);
-    }
-
     public function comprueba_liga($liga, $clave)
     {
         $this->db->where('nombre', $liga);
         $this->db->where('password', $clave);
-        $query = $this->db->get('liga');
-        if ($query) {
-            return $query->row();
-        } else {
-            return false;
-        }
-    }
-
-    public function select_liga($liga)
-    {
-        $this->db->where('nombre', $liga);
         $query = $this->db->get('liga');
         if ($query) {
             return $query->row();
