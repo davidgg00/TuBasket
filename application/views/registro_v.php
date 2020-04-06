@@ -58,10 +58,14 @@
             }
         })
 
+        //Evento que muestra o esconde cambos segun el tipo de cuenta que tengas
         $("#tipo-cuenta").on("change", function(evento) {
-            if ($("#tipo-cuenta option:selected").val() == "jugador") {
+            //Si el tipo de cuenta es jugador o entrenador
+            if ($("#tipo-cuenta option:selected").val() == "jugador" || $("#tipo-cuenta option:selected").val() == "Entrenador") {
+                //Quitamos el display none de los campos "nombre de liga" y "contraseña de liga"
                 $("#group-liga").removeClass("d-none");
                 $("#group-ligaclave").removeClass("d-none");
+                //Evento submit del formulario que comprueba (por AJAX) primero si la liga y la contraseña de la liga son correctas
                 $("form").submit(function(evento) {
                     evento.preventDefault();
                     //si hay mas de 5 caracteres
@@ -71,7 +75,7 @@
                                 "clave": $("#clave_liga").val()
                             },
                             function(dato_devuelto) {
-                                console.log($(this));
+                                //Si devuelve incorrecto mostramos error.
                                 if (dato_devuelto == "Incorrecto") {
                                     $("#nombreliga, #clave_liga").addClass("is-invalid");
                                     $("#error-liga").html("Liga o contraseña incorrectas");
@@ -87,6 +91,7 @@
                     }
                 })
             } else {
+                //Si la cuenta era de tipo administrador estos campos no son necesarios
                 $("#group-liga").addClass("d-none");
                 $("#group-ligaclave").addClass("d-none");
             }
@@ -157,6 +162,7 @@
                             <select name="tipocuenta" id="tipo-cuenta" class="col-10 custom-select">
                                 <option value="administrador" class="text-center" id="administrador">Administrador</option>
                                 <option value="jugador" id="jugador">Jugador</option>
+                                <option value="Entrenador" id="Entrenador">Entrenador</option>
                             </select>
                         </div>
                         <div class="form-group text-center mx-auto input-group mb-4 d-none" id="group-ligaclave">

@@ -22,7 +22,7 @@ class Admin_c extends CI_Controller
             $datos["proxPartidos"] = self::getPartidosCarrusel($liga);
             //Cargamos los modulos junto con $datos que tiene el nombre de la liga
             $this->load->view("modulos/head", array("css" => array("liga")));
-            $this->load->view("modulos/header_admin", $datos);
+            $this->load->view("modulos/header", $datos);
             $this->load->view("liga_v");
             $this->load->view("modulos/footer");
         }
@@ -68,7 +68,7 @@ class Admin_c extends CI_Controller
     {
         $datos["liga"] = $liga;
         $this->load->view("modulos/head", array("css" => array("liga", "gestion_equipos")));
-        $this->load->view("modulos/header_admin", $datos);
+        $this->load->view("modulos/header", $datos);
         $this->load->view('gest_equipos_v');
         $this->load->view("modulos/footer");
     }
@@ -77,7 +77,7 @@ class Admin_c extends CI_Controller
     {
         $datos["liga"] = $liga;
         $this->load->view("modulos/head", array("css" => array("liga", "gestion_jugadores")));
-        $this->load->view("modulos/header_admin", $datos);
+        $this->load->view("modulos/header", $datos);
         $this->load->view('gest_jugadores_v');
         $this->load->view("modulos/footer");
     }
@@ -88,7 +88,7 @@ class Admin_c extends CI_Controller
         $datos["partidos"] = self::mostrarPartidos($liga);
         $datos["nequipos"] = self::numeroEquiposLiga($liga);
         $this->load->view("modulos/head", array("css" => array("liga", "partidos")));
-        $this->load->view("modulos/header_admin", $datos);
+        $this->load->view("modulos/header", $datos);
         $this->load->view('partidos_v');
         $this->load->view("modulos/footer");
     }

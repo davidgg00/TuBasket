@@ -21,8 +21,8 @@ class Login_c extends CI_Controller
         //Si devuelve algo comprobar_usuario_clave es que el login es correcto
         $cuenta = $this->Login_m->comprobar_usuario_clave($this->input->post()['username'], hash("sha512", $this->input->post()['password']));
         if ($cuenta) {
-            if ($cuenta->tipo == "Jugador" && $cuenta->equipo != null && $cuenta->validado == 0) {
-                //Si es un jugador, tiene equipo pero no está validado no dejamos iniciar sesión
+            //Si es un jugador o entrenador, tiene equipo pero no está validado. No dejamos iniciar sesión
+            if (($cuenta->tipo == "Jugador" || $cuenta->tipo == "Entrenador") && $cuenta->equipo != null && $cuenta->validado == 0) {
                 $this->session->set_flashdata('error', 'No estás confirmado en la plataforma, debes de esperar a que el administrador te acepte');
                 redirect(base_url());
             } else if (!isset($cuenta->tipo)) {
@@ -35,6 +35,20 @@ class Login_c extends CI_Controller
                 $this->session->set_userdata($array);
                 //Redirigimos al controlador
                 redirect("Admin_c");
+            } else if ($cuenta->tipo == "Entrenador" && $cuenta->equipo != null && $cuenta->validado == 1) {
+                //Si es un entrenador pero está validado y tiene equipo
+                $array = array(
+                    'username' => $cuenta->username,
+                    'apenom' => $cuenta->apenom,
+                    'equipo' => $cuenta->equipo,
+                    'tipo_cuenta' => $cuenta->tipo,
+                    'liga' => $cuenta->liga,
+                    'validado' => $cuenta->validado
+                );
+                //Creamos la session con los datos
+                $this->session->set_userdata($array);
+                //Redirigimos al controlador
+                redirect("Usuario_c");
             } else {
                 //Si es un jugador pero está validado o no está validado y no tiene equipo:
                 $array = array(
@@ -48,7 +62,7 @@ class Login_c extends CI_Controller
                 //Creamos la session con los datos
                 $this->session->set_userdata($array);
                 //Redirigimos al controlador
-                redirect("Jugador_c");
+                redirect("Usuario_c");
             }
         } else {
             $this->session->set_flashdata('error', 'El username o la contraseña no válidos.');

@@ -58,7 +58,7 @@ class Partidos_c extends CI_Controller
         $datos['liga'] = $liga;
         $datos['id'] = $id;
         $this->load->view("modulos/head", array("css" => array("liga", "partido")));
-        $this->load->view("modulos/header_admin", $datos);
+        $this->load->view("modulos/header", $datos);
         $this->load->view("partido_v");
         $this->load->view("modulos/footer");
     }
