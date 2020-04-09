@@ -19,8 +19,8 @@
         let jornada = 1;
         let npartido = 0;
         //Si la cuenta es de tipo jugador esta variable almacenará "disabled" y se le introducirá a los inputs de fecha y hora para 
-        //que los jugadores no puedan cambiar los datos del encuentro
-        $disabled = ('<?php echo $_SESSION['tipo_cuenta'] ?>' == "Jugador") ? "disabled" : "";
+        //que los jugadores y entrenadores no puedan cambiar los datos del encuentro
+        $disabled = ('<?php echo $_SESSION['tipo_cuenta'] ?>' == "Jugador" || '<?php echo $_SESSION['tipo_cuenta'] ?>' == "Entrenador") ? "disabled" : "";
         //En el caso de que el numero de equipos sea 8 o 10
         switch (<?= ($nequipos) ?>) {
             case 8:

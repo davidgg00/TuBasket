@@ -14,11 +14,11 @@
                 <?php break; ?>
             <?php
             case 'Entrenador': ?>
-                <a href="<?php echo base_url('Usuario_c/index/' . $liga) ?>">Inicio</a>
-                <a href="<?php echo base_url('Usuario_c/gestEquipo/' . $liga) ?>">Jugadores de la Liga</a>
-                <a href="<?php echo base_url('Usuario_c/gestJugadores/' . $liga) ?>">Tus Jugadores</a>
-                <a href="<?php echo base_url('Usuario_c/partidos/' . $liga) ?>">Partidos</a>
-                <a href="<?php echo base_url('Usuario_c/clasificacion/' . $liga) ?>">Clasificación</a>
+                <a href="<?php echo base_url('Usuario_c/index/') ?>">Inicio</a>
+                <a href="<?php echo base_url('Usuario_c/listaJugadores/') ?>">Jugadores de la Liga</a>
+                <a href="<?php echo base_url('Usuario_c/tusJugadores/') ?>">Tus Jugadores</a>
+                <a href="<?php echo base_url('Usuario_c/partidos/') ?>">Partidos</a>
+                <a href="<?php echo base_url('Usuario_c/clasificacion/') ?>">Clasificación</a>
                 <a href="#"><img src="<?php echo base_url('assets/img/perfil.png') ?>" class="img-fluid rounded-circle"></a>
                 <a href="<?php echo base_url('Usuario_c/cerrarsesion') ?>"><img src="<?php echo base_url('assets/img/cerrarsesion2.png') ?>" class="img-fluid rounded-circle"></a>
                 <?php break; ?>

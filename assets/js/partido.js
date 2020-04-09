@@ -20,8 +20,7 @@ $.ajax({
     url: base_url + "Partidos_c/getJugadoresPartidos/" + idpartido,
     success: function (response) {
         let datos = JSON.parse(response);
-        console.log(response);
-        let disabled = tipocuenta == 'Jugador' ? " disabled " : "";
+        let disabled = tipocuenta == 'Jugador' || tipocuenta == 'Entrenador' ? " disabled " : "";
         //Creamos el html y lo añadimos después del tbody
         let valuetriples, valuetiros2, valuetiroslibres, tapones, robos;
         for (let dato of datos) {

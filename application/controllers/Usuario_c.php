@@ -41,14 +41,19 @@ class Usuario_c extends CI_Controller
     }
 
     //Funcion que consulta las estadísticas totales y por partido del JUGADOR y nos lo muestra en una vista
-    public function estadisticas()
+    public function estadisticas($username = null)
     {
         $this->load->view("modulos/head", array("css" => array("liga", "estadisticas")));
         $data["liga"] = $_SESSION['liga'];
-        $data["estadisticas"] = self::getEstadisticasJugador($_SESSION['username']);
-        $data["stats_ind"] = self::getEstadisticasJugadorPartido($_SESSION['username']);
+        if ($username != null) {
+            $data["estadisticas"] = self::getEstadisticasJugador($username);
+            $data["stats_ind"] = self::getEstadisticasJugadorPartido($username);
+        } else {
+            $data["estadisticas"] = self::getEstadisticasJugador($_SESSION['username']);
+            $data["stats_ind"] = self::getEstadisticasJugadorPartido($_SESSION['username']);
+        }
         $this->load->view("modulos/header", $data);
-        $this->load->view("estadisticas_v");
+        $this->load->view("jugador_v");
         $this->load->view("modulos/footer");
     }
 
@@ -64,9 +69,9 @@ class Usuario_c extends CI_Controller
     }
 
     //Función que devuelve el calendario de partidos y nos la muestra en una vista.
-    public function partidos($liga)
+    public function partidos()
     {
-        $datos["liga"] = $liga;
+        $datos["liga"] = $_SESSION["liga"];
         $datos["partidos"] = self::mostrarPartidos($_SESSION["liga"]);
         $datos["nequipos"] = self::numeroEquiposLiga($_SESSION["liga"]);
         $this->load->view("modulos/head", array("css" => array("liga", "partidos")));
@@ -75,10 +80,33 @@ class Usuario_c extends CI_Controller
         $this->load->view("modulos/footer");
     }
 
-    //Función que devuelve la clasificación.
-    public function getClasificacion($liga)
+    public function listaJugadores()
     {
-        $resultado = $this->Jugador_m->mostrarClasificacion($liga);
+        $this->load->model("GestionJugadores_m");
+        $datos["liga"] = $_SESSION["liga"];
+        $datos["partidos"] = self::mostrarPartidos($_SESSION["liga"]);
+        $datos["nequipos"] = self::numeroEquiposLiga($_SESSION["liga"]);
+        $datos['jugadores'] = $this->GestionJugadores_m->getJugadoresConfirmados($_SESSION["liga"])->result();
+        $this->load->view("modulos/head", array("css" => array("liga", "listaJugadores")));
+        $this->load->view("modulos/header", $datos);
+        $this->load->view('listajugadores_v');
+        $this->load->view("modulos/footer");
+    }
+
+    public function tusJugadores()
+    {
+        $this->load->model("GestionJugadores_m");
+        $datos['jugadores'] = $this->GestionJugadores_m->getJugadoresConfirmados($_SESSION["liga"])->result();
+        $this->load->view("modulos/head", array("css" => array("liga", "tusJugadores")));
+        $this->load->view("modulos/header");
+        $this->load->view('misjugadores_v', $datos);
+        $this->load->view("modulos/footer");
+    }
+
+    //Función que devuelve la clasificación.
+    public function getClasificacion()
+    {
+        $resultado = $this->Jugador_m->mostrarClasificacion($_SESSION["liga"]);
         return $resultado;
     }
 
@@ -129,16 +157,16 @@ class Usuario_c extends CI_Controller
     }
 
     //Función que devuelve el calendario de partidos de una liga
-    public function mostrarPartidos($liga)
+    public function mostrarPartidos()
     {
-        $partidos = $this->Jugador_m->getPartidos($liga);
+        $partidos = $this->Jugador_m->getPartidos($_SESSION["liga"]);
         return $partidos->result();
     }
 
     //Función que te dice el numero de equipos que hay en una liga.
-    public function numeroEquiposLiga($liga)
+    public function numeroEquiposLiga()
     {
-        $nequipos = $this->Jugador_m->getNumEquipos($liga);
+        $nequipos = $this->Jugador_m->getNumEquipos($_SESSION["liga"]);
         return $nequipos;
     }
 }

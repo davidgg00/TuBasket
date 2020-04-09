@@ -1,6 +1,7 @@
 <div class="row justify-content-center flex-start h-100" id="wrapper-stats">
     <div class="col-10 h-75 d-flex flex-start flex-wrap mt-2" id="estadisticas">
         <div id="foto" class="w-100 text-center">
+            <!--Foto que será implementada en los perfiles mas tarde-->
             <img src="https://e00-marca.uecdn.es/assets/multimedia/imagenes/2019/01/01/15463451815652.jpg" class="img-fluid" alt="">
         </div>
         <div id="estadistica_media" class="w-50">
