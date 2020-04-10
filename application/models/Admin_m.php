@@ -24,6 +24,11 @@ class Admin_m extends CI_Model
         $this->db->insert('liga', $datos);
     }
 
+    public function borrarLiga($liga)
+    {
+        $this->db->delete('liga', array('nombre' => $liga));
+    }
+
     public function mostrar_ligas($username)
     {
         $this->db->where('administrador', $username);

@@ -1,3 +1,8 @@
+<style>
+    i.fa-ban {
+        cursor: pointer;
+    }
+</style>
 <script>
     let base_url = '<?= base_url() ?>';
 </script>

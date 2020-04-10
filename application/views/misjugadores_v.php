@@ -1,8 +1,28 @@
 <style>
-    td img {
+    td img,
+    .titulo img {
         width: 100px;
     }
+
+    tr:hover {
+        cursor: pointer;
+    }
 </style>
+<script>
+    $(function() {
+        $("#accordion").accordion({
+            header: ".titulo",
+            collapsible: true,
+            active: false
+        });
+    });
+    $(document).ready(function() {
+        $("tr").on("click", function(evento) {
+            window.location.href = "<?= base_url('Usuario_c/estadisticas/') ?>" + $(this).children(':first').html();
+            console.log($(this).children(':first').html());
+        })
+    });
+</script>
 <div class="row justify-content-center flex-start h-100 bg-white">
     <table class="col-12 table">
         <tr>

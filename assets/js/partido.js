@@ -13,8 +13,8 @@ $.ajax({
     }
 });
 
-//Ajax que se ejecuta nada mas cargar la página que te muestra la tabla con los usuarios 
-//que han jugado el partido
+//Ajax que se ejecuta nada mas cargar la página que te muestra la tabla con los jugadores 
+//que juegan/han jugado el partido
 $.ajax({
     type: "POST",
     url: base_url + "Partidos_c/getJugadoresPartidos/" + idpartido,
@@ -24,6 +24,8 @@ $.ajax({
         //Creamos el html y lo añadimos después del tbody
         let valuetriples, valuetiros2, valuetiroslibres, tapones, robos;
         for (let dato of datos) {
+            //Si NO existen los valores triples,tiros2,tiroslibres, tapones y robos significa que el partido NO se ha jugado
+            //y los values se ponen a 0, de lo contrario al valor que del partido.
             valuetriples = dato.triples_metidos ? dato.triples_metidos : "0";
             valuetiros2 = dato.tiros_2_metidos ? dato.tiros_2_metidos : "0";
             valuetiroslibres = dato.tiros_libres_metidos ? dato.tiros_libres_metidos : "0";

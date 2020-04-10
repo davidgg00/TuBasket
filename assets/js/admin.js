@@ -3,7 +3,6 @@ $(document).ready(function () {
         obtenerLigas();
     })
 });
-
 function obtenerLigas() {
     console.log(base_url);
     //Este ajax nos trae de vuelta un listado con las ligas y si ha terminado la liga el ganador.
@@ -15,7 +14,7 @@ function obtenerLigas() {
             let mihtml = "";
             for (dato of datos) {
                 mihtml += "<div class='card'><div class='card-header'>";
-                mihtml += "<a href='" + base_url + "Admin_c/index/" + dato.nombre + "'>" + dato.nombre + "</a>";
+                mihtml += "<a href='" + base_url + "Admin_c/index/" + dato.nombre + "'>" + dato.nombre + "</a><i id='" + dato.nombre + "' class='borrarLiga fas fa-ban float-right'></i>";
                 mihtml += "</div><div class='card-body'>Ganador:";
                 mihtml += dato.ganador;
                 mihtml += "</div></div>";
@@ -28,6 +27,34 @@ function obtenerLigas() {
                 showCloseButton: true,
                 showConfirmButton: false,
                 focusConfirm: false,
+            })
+            //Cuando se haga click en el icono de borrar una liga
+            $(".borrarLiga").on("click", function (evento) {
+                console.log($(this).attr('id'));
+                Swal.fire({
+                    title: '¿Estás seguro de que quieres borrar la Liga?',
+                    text: "¡Una ve que la elimines no podrás recuperarla!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    cancelButtonText: 'Cancelar',
+                    confirmButtonText: 'Confirmar',
+                    backdrop: false,
+                }).then((result) => {
+                    if (result.value) {
+                        Swal.fire(
+                            '¡Liga Borrada!',
+                            'Has borrado la liga correctamente.',
+                            'success',
+                            $.ajax({
+                                type: "POST",
+                                url: base_url + "Admin_c/borrarLiga",
+                                data: { liga: $(this).attr('id') },
+                            })
+                        );
+                    }
+                })
             })
         }
     });

@@ -57,6 +57,11 @@ class Admin_c extends CI_Controller
         echo json_encode($data->result());
     }
 
+    public function borrarLiga()
+    {
+        $this->Admin_m->borrarLiga($_POST['liga']);
+    }
+
     public function cerrarsesion()
     {
         //Borra $_SESSION y redirige al login
