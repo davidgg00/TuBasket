@@ -62,6 +62,13 @@ class Admin_c extends CI_Controller
         $this->Admin_m->borrarLiga($_POST['liga']);
     }
 
+    public function obtenerNLigas()
+    {
+        //Obtenemos las ligas para después mostrarlas
+        $data = $this->Admin_m->mostrar_ligas($_SESSION['username']);
+        echo $data->num_rows();
+    }
+
     public function cerrarsesion()
     {
         //Borra $_SESSION y redirige al login

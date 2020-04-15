@@ -17,22 +17,14 @@ class Usuario_c extends CI_Controller
 
     public function index()
     {
-        //Si está validado y es un Jugador
-        if ($_SESSION['validado'] == 1 && $_SESSION['tipo_cuenta'] == "Jugador") {
+        //Si está validado y es un Jugador o Entrenador
+        if ($_SESSION['validado'] == 1 && ($_SESSION['tipo_cuenta'] == "Jugador" || $_SESSION['tipo_cuenta'] == "Entrenador")) {
             $this->load->view("modulos/head", array("css" => array("liga", "jugador")));
+            $data['datos_user'] = self::getDatos();
             $data["liga"] = $_SESSION['liga'];
             $data["proxPartidos"] = self::proxPartido($_SESSION['liga'], $_SESSION['equipo']);
             $this->load->view("modulos/header", $data);
             $this->load->view("liga_v", $data);
-            $this->load->view("modulos/footer");
-            //Si está validado y es un Entrenador
-        } else if ($_SESSION['validado'] == 1 && $_SESSION['tipo_cuenta'] == "Entrenador") {
-            $datos["liga"] = $_SESSION['liga'];
-            $datos["proxPartidos"] = self::proxPartido($_SESSION['liga'], $_SESSION['equipo']);
-            //Cargamos los modulos junto con $datos que tiene el nombre de la liga
-            $this->load->view("modulos/head", array("css" => array("liga")));
-            $this->load->view("modulos/header", $datos);
-            $this->load->view("liga_v");
             $this->load->view("modulos/footer");
         } else {
             $this->load->view("modulos/head", array("css" => array("liga", "sin_equipo")));
@@ -168,5 +160,50 @@ class Usuario_c extends CI_Controller
     {
         $nequipos = $this->Jugador_m->getNumEquipos($_SESSION["liga"]);
         return $nequipos;
+    }
+
+    //Función que te devuelve los datos de un usuario. (Se ejecuta en el index, para editar la información del usuario si lo desea)
+    public function getDatos()
+    {
+        if ($_SESSION['tipo_cuenta'] == "Jugador") {
+            $datos = $this->Jugador_m->getDatosUser($_SESSION["username"]);
+            return $datos;
+        } else {
+            $datos = $this->Entrenador_m->getDatosEntrenador($_SESSION["username"]);
+            return $datos;
+        }
+    }
+
+    //Función que actualiza los datos de perfil del usuario.
+    public function updateUsuario()
+    {
+        //Si se sube archivo
+        if ($_FILES['fotoperfil']['name']) {
+            //Ejecutamos este método que borrará la imagen antigua de la carpeta
+            self::borrarImagenAntigua();
+            $img = $_FILES['fotoperfil']['name'];
+            $tmp = $_FILES['fotoperfil']['tmp_name'];
+            $nombre_imagen = $img;
+            $path = "assets/uploads/perfiles/" . rand(1, 1000) . $nombre_imagen;
+            move_uploaded_file($tmp, $path);
+            //Modificamos la variable de sesión que tiene la foto de perfil
+            $_SESSION['imagen'] = $path;
+        }
+        //Ejecutamos el método del modelo para que suba los datos a la bae de datos
+        $this->Jugador_m->updateJugador($_POST['apenom'], $_POST['email'], $_POST['fecha_nac'], $path);
+        echo $path;
+    }
+
+    //Función que busca una imagen de perfil en la carpeta donde se guardan las imagenes y la borra.
+    public function borrarImagenAntigua()
+    {
+        //Buscamos la info del usuario
+        if ($_SESSION['tipo_cuenta'] == "Jugador") {
+            $datos = $this->Jugador_m->getDatosUser($_SESSION["username"]);
+        } else {
+            $datos = $this->Entrenador_m->getDatosEntrenador($_SESSION["username"]);
+        }
+        //Borramos la imagen
+        unlink($datos->imagen);
     }
 }

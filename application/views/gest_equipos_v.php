@@ -67,6 +67,8 @@
             $.ajax({
                 url: "<?php echo base_url() ?>" + "GestionEquipos_c/enviarEquipo",
                 type: "POST",
+                //El Objeto formdata nos permite transmitir nuestros datos en una codificación multipart/form-data
+                //Además que nos facilita bastante la subida de archivos a través de un <input type="file">
                 data: new FormData(this),
                 processData: false,
                 contentType: false,
@@ -103,6 +105,7 @@
                 </button>
             </div>
             <div class="modal-body">
+                <!-- Para enviar archivos debe especificarse el valor del atributo enctype =  "multipart/form-data" -->
                 <form method="post" id="formulario_imagen" enctype="multipart/form-data">
                     <label for="exampleFormControlFile1">Selecciona la imagen</label>
                     <input type="file" class="form-control-file" id="fileEscudo" name="escudo_nuevo" required>

@@ -81,3 +81,11 @@ footer {
     filter: invert(100%);
 }
 
+#modalPerfil label {
+    display: inline-block;
+    width: 40%;
+}
+
+#modalPerfil input {
+    width: 50%;
+}

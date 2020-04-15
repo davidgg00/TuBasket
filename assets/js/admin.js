@@ -43,16 +43,18 @@ function obtenerLigas() {
                     backdrop: false,
                 }).then((result) => {
                     if (result.value) {
-                        Swal.fire(
-                            '¡Liga Borrada!',
-                            'Has borrado la liga correctamente.',
-                            'success',
+                        Swal.fire({
+                            icon: 'success',
+                            title: '¡Liga Borrada!',
+                            text: 'Has borrado la liga correctamente.',
+                            backdrop: false,
+                        }).then(() => {
                             $.ajax({
                                 type: "POST",
                                 url: base_url + "Admin_c/borrarLiga",
                                 data: { liga: $(this).attr('id') },
                             })
-                        );
+                        })
                     }
                 })
             })

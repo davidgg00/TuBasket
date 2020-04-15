@@ -21,4 +21,12 @@ class Entrenador_m extends CI_Model
         $query = $this->db->get_where('equipo', array('liga' => $liga));
         return $query->result();
     }
+
+    public function getDatosEntrenador($user)
+    {
+        //Creamos la sentencia sql
+        $query = $this->db->get_where('usuarios ', array('username' => $user));
+        //Retornamos
+        return $query->row();
+    }
 }

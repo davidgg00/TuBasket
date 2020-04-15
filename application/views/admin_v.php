@@ -15,7 +15,7 @@
                 <h2>¡Bienvenido <?= $_SESSION['username'] ?>!</h2>
             </div>
             <div id="opciones" class="row d-flex justify-content-around align-items-center">
-                <div class="opcion col-3 text-center p-2 d-flex justify-content-center flex-wrap" data-toggle='modal' data-target='#miModal' id="crearligadiv">
+                <div class="opcion col-3 text-center p-2 d-flex justify-content-center flex-wrap" id="crearligadiv">
                     <img src="<?php echo base_url('assets/img/balon.png') ?>" alt="Balon" class="img-fluid align-self-center" id="balon">
                     <p class="w-100 mt-1 font-weight-bold">Crear Liga</p>
                 </div>
@@ -37,6 +37,31 @@
     </div>
 </div>
 <!-- Modal -->
+<script>
+    $(document).ready(function() {
+        $("#crearligadiv").on("click", function(evento) {
+            //Creamos AJAX que nos devuelva el número de ligas que tiene la cuenta administrador.
+            //Si tiene mas de 3, mostrará un error diciendo que has superado el numero de ligas creadas por cuenta.
+            $.ajax({
+                type: "post",
+                url: base_url + "Admin_c/obtenerNLigas",
+                success: function(numeroligas) {
+                    //Si el numero de liga es menos que 2 que se muestre el modal, de lo contrario que se muestre un error
+                    if (numeroligas <= 2) {
+                        $("#miModal").modal('show');
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: '¡Ligas Completas!',
+                            text: 'Has superado el máximo de ligas creadas (3), para crear otra deberá antes borrar una.',
+                            backdrop: false,
+                        })
+                    }
+                }
+            });
+        })
+    });
+</script>
 <div class="modal fade" id="miModal" tabindex="-1" role="dialog" aria-labelledby="miModal" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

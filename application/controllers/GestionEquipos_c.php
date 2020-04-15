@@ -52,7 +52,6 @@ class GestionEquipos_c extends CI_Controller
             $path = "assets/uploads/escudos/" . rand(1, 1000) . $nombre_imagen;
             move_uploaded_file($tmp, $path);
             $this->GestionEquipos_m->updateImgEquipo($path, $_POST['idImagen']);
-            echo "hola";
         }
     }
 }

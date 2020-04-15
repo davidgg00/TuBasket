@@ -43,7 +43,8 @@ class Login_c extends CI_Controller
                     'equipo' => $cuenta->equipo,
                     'tipo_cuenta' => $cuenta->tipo,
                     'liga' => $cuenta->liga,
-                    'validado' => $cuenta->validado
+                    'validado' => $cuenta->validado,
+                    'imagen' => $cuenta->imagen
                 );
                 //Creamos la session con los datos
                 $this->session->set_userdata($array);
@@ -57,7 +58,8 @@ class Login_c extends CI_Controller
                     'equipo' => $cuenta->equipo,
                     'tipo_cuenta' => $cuenta->tipo,
                     'liga' => $cuenta->liga,
-                    'validado' => $cuenta->validado
+                    'validado' => $cuenta->validado,
+                    'imagen' => $cuenta->imagen
                 );
                 //Creamos la session con los datos
                 $this->session->set_userdata($array);

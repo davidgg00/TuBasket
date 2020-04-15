@@ -77,4 +77,24 @@ class Jugador_m extends CI_Model
         //Retornamos
         return $query->num_rows();
     }
+
+    public function getDatosUser($user)
+    {
+        //Creamos la sentencia sql
+        $query = $this->db->get_where('usuarios ', array('username' => $user));
+        //Retornamos
+        return $query->row();
+    }
+
+    public function updateJugador($apenom, $email, $fechanac, $path = null)
+    {
+        $this->db->set('apenom', $apenom);
+        $this->db->set('email', $email);
+        $this->db->set('fecha_nac', $fechanac);
+        if ($path != null) {
+            $this->db->set('imagen', $path);
+        }
+        $this->db->where('username', $_SESSION['username']);
+        $this->db->update('usuarios');
+    }
 }
