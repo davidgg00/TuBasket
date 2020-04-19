@@ -32,21 +32,40 @@ class Usuario_c extends CI_Controller
         }
     }
 
-    //Funcion que consulta las estadísticas totales y por partido del JUGADOR y nos lo muestra en una vista
+    //Funcion que consulta las estadísticas totales y por partido del JUGADOR o jugadores y nos lo muestra en una vista
     public function estadisticas($username = null)
     {
         $this->load->view("modulos/head", array("css" => array("liga", "estadisticas")));
         $data["liga"] = $_SESSION['liga'];
-        if ($username != null) {
-            $data["estadisticas"] = self::getEstadisticasJugador($username);
-            $data["stats_ind"] = self::getEstadisticasJugadorPartido($username);
+        if (isset($_POST['jugador'])) {
+            $statsJugadores = [];
+            $statsIndJugadores = [];
+            foreach ($_POST['jugador'] as $jugador) {
+                $statsJugadores[] = self::getEstadisticasJugador($jugador);
+                $statsIndJugadores[] = self::getEstadisticasJugadorPartido($jugador);
+                $datosUsuarios[] = $this->Jugador_m->getDatosUser($jugador);
+            }
+            $data["estadisticas"] = $statsJugadores;
+            $data["stats_ind"] = $statsIndJugadores;
+            $data['datos_user'] = $datosUsuarios;
+            $this->load->view("modulos/header", $data);
+            $this->load->view("compararjugadores_v");
+            $this->load->view("modulos/footer");
         } else {
-            $data["estadisticas"] = self::getEstadisticasJugador($_SESSION['username']);
-            $data["stats_ind"] = self::getEstadisticasJugadorPartido($_SESSION['username']);
+            //Si el username es nulo que nos muestre las estadísticas de la cuenta que ha iniciado sesion, de lo contrario las estadísticas del usuario pasado por param
+            if ($username != null) {
+                $data["estadisticas"] = self::getEstadisticasJugador($username);
+                $data["stats_ind"] = self::getEstadisticasJugadorPartido($username);
+            } else {
+                $data["estadisticas"] = self::getEstadisticasJugador($_SESSION['username']);
+                $data["stats_ind"] = self::getEstadisticasJugadorPartido($_SESSION['username']);
+            }
+            $data['datos_user'] = $this->Jugador_m->getDatosUser($username);
+            $this->load->view("modulos/header", $data);
+            $this->load->view("jugador_v");
+
+            $this->load->view("modulos/footer");
         }
-        $this->load->view("modulos/header", $data);
-        $this->load->view("jugador_v");
-        $this->load->view("modulos/footer");
     }
 
     //Función que consulta la clasificación y nos la muestra en una vista.
@@ -122,8 +141,15 @@ class Usuario_c extends CI_Controller
     //Funcion que devuelve las estadisticas totales de un jugador
     public function getEstadisticasJugador($username)
     {
-        $resultado = $this->Jugador_m->getStats($username);
-        return $resultado;
+        if (is_array($username)) {
+            foreach ($username as $user) {
+                $array[] = $this->Jugador_m->getStats($user);
+            }
+            return $array;
+        } else {
+            $resultado = $this->Jugador_m->getStats($username);
+            return $resultado;
+        }
     }
 
     //Funcion que devuelve las estadisticas por partido de un jugador.
@@ -165,13 +191,8 @@ class Usuario_c extends CI_Controller
     //Función que te devuelve los datos de un usuario. (Se ejecuta en el index, para editar la información del usuario si lo desea)
     public function getDatos()
     {
-        if ($_SESSION['tipo_cuenta'] == "Jugador") {
-            $datos = $this->Jugador_m->getDatosUser($_SESSION["username"]);
-            return $datos;
-        } else {
-            $datos = $this->Entrenador_m->getDatosEntrenador($_SESSION["username"]);
-            return $datos;
-        }
+        $datos = $this->Jugador_m->getDatosUser($_SESSION["username"]);
+        return $datos;
     }
 
     //Función que actualiza los datos de perfil del usuario.
@@ -189,8 +210,12 @@ class Usuario_c extends CI_Controller
             //Modificamos la variable de sesión que tiene la foto de perfil
             $_SESSION['imagen'] = $path;
         }
-        //Ejecutamos el método del modelo para que suba los datos a la bae de datos
-        $this->Jugador_m->updateJugador($_POST['apenom'], $_POST['email'], $_POST['fecha_nac'], $path);
+        //Si existe $path 
+        if (isset($path)) {
+            $this->Jugador_m->updateJugador($_POST['apenom'], $_POST['email'], $_POST['fecha_nac'], $path);
+        } else {
+            $this->Jugador_m->updateJugador($_POST['apenom'], $_POST['email'], $_POST['fecha_nac'], $path = null);
+        }
         echo $path;
     }
 
@@ -203,7 +228,9 @@ class Usuario_c extends CI_Controller
         } else {
             $datos = $this->Entrenador_m->getDatosEntrenador($_SESSION["username"]);
         }
-        //Borramos la imagen
-        unlink($datos->imagen);
+        //Borramos la imagen si no es la de por defecto
+        if ($datos->imagen != "assets/uploads/perfiles/pordefecto.png") {
+            unlink($datos->imagen);
+        }
     }
 }

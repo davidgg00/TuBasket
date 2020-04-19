@@ -1,4 +1,4 @@
-<!-- Modal -->
+<!-- Modal del perfil -->
 <div class="modal fade" id="modalPerfil" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -17,7 +17,7 @@
                     <label for="apenom">Email</label>
                     <input type="text" name="email" id="" value='<?= $datos_user->email ?>'>
                     <label for="apenom">Fecha de Nacimiento</label>
-                    <input type="text" name="fecha_nac" id="" value='<?= $datos_user->fecha_ - nac ?>'>
+                    <input type="date" name="fecha_nac" id="" value='<?= $datos_user->fecha_nac ?>'>
                     <label for="previsualizacion" class="d-block mx-auto">Previsualización de la foto de perfil</label>
                     <img src="<?php echo base_url($_SESSION['imagen']) ?>" class="img-fluid rounded-circle w-25 d-block mx-auto" id="previsualizacion">
                 </form>

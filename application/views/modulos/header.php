@@ -55,7 +55,10 @@
                         /*si todo sale bien y se modifica la foto de perfil, se modificará tambien el $_SESSION['imagen']
                          **pero para que aparezca la foto habría que recargar la página así que vamos a modificar a mano la foto de perfil
                          **Y ya cuando se mueva por la página se le habrá actualizado el $_SESSION */
-                        $('#perfil').attr('src', response)
+                        if (response != "") {
+                            console.log(response);
+                            $('#perfil').attr('src', response);
+                        }
                     }
                 });
                 $("#modalPerfil").modal('hide');

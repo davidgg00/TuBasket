@@ -33,7 +33,7 @@ class GestionEquipos_c extends CI_Controller
 
     public function enviarEquipo()
     {
-        if ($_FILES['escudo']['name']) {
+        if (!empty($_FILES['escudo']['name'])) {
             $img = $_FILES['escudo']['name'];
             $tmp = $_FILES['escudo']['tmp_name'];
             $nombre_imagen =  $_POST['equipo'] . $img;

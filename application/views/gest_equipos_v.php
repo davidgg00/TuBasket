@@ -114,10 +114,10 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="submit" form="formulario_imagen" onclick="cambiarImagen()" data-dismiss="modal" class="btn btn-primary">Insertar Escudo</button>
+                <button type="submit" form="formulario_imagen" onclick="enviarEscudo()" data-dismiss="modal" class="btn btn-primary">Insertar Escudo</button>
             </div>
             <script>
-                function cambiarImagen() {
+                function enviarEscudo() {
                     $.ajax({
                         type: "POST",
                         url: "<?php echo base_url("GestionEquipos_c/cambiarImgEquipo") ?>",
@@ -125,6 +125,7 @@
                         processData: false,
                         contentType: false,
                         success: function(response) {
+
                             $("tr.datos").remove();
                             mostrarEquipo();
                         }

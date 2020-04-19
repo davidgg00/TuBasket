@@ -43,6 +43,13 @@ class Jugador_m extends CI_Model
         return $query->row();
     }
 
+    public function getStatsJugadores($username)
+    {
+        $this->db->select('SUM(triples_metidos) AS triples, SUM(tiros_2_metidos) AS tiros_2, SUM(tiros_libres_metidos) AS tiros_libres, SUM(tapones) AS tapones, SUM(robos) AS robos, COUNT(jugador) partidos_jugados FROM `jugador_stats` WHERE jugador="' . $username . '"');
+        $query = $this->db->get();
+        return $query->row();
+    }
+
     public function proxPartido($liga, $equipo)
     {
         //Select que te muestra los escudos, la jornada y la fecha de los próximos partidos a disputar del equipo y liga. (Máximo 3 partidos muestra)
