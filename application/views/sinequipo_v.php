@@ -4,7 +4,7 @@
             <h2 class="w-100 text-center">Elige un Equipo</h2>
             <?php foreach ($equipos as $equipo) : ?>
                 <div class="equipo d-flex justify-content-center flex-wrap">
-                    <a class="d-flex justify-content-center align-items-center" href="<?php echo base_url('Jugador_c/unirseEquipo/') . $equipo->id . "/" . $_SESSION['username'] ?>"><img src="<?php echo base_url($equipo->escudo_ruta) ?>" title="Unirse al <?= $equipo->equipo ?>" class="img-fluid"></a>
+                    <a class="d-flex justify-content-center align-items-center" href="<?php echo base_url('Usuario_c/unirseEquipo/') . $equipo->id . "/" . $_SESSION['username'] ?>"><img src="<?php echo base_url($equipo->escudo_ruta) ?>" title="Unirse al <?= $equipo->equipo ?>" class="img-fluid"></a>
                     <p class="w-100 text-center mb-0"><?= $equipo->equipo ?></p>
                 </div>
             <?php endforeach; ?>

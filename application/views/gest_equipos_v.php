@@ -125,7 +125,7 @@
                         processData: false,
                         contentType: false,
                         success: function(response) {
-
+                            console.log(response);
                             $("tr.datos").remove();
                             mostrarEquipo();
                         }

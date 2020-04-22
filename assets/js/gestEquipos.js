@@ -88,6 +88,10 @@ function mostrarEquipo() {
             tippy('i.eliminar', {
                 followCursor: 'horizontal',
             });
+            console.log($(".escudo"));
+            $("#miModal").on("show.bs.modal", function (evento) {
+                console.log($(this));
+            })
         }
     });
 }

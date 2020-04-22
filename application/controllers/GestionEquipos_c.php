@@ -46,6 +46,8 @@ class GestionEquipos_c extends CI_Controller
     public function cambiarImgEquipo()
     {
         if ($_FILES['escudo_nuevo']['name']) {
+            //Borramos la imagen anterior de la carpeta de subidas
+            unlink($_POST['idImagen']);
             $img = $_FILES['escudo_nuevo']['name'];
             $tmp = $_FILES['escudo_nuevo']['tmp_name'];
             $nombre_imagen = $img;
@@ -53,5 +55,10 @@ class GestionEquipos_c extends CI_Controller
             move_uploaded_file($tmp, $path);
             $this->GestionEquipos_m->updateImgEquipo($path, $_POST['idImagen']);
         }
+    }
+
+    public function borrarEscudoAntiguo($idequipo)
+    {
+        $equipo = $this->GestionEquipos_m->getEquipo($idequipo);
     }
 }

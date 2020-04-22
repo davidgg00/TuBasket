@@ -27,6 +27,12 @@ class GestionEquipos_m extends CI_Model
         return $query;
     }
 
+    public function getEquipo($idequipo)
+    {
+        $query = $this->db->get_where('equipo', array('id' => $idequipo));
+        return $query;
+    }
+
     public function insertarEquipo($equipo, $pabellon, $ciudad, $escudo, $liga)
     {
         $data = array(
