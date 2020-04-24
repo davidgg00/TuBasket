@@ -65,13 +65,14 @@ class Partidos_c extends CI_Controller
 
     public function enviarResultado($id)
     {
+        //Bucle que recorre los tr y TD que se han enviado para después enviarlos al MODELO
         for ($i = 0; $i <= count($_POST['miform']); $i++) {
-
             if ($i % 6 == 0 && $i != 0) {
                 $valor = $i;
                 $this->Partidos_m->insertarEstadisticaPartido($id, $_POST['miform'][$valor - 6], $_POST['miform'][$valor - 5], $_POST['miform'][$valor - 4], $_POST['miform'][$valor - 3], $_POST['miform'][$valor - 2], $_POST['miform'][$valor - 1]);
             }
         }
+        self::generarPDF($_POST['html'], $id);
     }
 
     public function cambiarFecha()
@@ -87,5 +88,72 @@ class Partidos_c extends CI_Controller
     public function resetPartido()
     {
         $this->Partidos_m->resetPartido($_POST['idPartido']);
+    }
+
+    public function generarPDF($documento, $idpartido)
+    {
+        $mpdf = new \Mpdf\Mpdf(['margin_left' => 0, 'margin_right' => 0, 'margin_top' => 0, 'margin_bottom' => 0, 'margin_header' => 0, 'margin_footer' => 0, 'dpi' => 100]);
+        $mpdf->AddPage('L'); // Adds a new page in Landscape orientation
+        $html =
+            "<style>
+            #equipos {
+                width: 290mm;
+                margin: 0 auto;
+                height: 60mm;
+            }
+        
+            .equipo {
+                width: 95mm;
+                border: 2px solid black;
+                float: left;
+                height: 60mm;
+                text-align:center;
+            }
+        
+            img {
+                display: block;
+                width: 150px;
+                margin: 0 auto;
+            }
+        
+            div.equipo p {
+                width: 100%;
+                text-align: center;
+            }
+        
+            div.equipo input {
+                width: 25%;
+                margin: 0 auto;
+            }
+        
+            #jugadores_stats {
+                width: 100%;
+                height: 60%;
+            }
+        
+            #tabla_stats {
+                width: 290mm;
+                height: 110mm;
+            }
+        
+            input {
+                display: block;
+                width: 25%;
+                margin: 0 auto;
+            }
+        
+            .d-none {
+                visibility: hidden ;
+            }
+        
+            #boton {
+                visibility: hidden ;
+            }
+            </style>";
+        $resultado = str_replace('<button id="boton" type="button" class="btn btn-outline-success btn-lg">Guardar Partido</button>', "", $documento);
+        $resultado = preg_replace('/<td class="d-none">(.*?)<\/td>/i', '', $resultado);
+        $html .= $resultado;
+        $mpdf->WriteHTML($html);
+        $mpdf->Output('C:/xampp/htdocs/TuBasket/assets/pdfPartidos/' . $idpartido . '.pdf', 'F');
     }
 }

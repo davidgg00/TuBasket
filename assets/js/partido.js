@@ -75,10 +75,14 @@ $.ajax({
                 }
             });
             //Enviamos los datos por post
+            let documento = $("div.bg-white").html();
+            console.log(documento);
             $.post(base_url + "Partidos_c/enviarResultado/" + idpartido, {
-                miform: miArray
+                miform: miArray,
+                html: documento
+            }, function (dato_devuelto) {
+                console.log(dato_devuelto);
             });
-
             //Creamos ajax para insertar simplemente el resultado del equipo, no el de los jugadores
             $.post(base_url + "Partidos_c/insertarResultadoEquipos", {
                 //Cogemos el total de puntos de cada equipo, el id y la liga
@@ -106,6 +110,7 @@ $.ajax({
             //Ejecutamos funcion sumarMarcador()
             sumarMarcador();
         })
+
         //Nada mas que termine el ajax ejecutamos la función de sumarMarcador porque puede ser que esté editando
         //Una estadística en concreto y entonces NO aparecerán las estadísticas a 0
         sumarMarcador();
@@ -152,7 +157,7 @@ function sumarMarcador() {
                 break;
         }
         //Añadimos el valor total a los marcadores
-        $(".equipo:first-child input").val(totalLocal);
-        $(".equipo:last-child input").val(totalVisitante);
+        $(".equipo:first-child input").attr('value', totalLocal);
+        $(".equipo:last-child input").attr('value', totalVisitante);
     })
 }
