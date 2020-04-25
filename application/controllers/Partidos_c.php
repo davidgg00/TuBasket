@@ -92,6 +92,8 @@ class Partidos_c extends CI_Controller
 
     public function generarPDF($documento, $idpartido)
     {
+        unlink('assets/pdfPartidos/' . $idpartido . '.pdf');
+
         $mpdf = new \Mpdf\Mpdf(['margin_left' => 0, 'margin_right' => 0, 'margin_top' => 0, 'margin_bottom' => 0, 'margin_header' => 0, 'margin_footer' => 0, 'dpi' => 100]);
         $mpdf->AddPage('L'); // Adds a new page in Landscape orientation
         $html =
@@ -135,19 +137,16 @@ class Partidos_c extends CI_Controller
                 width: 290mm;
                 height: 110mm;
             }
-        
+            tr td {
+                text-align: center;
+            }
+            tr td input {
+                margin: 0 auto;
+            }
             input {
                 display: block;
                 width: 25%;
                 margin: 0 auto;
-            }
-        
-            .d-none {
-                visibility: hidden ;
-            }
-        
-            #boton {
-                visibility: hidden ;
             }
             </style>";
         $resultado = str_replace('<button id="boton" type="button" class="btn btn-outline-success btn-lg">Guardar Partido</button>', "", $documento);
