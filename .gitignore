@@ -15,4 +15,4 @@ system/
 assets/grocery_crud/themes/bootstrap
 license.txt
 bootstrap-v4
-application/config/config_mail
+application/config/config_mail.php

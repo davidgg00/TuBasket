@@ -97,4 +97,26 @@ class Partidos_m extends CI_Model
         $this->db->where('id', $id);
         $this->db->update('partido');
     }
+
+    //Obtener el email de los jugadores de un encuentro
+    public function getEmailJugadores($id)
+    {
+        $this->db->select('email');
+        $this->db->from('jugador_stats');
+        $this->db->join('usuarios', 'username = jugador');
+        $this->db->join('equipo', 'usuarios.equipo = equipo.id');
+        $this->db->where('id_partido', $id);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function getEmailEntrenador($idequipo)
+    {
+        $this->db->select('email');
+        $this->db->from('usuarios');
+        $this->db->where('equipo', $idequipo);
+        $this->db->where('tipo', "Entrenador");
+        $query = $this->db->get();
+        return $query->row();
+    }
 }
