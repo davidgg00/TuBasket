@@ -98,6 +98,7 @@ class Partidos_c extends CI_Controller
         $mpdf->AddPage('L'); // Adds a new page in Landscape orientation
         $html =
             "<style>
+
             #equipos {
                 width: 290mm;
                 margin: 0 auto;
@@ -106,15 +107,19 @@ class Partidos_c extends CI_Controller
         
             .equipo {
                 width: 95mm;
-                border: 2px solid black;
                 float: left;
-                height: 60mm;
                 text-align:center;
+                height: 60mm;
+            }
+
+            #img-vs {
+                margin-top:10mm;
             }
         
             img {
                 display: block;
                 width: 150px;
+                height: 150px;
                 margin: 0 auto;
             }
         
@@ -122,34 +127,26 @@ class Partidos_c extends CI_Controller
                 width: 100%;
                 text-align: center;
             }
-        
-            div.equipo input {
-                width: 25%;
-                margin: 0 auto;
-            }
-        
+
             #jugadores_stats {
-                width: 100%;
-                height: 60%;
+                width: 290mm;
+                height: 140mm;
+                border:2px solid green;
             }
         
-            #tabla_stats {
+            table {
                 width: 290mm;
-                height: 110mm;
             }
             tr td {
                 text-align: center;
             }
+
             tr td input {
-                margin: 0 auto;
-            }
-            input {
-                display: block;
-                width: 25%;
-                margin: 0 auto;
+                text-align: center;
+                border: 0;
             }
             </style>";
-        $resultado = str_replace('<button id="boton" type="button" class="btn btn-outline-success btn-lg">Guardar Partido</button>', "", $documento);
+        $resultado = preg_replace('/<button id="boton" type="button" class="btn btn-outline-success btn-lg mx-auto">Guardar Partido<\/button>/i', '', $documento);
         $resultado = preg_replace('/<td class="d-none">(.*?)<\/td>/i', '', $resultado);
         $html .= $resultado;
         $mpdf->WriteHTML($html);

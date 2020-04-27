@@ -1,4 +1,5 @@
 $(document)
+    //Cuando comience el ajax mostramos una pantalla de cargando y cuando termine la quitamos y mostramos el resultado
     .ajaxStart(function () {
         $('#cargando').show('slow');
         $("#contenedor-equipos").hide();
@@ -20,7 +21,7 @@ $.ajax({
         let dato = JSON.parse(response);
         $("#equipos").append("<div class='equipo d-flex justify-content-center flex-wrap align-items-center'><img id='" + dato.id_local + "' class='img-fluid' src=" + base_url + dato.escudo_local + " > <p class='w-100 text-center'>" + dato.equipo_local + "</p> <input value='0' type='number' class='w-25 mx-auto' disabled id='" + dato.id_local + "' data-id='" + dato.equipo_local + "'></div>");
         $("#equipos").append("<div class='equipo d-flex justify-content-center flex-wrap align-items-center'><img id='" + dato.id_visitante + "' class='img-fluid' src=" + base_url + dato.escudo_visitante + " > <p class='w-100 text-center'>" + dato.equipo_visitante + "</p> <input value='0' type='number' class='w-25 mx-auto' disabled id='" + dato.id_visitante + "' data-id='" + dato.equipo_visitante + "'></div>");
-        $("div.equipo:first-child").after("<div class='equipo d-flex justify-content-center flex-wrap'><img class='img-fluid' src='" + base_url + "assets/img/vs.png'></div> ")
+        $("div.equipo:first-child").after("<div class='equipo d-flex justify-content-center flex-wrap'><img id='img-vs' class='img-fluid' src='" + base_url + "assets/img/vs.png'></div> ")
     }
 }).done(function () {
     //Llamada ajax que nos devuelve los judaores del partido.

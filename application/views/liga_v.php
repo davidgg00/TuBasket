@@ -14,6 +14,7 @@
                 <h3 class="col-12 text-center">Próximos Partidos</h3>
                 <?php foreach ($proxPartidos as $partido) : ?>
                     <div class="carousel-item">
+                        <?php print_r($this->config->item('credenciales')['clave']); ?>
                         <div id="imagenes" class="col-12 d-flex justify-content-around h-50">
                             <img src="<?php echo base_url($partido->escudo_local) ?>" class="img-fluid">
                             <img src="<?php echo base_url('assets/img/vs.png') ?>" class="img-fluid">
