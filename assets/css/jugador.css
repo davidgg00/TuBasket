@@ -1,17 +1,9 @@
-#proxpartido {
-    background: rgba(255, 255, 255, 0.9)
-}
 
-.carousel-item {
-    width: 100%;
-}
-
-.carousel-item img {
-    height: 200px;
-    width: 120px;
-}
-
-.carousel-control-next,
-.carousel-control-prev {
-    filter: invert(100%);
+#ofrecerFichaje {
+    background: orangered;
+    color: green;
+    border-radius: 5%;
+    width: 20%;
+    cursor: pointer;
+    margin-bottom: 5px;
 }

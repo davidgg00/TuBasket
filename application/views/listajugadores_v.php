@@ -49,14 +49,13 @@
                 <th><input type="submit" class="btn btn-success" value="Comparar"></th>
             </tr>
             <?php
-            //Mostramos las estadísticas de cada jugador si no es del mismo equipo que el entrenador
+            //Mostramos los datos de cada jugador que está en la liga
             foreach ($jugadores as $jugador) :
-                if ($jugador->equipo != $_SESSION['equipo']) :
+                if ($jugador->tipo == "Jugador") :
             ?>
                     <tr class="text-center">
                         <td style="display:none;"><?= $jugador->username ?></td>
                         <td>
-                            <!--Foto del jugador que se implementará mas tarde-->
                             <img class="img-fluid" src="<?= base_url($jugador->foto_perfil) ?>" alt="">
                         </td>
                         <td><?= $jugador->apenom ?></td>

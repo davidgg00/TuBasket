@@ -52,8 +52,11 @@ class Usuario_c extends CI_Controller
             $this->load->view("compararjugadores_v");
             $this->load->view("modulos/footer");
         } else {
+            $data["jugador"] = $username;
             //Si el username es nulo que nos muestre las estadísticas de la cuenta que ha iniciado sesion, de lo contrario las estadísticas del usuario pasado por param
             if ($username != null) {
+                $data["datos_jugador"] = self::getDatos($username);
+                $data["tusJugadores"] = self::getJugadoresEquipo();
                 $data["estadisticas"] = self::getEstadisticasJugador($username);
                 $data["stats_ind"] = self::getEstadisticasJugadorPartido($username);
             } else {
@@ -61,6 +64,7 @@ class Usuario_c extends CI_Controller
                 $data["stats_ind"] = self::getEstadisticasJugadorPartido($_SESSION['username']);
             }
             $data['datos_user'] = $this->Jugador_m->getDatosUser($username);
+            $this->load->view("modulos/head", array("css" => array("jugador")));
             $this->load->view("modulos/header", $data);
             $this->load->view("jugador_v");
 
@@ -104,13 +108,13 @@ class Usuario_c extends CI_Controller
         $this->load->view("modulos/footer");
     }
 
-    public function tusJugadores()
+    public function notificaciones()
     {
-        $this->load->model("GestionJugadores_m");
-        $datos['jugadores'] = $this->GestionJugadores_m->getJugadoresConfirmados($_SESSION["liga"])->result();
-        $this->load->view("modulos/head", array("css" => array("liga", "tusJugadores")));
-        $this->load->view("modulos/header");
-        $this->load->view('misjugadores_v', $datos);
+        $datos["fichajes_pendientes"] = self::fichajesPendiente();
+        $datos["liga"] = $_SESSION["liga"];
+        $this->load->view("modulos/head", array("css" => array("liga", "notificaciones")));
+        $this->load->view("modulos/header", $datos);
+        $this->load->view('notificaciones_v');
         $this->load->view("modulos/footer");
     }
 
@@ -189,9 +193,14 @@ class Usuario_c extends CI_Controller
     }
 
     //Función que te devuelve los datos de un usuario. (Se ejecuta en el index, para editar la información del usuario si lo desea)
-    public function getDatos()
+    public function getDatos($username = null)
     {
-        $datos = $this->Jugador_m->getDatosUser($_SESSION["username"]);
+        if ($username == null) {
+            $datos = $this->Jugador_m->getDatosUser($_SESSION["username"]);
+        } else {
+            $datos = $this->Jugador_m->getDatosUser($username);
+        }
+
         return $datos;
     }
 
@@ -232,5 +241,33 @@ class Usuario_c extends CI_Controller
         if ($datos->imagen != "assets/uploads/perfiles/pordefecto.png") {
             unlink($datos->imagen);
         }
+    }
+
+    public function getJugadoresEquipo()
+    {
+        $datos = $this->Entrenador_m->obtenerJugadoresEquipo($_SESSION["equipo"]);
+        return $datos;
+    }
+
+    public function OfrecerFichaje()
+    {
+        $mensaje = $this->Entrenador_m->OfrecerFichaje($_SESSION['equipo'], $_POST['jugadorAFichar'], $_POST['idEquipoRecibe'], $_POST['jugadorOfrecido']);
+        echo $mensaje;
+    }
+
+    public function fichajesPendiente()
+    {
+        $datos = $this->Entrenador_m->verFichajesPendientes($_SESSION["equipo"]);
+        return $datos;
+    }
+
+    public function aceptarFichaje()
+    {
+        $this->Entrenador_m->aceptarFichaje($_POST['idfichaje']);
+    }
+
+    public function rechazarFichaje()
+    {
+        $this->Entrenador_m->rechazarFichaje($_POST['idfichaje']);
     }
 }

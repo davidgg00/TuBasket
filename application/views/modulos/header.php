@@ -16,9 +16,9 @@
             case 'Entrenador': ?>
                 <a href="<?php echo base_url('Usuario_c/') ?>">Inicio</a>
                 <a href="<?php echo base_url('Usuario_c/listaJugadores/') ?>">Jugadores de la Liga</a>
-                <a href="<?php echo base_url('Usuario_c/tusJugadores/') ?>">Tus Jugadores</a>
                 <a href="<?php echo base_url('Usuario_c/partidos/') ?>">Partidos</a>
                 <a href="<?php echo base_url('Usuario_c/clasificacion/') ?>">Clasificación</a>
+                <a href="<?php echo base_url('Usuario_c/notificaciones/') ?>">Notificaciones(0)</a>
                 <a href="#"><img src="<?php echo base_url($_SESSION['imagen']) ?>" class="img-fluid rounded-circle" id='perfil'></a>
                 <a href="<?php echo base_url('Usuario_c/cerrarsesion') ?>"><img src="<?php echo base_url('assets/img/cerrarsesion2.png') ?>" class="img-fluid rounded-circle"></a>
                 <?php break; ?>

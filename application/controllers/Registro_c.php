@@ -72,7 +72,8 @@ class Registro_c extends CI_Controller
                 'fecha_nac' => $this->input->post()['fecha_nac'],
                 'equipo' => null,
                 'liga' => $this->input->post()['nombre_liga'],
-                'validado' => '0'
+                'validado' => '0',
+                'imagen' => "assets/uploads/perfiles/pordefecto.png"
             );
             $this->Registro_m->insert_jugador($datos_post);
             redirect(base_url());

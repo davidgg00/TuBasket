@@ -1,3 +1,15 @@
+<script>
+    $.ajax({
+        type: "POST",
+        url: "<?php echo base_url('Usuario_c/getJugadoresEquipo/') ?>",
+        data: "data",
+        dataType: "dataType",
+        success: function(response) {
+            let jugadores = JSON.parse(response);
+            console.log(jugadores);
+        }
+    });
+</script>
 <div class="row justify-content-center flex-start h-100" id="wrapper-stats">
     <div class="col-10 h-75 d-flex flex-start flex-wrap mt-2" id="estadisticas">
         <div id="foto" class="w-100 text-center">
@@ -52,5 +64,83 @@
                 </tbody>
             </table>
         </div>
+
+        <!--La opción de ofrecer fichaje saldrá solo si el jugador que vas a seleccionar NO está en tu equipo-->
+        <?php if ($_SESSION['equipo'] != $datos_user->equipo) : ?>
+            <img src="<?php echo base_url('assets/img/ofrecerfichaje.jpg'); ?>" alt="" id="ofrecerFichaje" class="mx-auto" data-toggle="modal" data-target="#modalFichaje">
+        <?php endif; ?>
+
+        <div class="modal fade" id="modalFichaje" tabindex="-1" role="dialog" aria-labelledby="modalFichaje" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="titulo_modal">Ofrecer un fichaje</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" id="formCrearLiga" class="text-center">
+                            <h3>Fichar a</h3>
+                            <h4 id="nombreFichaje" data-idequipo="<?= $datos_jugador->equipo ?>"><?= $jugador ?></h4>
+                            <h3>por</h3>
+                            <select name="jugadores" id="jugadores">
+                                <?php foreach ($tusJugadores as $Jugador) :
+                                    if ($Jugador->tipo == "Jugador") :
+                                ?>
+                                        <option value="<?= $Jugador->username ?>"><?= $Jugador->apenom ?></option>
+                                <?php endif;
+                                endforeach; ?>
+                            </select>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" form="formCrearLiga" onclick="ofrecerFichaje(); return false;" class="btn btn-primary">Ofrecer Fichaje</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+<script>
+    function ofrecerFichaje() {
+        console.log($("#nombreFichaje").html());
+        console.log($("#nombreFichaje").data("idequipo"));
+        console.log($("#jugadores").val());
+        $.ajax({
+            type: "POST",
+            url: "<?= base_url('Usuario_c/OfrecerFichaje'); ?>",
+            data: {
+                //Enviamos el username del jugador que queremos fichar, el id de su equipo actual y el username del jugador que ofrece
+                jugadorAFichar: $("#nombreFichaje").html(),
+                idEquipoRecibe: $("#nombreFichaje").data("idequipo"),
+                jugadorOfrecido: $("#jugadores").val()
+            },
+            success: function(response) {
+                console.log(response);
+                if (response == "Error") {
+                    Swal.fire({
+                        backdrop: false,
+                        icon: 'error',
+                        title: 'Ooops....',
+                        text: 'Ya has realizado este fichaje y está PENDIENTE. Cuando haya algún cambio se le notificará',
+                    })
+                    //Cerramos modal
+                    $('#modalFichaje').modal('toggle');
+                } else {
+                    //Mostramos alerta correcta
+                    Swal.fire({
+                        backdrop: false,
+                        icon: 'success',
+                        title: 'Petición de fichaje realizada con éxito',
+                        text: 'Cuando el equipo contrario decida si aceptar o denegar la propuesta, se le notificará.',
+                    })
+                    //Cerramos modal
+                    $('#modalFichaje').modal('toggle');
+                }
+            }
+        });
+
+    }
+</script>

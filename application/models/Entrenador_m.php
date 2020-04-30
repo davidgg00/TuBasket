@@ -29,4 +29,58 @@ class Entrenador_m extends CI_Model
         //Retornamos
         return $query->row();
     }
+
+    public function obtenerJugadoresEquipo($idequipo)
+    {
+        //Creamos la sentencia sql
+        $query = $this->db->get_where('view_usuarios_liga ', array('equipo' => $idequipo));
+        //Retornamos
+        return $query->result();
+    }
+
+    public function OfrecerFichaje($equipo, $jugadorAFichar, $idEquipoRecibe, $jugadorOfrecido)
+    {
+        $datos = array(
+            'IdEquipoSolicita' => $equipo,
+            'username_jugador1' => $jugadorAFichar,
+            'IdEquipoRecibe' => $idEquipoRecibe,
+            'username_jugador2' => $jugadorOfrecido,
+            'Estado' => 'PENDIENTE'
+        );
+        $this->db->select('*');
+        $this->db->from('fichajes');
+        $this->db->where($datos);
+        $result = $this->db->get();
+        if ($result->num_rows() > 0) {
+            echo "Error";
+        } else {
+            $this->db->insert('fichajes', $datos);
+        }
+    }
+
+    public function verFichajesPendientes($idequipo)
+    {
+        $this->db->select('e.equipo AS `solicitante`, f.username_jugador1 AS `pide`, f.username_jugador2 AS `ofrece`, e2.equipo AS `equipo`, f.id as `idfichaje`');
+        $this->db->from('fichajes f');
+        $this->db->join('equipo e', 'e.id = f.IdEquipoSolicita');
+        $this->db->join('equipo e2', 'e2.id = f.IdEquipoRecibe');
+        $this->db->where('f.estado', "PENDIENTE");
+        $this->db->where('f.IdEquipoRecibe', $idequipo);
+        $resultado = $this->db->get();
+        return $resultado->result();
+    }
+
+    public function aceptarFichaje($idfichaje)
+    {
+        $this->db->set('estado', 'ACEPTADO');
+        $this->db->where('id', $idfichaje);
+        $this->db->update('fichajes');
+    }
+
+    public function rechazarFichaje($idfichaje)
+    {
+        $this->db->set('estado', 'DENEGADO');
+        $this->db->where('id', $idfichaje);
+        $this->db->update('fichajes');
+    }
 }
