@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.6deb5
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
--- Servidor: localhost:3306
--- Tiempo de generación: 16-04-2020 a las 21:21:18
--- Versión del servidor: 5.7.28-0ubuntu0.19.04.2
--- Versión de PHP: 7.2.24-0ubuntu0.19.04.2
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 30-04-2020 a las 18:27:50
+-- Versión del servidor: 10.4.11-MariaDB
+-- Versión de PHP: 7.4.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -68,14 +69,51 @@ CREATE TABLE `equipo` (
 --
 
 INSERT INTO `equipo` (`id`, `equipo`, `pabellon`, `ciudad`, `escudo_ruta`, `liga`, `partidos_ganados`, `partidos_perdidos`, `puntos_favor`, `puntos_contra`, `puntos_clasificacion`) VALUES
-(1, 'Barcelona', 'Pabellon Barcelona', 'Barcelona', 'assets/uploads/escudos/97barcelona.png', 'miliga', 1, 0, 28, 27, 2),
+(1, 'Barcelona', 'Pabellon Barcelona', 'Barcelona', 'assets/uploads/escudos/850barcelona.png', 'miliga', 1, 0, 39, 30, 2),
 (2, 'Real Madrid', 'Pabellon Real Madrid', 'Madrid', 'assets/uploads/escudos/151realmadrid.png', 'miliga', 0, 0, 0, 0, 0),
 (3, 'Valencia', 'Pabellón Valencia', 'Valencia', 'assets/uploads/escudos/174valencia.png', 'miliga', 0, 0, 0, 0, 0),
 (4, 'Almería', 'Pabellon Almería', 'Almería', 'assets/uploads/escudos/451almeria.png', 'miliga', 0, 0, 0, 0, 0),
 (5, 'Sevilla', 'Pabellon Sevilla', 'Sevilla', 'assets/uploads/escudos/116sevilla.png', 'miliga', 0, 0, 0, 0, 0),
-(6, 'Bilbao Basket', 'Pabellon Bilbao', 'Bilbao', 'assets/uploads/escudos/179bilbao.png', 'miliga', 0, 1, 27, 28, 1),
+(6, 'Bilbao Basket', 'Pabellon Bilbao', 'Bilbao', 'assets/uploads/escudos/179bilbao.png', 'miliga', 0, 1, 30, 39, 1),
 (7, 'Betis', 'Pabellon Betis', 'Ciudad Betis', 'assets/uploads/escudos/324betis.png', 'miliga', 0, 0, 0, 0, 0),
 (8, 'Manresa', 'Pabellon Manresa', 'Manresa', 'assets/uploads/escudos/266manresa.png', 'miliga', 0, 0, 0, 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `fichajes`
+--
+
+CREATE TABLE `fichajes` (
+  `id` int(11) NOT NULL,
+  `IdEquipoSolicita` int(11) NOT NULL,
+  `username_jugador1` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
+  `IdEquipoRecibe` int(11) NOT NULL,
+  `username_jugador2` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
+  `Estado` set('PENDIENTE','ACEPTADO','DENEGADO','') COLLATE utf8_spanish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `fichajes`
+--
+
+INSERT INTO `fichajes` (`id`, `IdEquipoSolicita`, `username_jugador1`, `IdEquipoRecibe`, `username_jugador2`, `Estado`) VALUES
+(1, 2, 'jugadorBarcelona', 1, 'jugadorRealMadrid', 'ACEPTADO'),
+(2, 1, 'jugadorBarcelona', 2, 'jugadorRealMadrid', 'ACEPTADO');
+
+--
+-- Disparadores `fichajes`
+--
+DELIMITER $$
+CREATE TRIGGER `realizarFichaje` AFTER UPDATE ON `fichajes` FOR EACH ROW BEGIN
+IF (new.Estado = 'ACEPTADO') THEN
+UPDATE usuarios SET equipo = old.IdEquipoSolicita WHERE username = old.username_jugador1;
+
+UPDATE usuarios SET equipo = old.IdEquipoRecibe WHERE username = old.username_jugador2;
+END IF;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -98,15 +136,15 @@ CREATE TABLE `jugador_stats` (
 --
 
 INSERT INTO `jugador_stats` (`id_partido`, `jugador`, `triples_metidos`, `tiros_2_metidos`, `tiros_libres_metidos`, `tapones`, `robos`) VALUES
-(60, 'jugador_barcelona', 1, 1, 1, 1, 1),
-(60, 'jugadorBarcelona', 0, 1, 1, 1, 1),
+(60, 'jugador_barcelona', 3, 1, 1, 1, 1),
+(60, 'jugadorBarcelona', 1, 1, 1, 1, 1),
 (60, 'jugadorBarcelona2', 1, 1, 1, 1, 1),
-(60, 'jugadorBarcelona3', 0, 1, 1, 1, 1),
+(60, 'jugadorBarcelona3', 1, 0, 1, 1, 1),
 (60, 'jugadorBarcelona4', 1, 1, 1, 1, 1),
-(60, 'jugadorBarcelona5', 1, 0, 1, 1, 1),
+(60, 'jugadorBarcelona5', 1, 1, 0, 1, 1),
 (60, 'jugadorBilbao', 1, 1, 1, 1, 1),
-(60, 'jugadorBilbao2', 1, 1, 0, 1, 1),
-(60, 'jugadorBilbao3', 1, 0, 1, 1, 1),
+(60, 'jugadorBilbao2', 1, 1, 1, 1, 1),
+(60, 'jugadorBilbao3', 1, 1, 1, 1, 1),
 (60, 'jugadorBilbao4', 1, 1, 1, 1, 1),
 (60, 'jugadorBilbao5', 1, 1, 1, 1, 1);
 
@@ -155,7 +193,7 @@ CREATE TABLE `partido` (
 INSERT INTO `partido` (`id`, `local`, `visitante`, `resultado_local`, `resultado_visitante`, `fecha`, `Hora`, `jornada`, `liga`) VALUES
 (58, 4, 2, '', '', '2020-04-23', NULL, 1, 'miliga'),
 (59, 7, 8, '', '', '2020-04-20', '15:15:00', 1, 'miliga'),
-(60, 6, 1, '27', '28', '2020-04-21', NULL, 1, 'miliga'),
+(60, 6, 1, '30', '39', '2020-04-21', NULL, 1, 'miliga'),
 (61, 3, 5, '', '', '2020-04-22', NULL, 1, 'miliga'),
 (62, 7, 6, '', '', '0000-00-00', NULL, 2, 'miliga'),
 (63, 1, 2, '', '', '0000-00-00', NULL, 2, 'miliga'),
@@ -186,9 +224,7 @@ INSERT INTO `partido` (`id`, `local`, `visitante`, `resultado_local`, `resultado
 -- Disparadores `partido`
 --
 DELIMITER $$
-CREATE TRIGGER `puntos_clasificacion` AFTER UPDATE ON `partido` FOR EACH ROW /*TRIGGER que al cambiar un resultado o insertalo (realmente siempre se hace UPDATE, se suman los puntos a favor, en contra y puntos de la clasificación*/
-
-BEGIN
+CREATE TRIGGER `puntos_clasificacion` AFTER UPDATE ON `partido` FOR EACH ROW BEGIN
 /*Si había un resultado valido (no vacío) y el local gana al visitante*/
 IF (old.resultado_local > 0 AND old.resultado_local > old.resultado_visitante) THEN
 /*Restamos las estadísticas que tenía el local*/
@@ -291,50 +327,51 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`username`, `password`, `tipo`, `email`, `apenom`, `fecha_nac`, `liga`, `equipo`, `validado`, `imagen`) VALUES
-('elnuger', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'elnuger@elnuger.com', 'el nuger', '2020-03-03', 'miliga', 7, 1, ''),
-('entrenadorRealMadrid', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Entrenador', 'entrenadorRealMadrid@entrenadorRealMadrid.com', 'entrenador RealMadrid', '0000-00-00', 'miliga', 2, 1, 'assets/uploads/perfiles/790UML.gif'),
-('jugador_barcelona', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugador_barcelona@jugadorbarcelona.com', 'barcelona player', '2020-03-05', 'miliga', 1, 1, ''),
-('jugadorAlmeria', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorAlmeria@jugadorAlmeria.com', 'jugador Almeria', '2020-03-05', 'miliga', 4, 1, ''),
-('jugadorAlmeria2', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorAlmeria2@jugadorAlmeria.com', 'jugador Almeria 2', '2020-03-06', 'miliga', 4, 1, ''),
-('jugadorAlmeria3', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorAlmeria3@jugadorAlmeria.com', 'jugador Almeria 3', '2020-03-13', 'miliga', 4, 1, ''),
-('jugadorAlmeria4', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorAlmeria4@jugadorAlmeria.com', 'jugador Almeria 4', '2020-03-18', 'miliga', 4, 1, ''),
-('jugadorAlmeria5', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorAlmeria5@gmail.com', 'jugador Almeria 5', '2020-03-03', 'miliga', 4, 1, ''),
-('jugadorBarcelona', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorBarcelona@jugadorBarcelona.com', 'jugador Barcelona', '2020-04-05', 'miliga', 1, 1, 'assets/uploads/perfiles/274UML.gif'),
-('jugadorBarcelona2', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorBarcelona2@jugadorBarcelona.com', 'jugador Barcelona 2', '2020-02-26', 'miliga', 1, 1, ''),
-('jugadorBarcelona3', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorBarcelona3@jugadorBarcelona.com', 'jugador Barcelona 3', '2020-02-28', 'miliga', 1, 1, ''),
-('jugadorBarcelona4', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorBarcelona4@jugadorBarcelona.com', 'jugador Barcelona 4', '2020-02-27', 'miliga', 1, 1, ''),
-('jugadorBarcelona5', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorBarcelona5@jugadorBarcelona.com', 'jugador Barcelona 5', '2020-02-29', 'miliga', 1, 1, ''),
-('jugadorBetis', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorBetis@jugadorBetis.com', 'jugador Betis', '2020-03-05', 'miliga', 7, 1, ''),
-('jugadorBetis2', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorBetis2@jugadorBetis.com', 'jugador Betis 2', '2020-03-01', 'miliga', 7, 1, ''),
-('jugadorBetis3', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorBetis3@jugadorBetis.com', 'jugador Betis 3', '2020-02-28', 'miliga', 7, 1, ''),
-('jugadorBetis4', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorBetis4@jugadorBetis.com', 'jugador Betis 4', '2020-02-28', 'miliga', 7, 1, ''),
-('jugadorBetis5', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorBetis5@jugadorBetis.com', 'jugador Betis 5', '2020-02-25', 'miliga', 7, 1, ''),
-('jugadorBilbao', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorBilbao@jugadorBilbao.com', 'jugador Bilbao', '2020-03-04', 'miliga', 6, 1, ''),
-('jugadorBilbao2', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorBilbao2@jugadorBilbao.com', 'jugador Bilbao 2', '2020-03-06', 'miliga', 6, 1, ''),
-('jugadorBilbao3', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorBilbao3@jugadorBilbao.com', 'jugador Bilbao 3', '2020-03-01', 'miliga', 6, 1, ''),
-('jugadorBilbao4', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorBilbao4@jugadorBilbao.com', 'jugador Bilbao 4', '2020-03-01', 'miliga', 6, 1, ''),
-('jugadorBilbao5', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorBilbao5@jugadorBilbao.com', 'jugador Bilbao 5', '2020-03-01', 'miliga', 6, 1, ''),
-('jugadorManresa', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorManresa@jugadorManresa.com', 'jugador Manresa', '2020-03-01', 'miliga', 8, 1, ''),
-('jugadorManresa2', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorManresa2@jugadorManresa.com', 'jugador Manresa 2', '2020-02-28', 'miliga', 8, 1, ''),
-('jugadorManresa3', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorManresa3@jugadorManresa.com', 'jugador Manresa 3', '2020-03-05', 'miliga', 8, 1, ''),
-('jugadorManresa4', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorManresa4@jugadorManresa.com', 'jugador Manresa 4', '2020-03-11', 'miliga', 8, 1, ''),
-('jugadorManresa5', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorManresa5@jugadorManresa.com', 'jugador Manresa 5', '2020-03-01', 'miliga', 8, 1, ''),
-('jugadorRealMadrid', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorRealMadrid@jugadorRealMadrid.com', 'jugador RealMadrid', '2020-02-26', 'miliga', 2, 1, ''),
-('jugadorRealMadrid2', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorRealMadrid2@jugadorRealMadrid.com', 'jugador RealMadrid 2', '2020-03-07', 'miliga', 2, 1, ''),
-('jugadorRealMadrid3', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorRealMadrid3@jugadorRealMadrid.com', 'jugador RealMadrid 3', '2020-03-01', 'miliga', 2, 1, ''),
-('jugadorRealMadrid4', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorRealMadrid4@jugadorRealMadrid.com', 'jugador RealMadrid 4', '2020-02-29', 'miliga', 2, 1, ''),
-('jugadorRealMadrid5', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorRealMadrid5@jugadorRealMadrid.com', 'jugador RealMadrid 5', '2020-03-04', 'miliga', 2, 1, ''),
-('jugadorSevilla', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorSevilla@jugadorSevilla.com', 'jugador Sevilla', '2020-03-05', 'miliga', 5, 1, ''),
-('jugadorSevilla2', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorSevilla2@jugadorSevilla.com', 'jugador Sevilla2', '2020-03-05', 'miliga', 5, 1, ''),
-('jugadorSevilla3', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorSevilla3@jugadorSevilla.com', 'jugador Sevilla3', '2020-03-18', 'miliga', 5, 1, ''),
-('jugadorSevilla4', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorSevilla4@jugadorSevilla.com', 'jugador Sevilla 4', '2020-03-12', 'miliga', 5, 1, ''),
-('jugadorSevilla5', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorSevilla5@jugadorSevilla.com', 'jugador Sevilla 5', '2020-03-04', 'miliga', 5, 1, ''),
-('jugadorValencia', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorValencia@jugadorValencia.com', 'jugador Valencia', '2020-02-28', 'miliga', 3, 1, ''),
-('jugadorValencia2', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorValencia2@jugadorValencia.com', 'jugador Valencia', '2020-03-01', 'miliga', 3, 1, ''),
-('jugadorValencia3', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorValencia3@jugadorValencia.com', 'jugador Valencia', '2020-02-29', 'miliga', 3, 1, '/assets/img/perfil.png'),
-('jugadorValencia4', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorValencia4@jugadorValencia.com', 'jugador Valencia 4', '2020-03-01', 'miliga', 3, 1, ''),
-('jugadorValencia5', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorValencia5@jugadorValencia.com', 'jugador Valencia 5', '2020-02-28', 'miliga', 3, 1, ''),
-('unai_2000', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', '412341234@1234.com', 'unai carlos', '2020-03-04', 'miliga', 3, 1, '');
+('elnuger', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'elnuger@elnuger.com', 'el nuger', '2020-03-03', 'miliga', 7, 1, 'assets/uploads/perfiles/pordefecto.png'),
+('entrenadorBarcelona', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Entrenador', 'entrenadorBarcelona@entrenadorBarcelona.com', 'Entrenador Barcelona', '2000-12-12', 'miliga', 1, 1, 'assets/uploads/perfiles/pordefecto.png'),
+('entrenadorRealMadrid', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Entrenador', 'entrenadorRealMadrid@entrenadorRealMadrid.com', 'entrenador RealMadrid', '0000-00-00', 'miliga', 2, 1, 'assets/uploads/perfiles/pordefecto.png'),
+('jugador_barcelona', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'davidguisado2000@gmail.com', 'barcelona player', '2020-03-05', 'miliga', 1, 1, 'assets/uploads/perfiles/pordefecto.png'),
+('jugadorAlmeria', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorAlmeria@jugadorAlmeria.com', 'jugador Almeria', '2020-03-05', 'miliga', 4, 1, 'assets/uploads/perfiles/pordefecto.png'),
+('jugadorAlmeria2', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorAlmeria2@jugadorAlmeria.com', 'jugador Almeria 2', '2020-03-06', 'miliga', 4, 1, 'assets/uploads/perfiles/pordefecto.png'),
+('jugadorAlmeria3', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorAlmeria3@jugadorAlmeria.com', 'jugador Almeria 3', '2020-03-13', 'miliga', 4, 1, 'assets/uploads/perfiles/pordefecto.png'),
+('jugadorAlmeria4', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorAlmeria4@jugadorAlmeria.com', 'jugador Almeria 4', '2020-03-18', 'miliga', 4, 1, 'assets/uploads/perfiles/pordefecto.png'),
+('jugadorAlmeria5', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorAlmeria5@gmail.com', 'jugador Almeria 5', '2020-03-03', 'miliga', 4, 1, 'assets/uploads/perfiles/pordefecto.png'),
+('jugadorBarcelona', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'davidguisado2000@educarex.es', 'jugador Barcelona', '2020-04-05', 'miliga', 1, 1, 'assets/uploads/perfiles/pordefecto.png'),
+('jugadorBarcelona2', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorBarcelona2@jugadorBarcelona.com', 'jugador Barcelona 2', '2020-02-26', 'miliga', 1, 1, 'assets/uploads/perfiles/pordefecto.png'),
+('jugadorBarcelona3', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorBarcelona3@jugadorBarcelona.com', 'jugador Barcelona 3', '2020-02-28', 'miliga', 1, 1, 'assets/uploads/perfiles/pordefecto.png'),
+('jugadorBarcelona4', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorBarcelona4@jugadorBarcelona.com', 'jugador Barcelona 4', '2020-02-27', 'miliga', 1, 1, 'assets/uploads/perfiles/pordefecto.png'),
+('jugadorBarcelona5', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorBarcelona5@jugadorBarcelona.com', 'jugador Barcelona 5', '2020-02-29', 'miliga', 1, 1, 'assets/uploads/perfiles/pordefecto.png'),
+('jugadorBetis', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorBetis@jugadorBetis.com', 'jugador Betis', '2020-03-05', 'miliga', 7, 1, 'assets/uploads/perfiles/pordefecto.png'),
+('jugadorBetis2', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorBetis2@jugadorBetis.com', 'jugador Betis 2', '2020-03-01', 'miliga', 7, 1, 'assets/uploads/perfiles/pordefecto.png'),
+('jugadorBetis3', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorBetis3@jugadorBetis.com', 'jugador Betis 3', '2020-02-28', 'miliga', 7, 1, 'assets/uploads/perfiles/pordefecto.png'),
+('jugadorBetis4', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorBetis4@jugadorBetis.com', 'jugador Betis 4', '2020-02-28', 'miliga', 7, 1, 'assets/uploads/perfiles/pordefecto.png'),
+('jugadorBetis5', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorBetis5@jugadorBetis.com', 'jugador Betis 5', '2020-02-25', 'miliga', 7, 1, 'assets/uploads/perfiles/pordefecto.png'),
+('jugadorBilbao', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorBilbao@jugadorBilbao.com', 'jugador Bilbao', '2020-03-04', 'miliga', 6, 1, 'assets/uploads/perfiles/pordefecto.png'),
+('jugadorBilbao2', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorBilbao2@jugadorBilbao.com', 'jugador Bilbao 2', '2020-03-06', 'miliga', 6, 1, 'assets/uploads/perfiles/pordefecto.png'),
+('jugadorBilbao3', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorBilbao3@jugadorBilbao.com', 'jugador Bilbao 3', '2020-03-01', 'miliga', 6, 1, 'assets/uploads/perfiles/pordefecto.png'),
+('jugadorBilbao4', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorBilbao4@jugadorBilbao.com', 'jugador Bilbao 4', '2020-03-01', 'miliga', 6, 1, 'assets/uploads/perfiles/pordefecto.png'),
+('jugadorBilbao5', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorBilbao5@jugadorBilbao.com', 'jugador Bilbao 5', '2020-03-01', 'miliga', 6, 1, 'assets/uploads/perfiles/pordefecto.png'),
+('jugadorManresa', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorManresa@jugadorManresa.com', 'jugador Manresa', '2020-03-01', 'miliga', 8, 1, 'assets/uploads/perfiles/pordefecto.png'),
+('jugadorManresa2', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorManresa2@jugadorManresa.com', 'jugador Manresa 2', '2020-02-28', 'miliga', 8, 1, 'assets/uploads/perfiles/pordefecto.png'),
+('jugadorManresa3', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorManresa3@jugadorManresa.com', 'jugador Manresa 3', '2020-03-05', 'miliga', 8, 1, 'assets/uploads/perfiles/pordefecto.png'),
+('jugadorManresa4', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorManresa4@jugadorManresa.com', 'jugador Manresa 4', '2020-03-11', 'miliga', 8, 1, 'assets/uploads/perfiles/pordefecto.png'),
+('jugadorManresa5', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorManresa5@jugadorManresa.com', 'jugador Manresa 5', '2020-03-01', 'miliga', 8, 1, 'assets/uploads/perfiles/pordefecto.png'),
+('jugadorRealMadrid', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorRealMadrid@jugadorRealMadrid.com', 'jugador RealMadrid', '2020-02-26', 'miliga', 2, 1, 'assets/uploads/perfiles/pordefecto.png'),
+('jugadorRealMadrid2', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorRealMadrid2@jugadorRealMadrid.com', 'jugador RealMadrid 2', '2020-03-07', 'miliga', 2, 1, 'assets/uploads/perfiles/pordefecto.png'),
+('jugadorRealMadrid3', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorRealMadrid3@jugadorRealMadrid.com', 'jugador RealMadrid 3', '2020-03-01', 'miliga', 2, 1, 'assets/uploads/perfiles/pordefecto.png'),
+('jugadorRealMadrid4', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorRealMadrid4@jugadorRealMadrid.com', 'jugador RealMadrid 4', '2020-02-29', 'miliga', 2, 1, 'assets/uploads/perfiles/pordefecto.png'),
+('jugadorRealMadrid5', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorRealMadrid5@jugadorRealMadrid.com', 'jugador RealMadrid 5', '2020-03-04', 'miliga', 2, 1, 'assets/uploads/perfiles/pordefecto.png'),
+('jugadorSevilla', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorSevilla@jugadorSevilla.com', 'jugador Sevilla', '2020-03-05', 'miliga', 5, 1, 'assets/uploads/perfiles/pordefecto.png'),
+('jugadorSevilla2', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorSevilla2@jugadorSevilla.com', 'jugador Sevilla2', '2020-03-05', 'miliga', 5, 1, 'assets/uploads/perfiles/pordefecto.png'),
+('jugadorSevilla3', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorSevilla3@jugadorSevilla.com', 'jugador Sevilla3', '2020-03-18', 'miliga', 5, 1, 'assets/uploads/perfiles/pordefecto.png'),
+('jugadorSevilla4', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorSevilla4@jugadorSevilla.com', 'jugador Sevilla 4', '2020-03-12', 'miliga', 5, 1, 'assets/uploads/perfiles/pordefecto.png'),
+('jugadorSevilla5', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorSevilla5@jugadorSevilla.com', 'jugador Sevilla 5', '2020-03-04', 'miliga', 5, 1, 'assets/uploads/perfiles/pordefecto.png'),
+('jugadorValencia', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorValencia@jugadorValencia.com', 'jugador Valencia', '2020-02-28', 'miliga', 3, 1, 'assets/uploads/perfiles/pordefecto.png'),
+('jugadorValencia2', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorValencia2@jugadorValencia.com', 'jugador Valencia', '2020-03-01', 'miliga', 3, 1, 'assets/uploads/perfiles/pordefecto.png'),
+('jugadorValencia3', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorValencia3@jugadorValencia.com', 'jugador Valencia', '2020-02-29', 'miliga', 3, 1, 'assets/uploads/perfiles/pordefecto.png'),
+('jugadorValencia4', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorValencia4@jugadorValencia.com', 'jugador Valencia 4', '2020-03-01', 'miliga', 3, 1, 'assets/uploads/perfiles/pordefecto.png'),
+('jugadorValencia5', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorValencia5@jugadorValencia.com', 'jugador Valencia 5', '2020-02-28', 'miliga', 3, 1, 'assets/uploads/perfiles/pordefecto.png'),
+('unai_2000', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', '412341234@1234.com', 'unai carlos', '2020-03-04', 'miliga', 3, 1, 'assets/uploads/perfiles/pordefecto.png');
 
 -- --------------------------------------------------------
 
@@ -404,6 +441,7 @@ CREATE TABLE `view_usuarios_liga` (
 ,`fecha_nac` date
 ,`liga` varchar(255)
 ,`equipo` int(11)
+,`foto_perfil` varchar(100)
 ,`validado` tinyint(1)
 ,`nombre_equipo` varchar(255)
 );
@@ -415,7 +453,7 @@ CREATE TABLE `view_usuarios_liga` (
 --
 DROP TABLE IF EXISTS `view_clasificacion`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_clasificacion`  AS  select `e`.`equipo` AS `equipo`,`e`.`partidos_ganados` AS `partidos_ganados`,`e`.`partidos_perdidos` AS `partidos_perdidos`,`e`.`puntos_favor` AS `puntos_favor`,`e`.`puntos_contra` AS `puntos_contra`,`e`.`puntos_clasificacion` AS `puntos_clasificacion`,`l`.`nombre` AS `liga` from (`equipo` `e` join `liga` `l` on((`l`.`nombre` = `e`.`liga`))) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_clasificacion`  AS  select `e`.`equipo` AS `equipo`,`e`.`partidos_ganados` AS `partidos_ganados`,`e`.`partidos_perdidos` AS `partidos_perdidos`,`e`.`puntos_favor` AS `puntos_favor`,`e`.`puntos_contra` AS `puntos_contra`,`e`.`puntos_clasificacion` AS `puntos_clasificacion`,`l`.`nombre` AS `liga` from (`equipo` `e` join `liga` `l` on(`l`.`nombre` = `e`.`liga`)) ;
 
 -- --------------------------------------------------------
 
@@ -424,7 +462,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `view_jugadores_partidos`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_jugadores_partidos`  AS  select `p`.`id` AS `idpartido`,`u`.`apenom` AS `apenom`,`u`.`username` AS `username`,`u`.`equipo` AS `idequipo`,`e`.`equipo` AS `equipo`,`e`.`escudo_ruta` AS `escudo_ruta_local` from ((`equipo` `e` join `usuarios` `u` on((`e`.`id` = `u`.`equipo`))) join `partido` `p` on(((`e`.`id` = `p`.`local`) or (`e`.`id` = `p`.`visitante`)))) where (`u`.`tipo` like 'Jugador') order by `p`.`id` ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_jugadores_partidos`  AS  select `p`.`id` AS `idpartido`,`u`.`apenom` AS `apenom`,`u`.`username` AS `username`,`u`.`equipo` AS `idequipo`,`e`.`equipo` AS `equipo`,`e`.`escudo_ruta` AS `escudo_ruta_local` from ((`equipo` `e` join `usuarios` `u` on(`e`.`id` = `u`.`equipo`)) join `partido` `p` on(`e`.`id` = `p`.`local` or `e`.`id` = `p`.`visitante`)) where `u`.`tipo` like 'Jugador' order by `p`.`id` ;
 
 -- --------------------------------------------------------
 
@@ -433,7 +471,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `view_partidos_liga`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_partidos_liga`  AS  select `p`.`id` AS `id`,`e`.`id` AS `id_local`,`e`.`equipo` AS `equipo_local`,`e`.`escudo_ruta` AS `escudo_local`,`e2`.`id` AS `id_visitante`,`e2`.`equipo` AS `equipo_visitante`,`e2`.`escudo_ruta` AS `escudo_visitante`,`p`.`resultado_local` AS `resultado_local`,`p`.`resultado_visitante` AS `resultado_visitante`,`p`.`jornada` AS `jornada`,`p`.`fecha` AS `fecha`,`p`.`Hora` AS `hora`,`l`.`nombre` AS `liga` from (((`partido` `p` join `equipo` `e` on((`p`.`local` = `e`.`id`))) join `equipo` `e2` on((`p`.`visitante` = `e2`.`id`))) join `liga` `l` on((`l`.`nombre` = `e`.`liga`))) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_partidos_liga`  AS  select `p`.`id` AS `id`,`e`.`id` AS `id_local`,`e`.`equipo` AS `equipo_local`,`e`.`escudo_ruta` AS `escudo_local`,`e2`.`id` AS `id_visitante`,`e2`.`equipo` AS `equipo_visitante`,`e2`.`escudo_ruta` AS `escudo_visitante`,`p`.`resultado_local` AS `resultado_local`,`p`.`resultado_visitante` AS `resultado_visitante`,`p`.`jornada` AS `jornada`,`p`.`fecha` AS `fecha`,`p`.`Hora` AS `hora`,`l`.`nombre` AS `liga` from (((`partido` `p` join `equipo` `e` on(`p`.`local` = `e`.`id`)) join `equipo` `e2` on(`p`.`visitante` = `e2`.`id`)) join `liga` `l` on(`l`.`nombre` = `e`.`liga`)) ;
 
 -- --------------------------------------------------------
 
@@ -442,7 +480,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `view_usuarios_liga`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_usuarios_liga`  AS  select `u`.`username` AS `username`,`u`.`password` AS `password`,`u`.`tipo` AS `tipo`,`u`.`email` AS `email`,`u`.`apenom` AS `apenom`,`u`.`fecha_nac` AS `fecha_nac`,`u`.`liga` AS `liga`,`u`.`equipo` AS `equipo`,`u`.`validado` AS `validado`,`e`.`equipo` AS `nombre_equipo` from (`usuarios` `u` join `equipo` `e` on((`u`.`equipo` = `e`.`id`))) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_usuarios_liga`  AS  select `u`.`username` AS `username`,`u`.`password` AS `password`,`u`.`tipo` AS `tipo`,`u`.`email` AS `email`,`u`.`apenom` AS `apenom`,`u`.`fecha_nac` AS `fecha_nac`,`u`.`liga` AS `liga`,`u`.`equipo` AS `equipo`,`u`.`imagen` AS `foto_perfil`,`u`.`validado` AS `validado`,`e`.`equipo` AS `nombre_equipo` from (`usuarios` `u` join `equipo` `e` on(`u`.`equipo` = `e`.`id`)) ;
 
 --
 -- Índices para tablas volcadas
@@ -460,6 +498,16 @@ ALTER TABLE `admin`
 ALTER TABLE `equipo`
   ADD PRIMARY KEY (`id`),
   ADD KEY `liga` (`liga`);
+
+--
+-- Indices de la tabla `fichajes`
+--
+ALTER TABLE `fichajes`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `IdEquipoSolicita` (`IdEquipoSolicita`,`username_jugador1`,`IdEquipoRecibe`,`username_jugador2`),
+  ADD KEY `IdEquipoRecibe` (`IdEquipoRecibe`),
+  ADD KEY `username_jugador1` (`username_jugador1`),
+  ADD KEY `username_jugador2` (`username_jugador2`);
 
 --
 -- Indices de la tabla `jugador_stats`
@@ -500,11 +548,19 @@ ALTER TABLE `usuarios`
 --
 ALTER TABLE `equipo`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT de la tabla `fichajes`
+--
+ALTER TABLE `fichajes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT de la tabla `partido`
 --
 ALTER TABLE `partido`
   MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
+
 --
 -- Restricciones para tablas volcadas
 --
@@ -514,6 +570,15 @@ ALTER TABLE `partido`
 --
 ALTER TABLE `equipo`
   ADD CONSTRAINT `equipo_ibfk_1` FOREIGN KEY (`liga`) REFERENCES `liga` (`nombre`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `fichajes`
+--
+ALTER TABLE `fichajes`
+  ADD CONSTRAINT `fichajes_ibfk_1` FOREIGN KEY (`IdEquipoSolicita`) REFERENCES `equipo` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fichajes_ibfk_2` FOREIGN KEY (`IdEquipoRecibe`) REFERENCES `equipo` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fichajes_ibfk_3` FOREIGN KEY (`username_jugador1`) REFERENCES `usuarios` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fichajes_ibfk_4` FOREIGN KEY (`username_jugador2`) REFERENCES `usuarios` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `jugador_stats`
@@ -541,6 +606,7 @@ ALTER TABLE `partido`
 --
 ALTER TABLE `usuarios`
   ADD CONSTRAINT `usuarios_ibfk_1` FOREIGN KEY (`liga`) REFERENCES `liga` (`nombre`) ON DELETE CASCADE ON UPDATE CASCADE;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
