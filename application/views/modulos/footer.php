@@ -22,11 +22,11 @@
                     <label for="apenom">Apellidos y Nombre</label>
                     <input type="text" name="apenom" id="" value='<?= $_SESSION['apenom'] ?>'>
                     <label for="apenom">Email</label>
-                    <input type="text" name="email" id="" value='<?= $datos_user->email ?>'>
+                    <input type="text" name="email" id="" value='<?= $_SESSION['email'] ?>'>
                     <label for="apenom">Fecha de Nacimiento</label>
-                    <input type="date" id="modal_date" name="fecha_nac" id="" value='<?= $datos_user->fecha_nac ?>'>
+                    <input type="date" id="modal_date" name="fecha_nac" id="" value='<?= $_SESSION['fecha_nac']; ?>'>
                     <label for="previsualizacion" class="d-block mx-auto">Previsualización de la foto de perfil</label>
-
+                    <img src="" name="previsualizacion" id="previsualizacion" class="w-100 h-50 img-fluid rounded-circle" alt="">
                 </form>
             </div>
             <div class="modal-footer">

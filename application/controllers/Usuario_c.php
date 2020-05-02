@@ -20,7 +20,6 @@ class Usuario_c extends CI_Controller
         //Si está validado y es un Jugador o Entrenador
         if ($_SESSION['validado'] == 1 && ($_SESSION['tipo_cuenta'] == "Jugador" || $_SESSION['tipo_cuenta'] == "Entrenador")) {
             $this->load->view("modulos/head", array("css" => array("liga", "jugador")));
-            $data['datos_user'] = self::getDatos();
             $data["liga"] = $_SESSION['liga'];
             $data["proxPartidos"] = self::proxPartido($_SESSION['liga'], $_SESSION['equipo']);
             $this->load->view("modulos/header", $data);
@@ -59,11 +58,12 @@ class Usuario_c extends CI_Controller
                 $data["tusJugadores"] = self::getJugadoresEquipo();
                 $data["estadisticas"] = self::getEstadisticasJugador($username);
                 $data["stats_ind"] = self::getEstadisticasJugadorPartido($username);
+                $data['datos_user'] = $this->Jugador_m->getDatosUser($username);
             } else {
                 $data["estadisticas"] = self::getEstadisticasJugador($_SESSION['username']);
                 $data["stats_ind"] = self::getEstadisticasJugadorPartido($_SESSION['username']);
+                $data['datos_user'] = $this->Jugador_m->getDatosUser($_SESSION['username']);
             }
-            $data['datos_user'] = $this->Jugador_m->getDatosUser($username);
             $this->load->view("modulos/head", array("css" => array("jugador")));
             $this->load->view("modulos/header", $data);
             $this->load->view("jugador_v");

@@ -103,5 +103,10 @@ class Jugador_m extends CI_Model
         }
         $this->db->where('username', $_SESSION['username']);
         $this->db->update('usuarios');
+
+        //Reemplazamos las variables de sesión
+        $this->session->set_userdata('apenom', $apenom);
+        $this->session->set_userdata('email', $email);
+        $this->session->set_userdata('fecha_nac', $fechanac);
     }
 }

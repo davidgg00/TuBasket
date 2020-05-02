@@ -14,6 +14,7 @@
     <div class="col-10 h-75 d-flex flex-start flex-wrap mt-2" id="estadisticas">
         <div id="foto" class="w-100 text-center">
             <!--Foto que será implementada en los perfiles mas tarde-->
+
             <img src="<?= base_url($datos_user->imagen) ?>" class="img-fluid" alt="">
         </div>
         <div id="estadistica_media" class="w-50">

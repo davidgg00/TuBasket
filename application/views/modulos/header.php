@@ -9,7 +9,7 @@
                 <a href="<?php echo base_url('Usuario_c/clasificacion/' . $liga) ?>">Clasificación</a>
                 <a href="<?php echo base_url('Usuario_c/estadisticas/') ?>">Tus estadísticas</a>
                 <a href="<?php echo base_url('Usuario_c/partidos/' . $liga) ?>">Partidos</a>
-                <a href="#"><img src="<?php echo base_url($_SESSION['imagen']) ?>" class="img-fluid rounded-circle" id='perfil'></a>
+                <a href="#"><img src="<?php echo base_url("assets/uploads/perfiles/pordefecto.png") ?>" class="img-fluid rounded-circle" id='perfil'></a>
                 <a href="<?php echo base_url('Usuario_c/cerrarsesion') ?>"><img src="<?php echo base_url('assets/img/cerrarsesion2.png') ?>" class="img-fluid rounded-circle"></a>
                 <?php break; ?>
             <?php
@@ -19,7 +19,7 @@
                 <a href="<?php echo base_url('Usuario_c/partidos/') ?>">Partidos</a>
                 <a href="<?php echo base_url('Usuario_c/clasificacion/') ?>">Clasificación</a>
                 <a href="<?php echo base_url('Usuario_c/notificaciones/') ?>">Notificaciones(0)</a>
-                <a href="#"><img src="<?php echo base_url($_SESSION['imagen']) ?>" class="img-fluid rounded-circle" id='perfil'></a>
+                <a href="#"><img src="<?php echo base_url("assets/uploads/perfiles/pordefecto.png") ?>" class="img-fluid rounded-circle" id='perfil'></a>
                 <a href="<?php echo base_url('Usuario_c/cerrarsesion') ?>"><img src="<?php echo base_url('assets/img/cerrarsesion2.png') ?>" class="img-fluid rounded-circle"></a>
                 <?php break; ?>
             <?php
@@ -39,6 +39,7 @@
                 $("#modalPerfil").modal('show');
             })
             $("#fotoperfil").change(function() {
+                console.log(this);
                 previsualizarImagen(this);
             })
 
@@ -57,7 +58,7 @@
                          **Y ya cuando se mueva por la página se le habrá actualizado el $_SESSION */
                         if (response != "") {
                             console.log(response);
-                            $('#perfil').attr('src', response);
+                            $('#foto-perfil').attr('src', response);
                         }
                     }
                 });

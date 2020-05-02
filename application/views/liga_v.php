@@ -36,6 +36,11 @@
         </div>
     </section>
     <aside class="col-2 h-25 d-flex justify-content-center flex-wrap align-items-center">
+        <?php if (isset($_SESSION['imagen'])) : ?>
+            <img src="<?php echo base_url($_SESSION['imagen']) ?>" class="img-fluid rounded-circle" id='foto-perfil'>
+        <?php else : ?>
+            <img src="<?php echo base_url("assets/uploads/perfiles/pordefecto.png") ?>" class="img-fluid rounded-circle" id='foto-perfil'>
+        <?php endif; ?>
         <p class="col-12">¡Bienvenido <?= $_SESSION["username"] ?>!</p>
         <p class="col-12">Cuenta: <?= $_SESSION["tipo_cuenta"] ?></p>
         <p class="col-12">Liga: <?= $liga ?></p>

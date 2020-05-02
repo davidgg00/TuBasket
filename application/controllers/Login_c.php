@@ -6,6 +6,8 @@ class Login_c extends CI_Controller
     function __construct()
     {
         parent::__construct();
+        //cargamos el modelo
+        $this->load->model("Login_m");
     }
 
     public function index()
@@ -16,10 +18,9 @@ class Login_c extends CI_Controller
 
     public function iniciarsesion()
     {
-        //cargamos el modelo
-        $this->load->model("Login_m");
         //Si devuelve algo comprobar_usuario_clave es que el login es correcto
         $cuenta = $this->Login_m->comprobar_usuario_clave($this->input->post()['username'], hash("sha512", $this->input->post()['password']));
+
         if ($cuenta) {
             //Si es un jugador o entrenador, tiene equipo pero no está validado. No dejamos iniciar sesión
             if (($cuenta->tipo == "Jugador" || $cuenta->tipo == "Entrenador") && $cuenta->equipo != null && $cuenta->validado == 0) {
@@ -29,6 +30,9 @@ class Login_c extends CI_Controller
                 //Si no existe el campo "tipo" es que es una cuenta admin
                 $array = array(
                     'username' => $cuenta->username,
+                    'email' => $cuenta->email,
+                    'apenom' => $cuenta->apenom,
+                    'fecha_nac' => $cuenta->fecha_nac,
                     'tipo_cuenta' => "Admin"
                 );
                 //Creamos la session con los datos
@@ -39,10 +43,12 @@ class Login_c extends CI_Controller
                 //Si es un entrenador pero está validado y tiene equipo
                 $array = array(
                     'username' => $cuenta->username,
-                    'apenom' => $cuenta->apenom,
-                    'equipo' => $cuenta->equipo,
                     'tipo_cuenta' => $cuenta->tipo,
+                    'email' => $cuenta->email,
+                    'apenom' => $cuenta->apenom,
+                    'fecha_nac' => $cuenta->fecha_nac,
                     'liga' => $cuenta->liga,
+                    'equipo' => $cuenta->equipo,
                     'validado' => $cuenta->validado,
                     'imagen' => $cuenta->imagen
                 );
@@ -54,10 +60,12 @@ class Login_c extends CI_Controller
                 //Si es un jugador pero está validado o no está validado y no tiene equipo:
                 $array = array(
                     'username' => $cuenta->username,
-                    'apenom' => $cuenta->apenom,
-                    'equipo' => $cuenta->equipo,
                     'tipo_cuenta' => $cuenta->tipo,
+                    'email' => $cuenta->email,
+                    'apenom' => $cuenta->apenom,
+                    'fecha_nac' => $cuenta->fecha_nac,
                     'liga' => $cuenta->liga,
+                    'equipo' => $cuenta->equipo,
                     'validado' => $cuenta->validado,
                     'imagen' => $cuenta->imagen
                 );
