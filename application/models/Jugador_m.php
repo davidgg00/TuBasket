@@ -109,4 +109,25 @@ class Jugador_m extends CI_Model
         $this->session->set_userdata('email', $email);
         $this->session->set_userdata('fecha_nac', $fechanac);
     }
+
+    public function actualizarClave($claveAntigua, $claveNueva, $cuenta, $username)
+    {
+        if ($cuenta != "Admin") {
+            $this->db->set('password', $claveNueva);
+            $this->db->where('username', $username);
+            $this->db->where('password', $claveAntigua);
+            $this->db->update('usuarios');
+        } else {
+            $this->db->set('password', $claveNueva);
+            $this->db->where('username', $username);
+            $this->db->where('password', $claveAntigua);
+            $this->db->update('admin');
+        }
+
+        if ($this->db->affected_rows() > 0) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
 }

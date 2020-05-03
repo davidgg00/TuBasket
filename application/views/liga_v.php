@@ -4,10 +4,48 @@
         //la página para que haya solo un elemento activo. (Si lo hacemos en el bucle)
         //Se ponen todos con esa clase y no funcionará el carrusel correctamente
         $(".carousel-item:first").addClass("active");
+
+        $("#btn-guardarclave").on("click", function(evento) {
+            //Si la clave antigua NO está vacía
+            if ($("#claveAntigua").val() != "") {
+                if ($("#claveAntigua").val() == $("#claveNueva").val()) {
+                    $("#span-clave").html("");
+                    $("#span-claveNueva").html("Las contraseñas no pueden ser iguales");
+                } else {
+                    $("#span-claveNueva").html("&nbsp;");
+                    $.post("<?= base_url('Usuario_c/updateClave') ?>", {
+                            claveAntigua: $("#claveAntigua").val(),
+                            claveNueva: $("#claveNueva").val(),
+                            cuenta: "<?= $_SESSION["tipo_cuenta"] ?>",
+                            username: "<?= $_SESSION["username"] ?>"
+                        },
+                        function(dato_devuelto) {
+                            console.log(dato_devuelto)
+                            if (dato_devuelto == "Error") {
+                                $("#span-clave").html("Contraseña Incorrecta");
+                            } else {
+                                $("#span-clave").html("&nbsp;");
+                                $("#modalPassword").modal('hide');
+                                //Mostramos alerta correcta
+                                Swal.fire({
+                                    backdrop: false,
+                                    icon: 'success',
+                                    title: 'Contraseña Actualizada',
+                                    text: 'La contraseña se cambió correctamente.',
+                                })
+                            }
+                        }
+                    );
+                }
+
+            }
+        })
     });
 </script>
 <div class="row justify-content-end" id="informacion">
+
     <section class="col-8 d-flex flex-wrap justify-content-center align-items-center" id="proxpartido">
+
         <div id="carouselExampleControls" class="carousel slide w-100 border border-dark" data-ride="carousel">
             <div class="carousel-inner">
                 <h3 class="col-12 text-center">Liga: <?= $liga ?></h3>
@@ -44,5 +82,40 @@
         <p class="col-12">¡Bienvenido <?= $_SESSION["username"] ?>!</p>
         <p class="col-12">Cuenta: <?= $_SESSION["tipo_cuenta"] ?></p>
         <p class="col-12">Liga: <?= $liga ?></p>
+        <button type="button" class="d-block btn btn-warning mx-auto mb-2" data-toggle="modal" data-target="#modalPassword">Cambiar Contraseña</button>
     </aside>
+</div>
+<!--Modal password-->
+<div class="modal fade" id="modalPassword" tabindex="-1" role="dialog" aria-labelledby="modalPassword" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Cambiar Contraseña</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" enctype="multipart/form-data" id="formUpdatePassword" class="mx-auto">
+                    <img src="<?php echo base_url($_SESSION['imagen']) ?>" class="img-fluid rounded-circle w-25 d-block mx-auto mb-3" id='foto-perfil' alt="">
+                    <div id="campos" class="d-flex flex-wrap justify-content-around">
+                        <label for="claveAntigua">Introduzca la clave actual: </label>
+                        <div id="error_clave" class="w-50 text-center mb-2">
+                            <input type="password" name="claveAntigua" id="claveAntigua">
+                            <span class="w-100 d-block text-danger" id="span-clave">&nbsp;</span>
+                        </div>
+                        <label for="claveNueva">Introduzca la clave nueva: </label>
+                        <div id="claveIgual" class="mb-2 text-center w-50">
+                            <input type="password" name="claveNueva" id="claveNueva">
+                            <span class="w-100 d-block text-danger" id="span-claveNueva">&nbsp;</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button id='btn-guardarclave' type="button" class="btn btn-primary">Guardar Cambios</button>
+            </div>
+        </div>
+    </div>
 </div>
