@@ -76,7 +76,9 @@ class Registro_c extends CI_Controller
                 'imagen' => "assets/uploads/perfiles/pordefecto.png"
             );
             $this->Registro_m->insert_jugador($datos_post);
-            redirect(base_url());
+            //Creamos la session para que elija un equipo y después cerrar la sesión
+            $this->session->set_userdata($datos_post);
+            redirect("Usuario_c/");
         }
     }
 }
