@@ -6,9 +6,9 @@
         El máximo 100 años, así que calculamos desde el dia de hoy 100 años
          */
         let hoy = new Date();
-        $("#fecha_nac").attr('min', hoy.getFullYear() - 100 + "-" + ("0" + (hoy.getMonth() + 1)).slice(-2) + "-" + hoy.getDate())
-        $("#fecha_nac").attr('max', hoy.getFullYear() - 18 + "-" + ("0" + (hoy.getMonth() + 1)).slice(-2) + "-" + hoy.getDate())
-        $("#fecha_nac").val(hoy.getFullYear() - 18 + "-" + ("0" + (hoy.getMonth() + 1)).slice(-2) + "-" + hoy.getDate());
+        $("#fecha_nac").attr('min', hoy.getFullYear() - 100 + "-" + ("0" + (hoy.getMonth() + 1)).slice(-2) + "-" + ("0" + hoy.getDate()).slice(-2))
+        $("#fecha_nac").attr('max', hoy.getFullYear() - 18 + "-" + ("0" + (hoy.getMonth() + 1)).slice(-2) + "-" + ("0" + hoy.getDate()).slice(-2))
+        $("#fecha_nac").val(hoy.getFullYear() - 18 + "-" + ("0" + (hoy.getMonth() + 1)).slice(-2) + "-" + ("0" + hoy.getDate()).slice(-2));
 
         //Creamos evento on keyup para comprobar username
         $("#username").on("keyup", function(evento) {
