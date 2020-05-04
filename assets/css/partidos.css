@@ -2,8 +2,40 @@
     width: 90%;
     background: rgba(255, 255, 255, 0.9);
 }
+
+.th-local, .td-local {
+    width: 18%;
+}
+
+.th-resultado,.td-resultado {
+    width: 18%;
+}
+
+.th-visitante,.td-visitante {
+    width: 18%;
+}
+
+.th-fecha,.td-fecha {
+    width: 25%;
+}
+
+.th-hora,.td-hora {
+    width: 20%;
+}
+
+p {
+    width: 100%;
+}
+
 table {
+    width: 100%;
     border: 1px solid #ccc;
+    table-layout: fixed;
+}
+
+table thead {
+    display:table;
+  width: 100%;
 }
 
 .datepick, .hora {
@@ -21,6 +53,9 @@ table {
     font-size: 1.3em;
 }
 
-#fecha {
-    width: 50%;
+input[type="time"]::-webkit-clear-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
 }
