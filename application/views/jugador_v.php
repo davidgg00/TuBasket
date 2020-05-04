@@ -13,25 +13,23 @@
 <div class="row justify-content-center flex-start h-100" id="wrapper-stats">
     <div class="col-10 h-75 d-flex flex-start flex-wrap mt-2" id="estadisticas">
         <div id="foto" class="w-100 text-center">
-            <!--Foto que será implementada en los perfiles mas tarde-->
-
             <img src="<?= base_url($datos_user->imagen) ?>" class="img-fluid" alt="">
         </div>
         <div id="estadistica_media" class="w-50">
             <h2 class="text-center">Estadísticas Media</h2>
-            <h4>Triples metidos: <?= $estadisticas->triples / $estadisticas->partidos_jugados ?></h4>
-            <h4>Tiros de 2 metidos: <?= $estadisticas->tiros_2 / $estadisticas->partidos_jugados ?></h4>
-            <h4>Tiros libres metidos: <?= $estadisticas->tiros_libres / $estadisticas->partidos_jugados ?></h4>
-            <h4>Tapones: <?= $estadisticas->tapones / $estadisticas->partidos_jugados ?></h4>
-            <h4>Robos: <?= $estadisticas->robos / $estadisticas->partidos_jugados ?></h4>
+            <h4>Triples metidos: <?= ($estadisticas->triples) ?  $estadisticas->triples / $estadisticas->partidos_jugados : "N/A"; ?></h4>
+            <h4>Tiros de 2 metidos: <?= ($estadisticas->tiros_2) ? $estadisticas->tiros_2 / $estadisticas->partidos_jugados : "N/A"; ?></h4>
+            <h4>Tiros libres metidos: <?= ($estadisticas->tiros_libres) ? $estadisticas->tiros_libres / $estadisticas->partidos_jugados : "N/A"; ?></h4>
+            <h4>Tapones: <?= ($estadisticas->tapones) ? $estadisticas->tapones / $estadisticas->partidos_jugados : "N/A"; ?></h4>
+            <h4>Robos: <?= ($estadisticas->robos) ? $estadisticas->robos / $estadisticas->partidos_jugados : "N/A"; ?></h4>
         </div>
         <div id="estadistica_total" class="w-50">
             <h2 class="text-center">Estadisticas Totales</h2>
-            <h4>Triples metidos: <?= $estadisticas->triples ?></h4>
-            <h4>Tiros de 2 metidos: <?= $estadisticas->tiros_2 ?></h4>
-            <h4>Tiros libres metidos: <?= $estadisticas->tiros_libres ?></h4>
-            <h4>Tapones: <?= $estadisticas->tapones ?></h4>
-            <h4>Robos: <?= $estadisticas->robos ?></h4>
+            <h4>Triples metidos: <?= ($estadisticas->triples) ? $estadisticas->triples : "N/A" ?></h4>
+            <h4>Tiros de 2 metidos: <?= ($estadisticas->tiros_2) ? $estadisticas->tiros_2 : "N/A" ?></h4>
+            <h4>Tiros libres metidos: <?= ($estadisticas->tiros_libres) ? $estadisticas->tiros_libres : "N/A" ?></h4>
+            <h4>Tapones: <?= ($estadisticas->tapones) ? $estadisticas->tapones : "N/A" ?></h4>
+            <h4>Robos: <?= ($estadisticas->robos) ? $estadisticas->robos : "N/A" ?></h4>
         </div>
         <h3 class="mx-auto mt-3">Estadisticas partidos</h3>
         <div id="partidos" class="col-12">
@@ -49,7 +47,7 @@
                 <tbody>
                     <?php
                     foreach ($stats_ind as $partido) {
-                        if ($partido->id_local === $_SESSION['equipo']) {
+                        if ($partido->id_local === $_SESSION['equipo'] && isset($partido->id_local)) {
                             echo "<td>$partido->equipo_visitante</td>";
                         } else {
                             echo "<td>$partido->equipo_local</td>";
@@ -67,48 +65,48 @@
         </div>
 
         <!--La opción de ofrecer fichaje saldrá solo si el jugador que vas a seleccionar NO está en tu equipo-->
-        <?php if ($_SESSION['equipo'] != $datos_user->equipo) : ?>
+        <?php if (isset($datos_user->equipo) && $_SESSION['equipo'] != $datos_user->equipo) : ?>
             <img src="<?php echo base_url('assets/img/ofrecerfichaje.jpg'); ?>" alt="" id="ofrecerFichaje" class="mx-auto" data-toggle="modal" data-target="#modalFichaje">
         <?php endif; ?>
 
-        <div class="modal fade" id="modalFichaje" tabindex="-1" role="dialog" aria-labelledby="modalFichaje" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="titulo_modal">Ofrecer un fichaje</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form method="post" id="formCrearLiga" class="text-center">
-                            <h3>Fichar a</h3>
-                            <h4 id="nombreFichaje" data-idequipo="<?= $datos_jugador->equipo ?>"><?= $jugador ?></h4>
-                            <h3>por</h3>
-                            <select name="jugadores" id="jugadores">
-                                <?php foreach ($tusJugadores as $Jugador) :
-                                    if ($Jugador->tipo == "Jugador") :
-                                ?>
-                                        <option value="<?= $Jugador->username ?>"><?= $Jugador->apenom ?></option>
-                                <?php endif;
-                                endforeach; ?>
-                            </select>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" form="formCrearLiga" onclick="ofrecerFichaje(); return false;" class="btn btn-primary">Ofrecer Fichaje</button>
+        <!--Creamos modal si existe el $datos_jugador (si no existe y te genera el modal con un objeto vacío el html te hace bug-->
+        <?php if (isset($datos_jugador)) : ?>
+            <div class="modal fade" id="modalFichaje" tabindex="-1" role="dialog" aria-labelledby="modalFichaje" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="titulo_modal">Ofrecer un fichaje</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post" id="formCrearLiga" class="text-center">
+                                <h3>Fichar a</h3>
+                                <h4 id="nombreFichaje" data-idequipo="<?= $datos_jugador->equipo ?>"><?= $jugador ?></h4>
+                                <h3>por</h3>
+                                <select name="jugadores" id="jugadores">
+                                    <?php foreach ($tusJugadores as $Jugador) :
+                                        if ($Jugador->tipo == "Jugador") :
+                                    ?>
+                                            <option value="<?= $Jugador->username ?>"><?= $Jugador->apenom ?></option>
+                                    <?php endif;
+                                    endforeach; ?>
+                                </select>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" form="formCrearLiga" onclick="ofrecerFichaje(); return false;" class="btn btn-primary">Ofrecer Fichaje</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        <?php endif; ?>
     </div>
 </div>
 <script>
     function ofrecerFichaje() {
-        console.log($("#nombreFichaje").html());
-        console.log($("#nombreFichaje").data("idequipo"));
-        console.log($("#jugadores").val());
         $.ajax({
             type: "POST",
             url: "<?= base_url('Usuario_c/OfrecerFichaje'); ?>",
