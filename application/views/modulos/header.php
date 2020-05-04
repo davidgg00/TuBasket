@@ -5,7 +5,7 @@
         //Los enlaces varían según el tipo de cuenta
         switch ($_SESSION['tipo_cuenta']):
             case 'Jugador': ?>
-                <a href="<?php echo base_url('Usuario_c/index/') ?>">Inicio</a>
+                <a href="<?php echo base_url('Usuario_c/') ?>">Inicio</a>
                 <a href="<?php echo base_url('Usuario_c/clasificacion/' . $liga) ?>">Clasificación</a>
                 <a href="<?php echo base_url('Usuario_c/estadisticas/') ?>">Tus estadísticas</a>
                 <a href="<?php echo base_url('Usuario_c/partidos/' . $liga) ?>">Partidos</a>
