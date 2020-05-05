@@ -9,6 +9,11 @@
                             <?= $_SESSION['error'] ?>
                         </div>
                     <?php endif; ?>
+                    <?php if (isset($_SESSION['acierto'])) : ?>
+                        <div class="alert alert-success mx-auto mb-0" role="alert">
+                            <?= $_SESSION['acierto'] ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
                 <form action="<?php echo base_url() . 'login_c/iniciarsesion' ?>" method="POST">
                     <div class="form-group text-center w-50 mx-auto input-group mb-3">
@@ -31,6 +36,10 @@
                     <div class="form-group mx-auto text-center w-50">
                         <p class="text-dark">¿Aún no tienes cuenta?</p>
                         <a href=" <?php echo base_url('/registro_c') ?>">Regístrate</a>
+                    </div>
+                    <div class="form-group mx-auto text-center w-50">
+                        <p class="text-dark">¿Has olvidado tu contraseña?</p>
+                        <a href=" <?php echo base_url('/RecuperarClave_c') ?>">Recuperar contraseña</a>
                     </div>
                 </form>
             </div>

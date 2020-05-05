@@ -195,27 +195,6 @@
             </div>
         </div>
     </div>
-    <div id="myModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header text-center">
-                    <h4 class="modal-title">Elige tu equipo</h4>
-                </div>
-                <div class="modal-body">
-                    <?php foreach ($variable as $key) : ?>
-                        # code...
-                    <?php endforeach; ?>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-
-        </div>
-    </div>
-    <button id="abrirModal" type="button" hidden class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
 </body>
 
 </html>
