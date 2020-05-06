@@ -52,7 +52,7 @@
                 <h3 class="col-12 text-center">Próximos Partidos</h3>
                 <?php foreach ($proxPartidos as $partido) : ?>
                     <div class="carousel-item">
-                        <div id="imagenes" class="col-12 d-flex justify-content-around h-50">
+                        <div id="partido" class="col-12 d-flex justify-content-around h-50">
                             <img src="<?php echo base_url($partido->escudo_local) ?>" class="img-fluid">
                             <img src="<?php echo base_url('assets/img/vs.png') ?>" class="img-fluid">
                             <img src="<?php echo base_url($partido->escudo_visitante) ?>" class="img-fluid">

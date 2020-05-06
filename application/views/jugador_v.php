@@ -13,7 +13,7 @@
 <div class="row justify-content-center flex-start h-100" id="wrapper-stats">
     <div class="col-10 h-75 d-flex flex-start flex-wrap mt-2" id="estadisticas">
         <div id="foto" class="w-100 text-center">
-            <img src="<?= base_url($datos_user->imagen) ?>" class="img-fluid" alt="">
+            <img src="<?= base_url($datos_user->imagen) ?>" class="img-fluid rounded-circle" alt="">
         </div>
         <div id="estadistica_media" class="w-50">
             <h2 class="text-center">Estadísticas Media</h2>

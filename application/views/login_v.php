@@ -33,11 +33,11 @@
                     <div class="form-group mx-auto text-center w-25">
                         <button type="submit" class="btn btn-lg btn-block ">Ingresar</button>
                     </div>
-                    <div class="form-group mx-auto text-center w-50">
+                    <div class="form-group mx-auto text-center w-50 m-1">
                         <p class="text-dark">¿Aún no tienes cuenta?</p>
                         <a href=" <?php echo base_url('/registro_c') ?>">Regístrate</a>
                     </div>
-                    <div class="form-group mx-auto text-center w-50">
+                    <div class="form-group mx-auto text-center w-50 m-2">
                         <p class="text-dark">¿Has olvidado tu contraseña?</p>
                         <a href=" <?php echo base_url('/RecuperarClave_c') ?>">Recuperar contraseña</a>
                     </div>

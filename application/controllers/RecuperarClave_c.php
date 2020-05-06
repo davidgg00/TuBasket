@@ -19,7 +19,7 @@ class RecuperarClave_c extends CI_Controller
     public function recuperarclave()
     {
         //Primero de todo vamos a comprobar si el email existe
-        if ($this->RecuperarClave_m->existeEmail($_POST['email'])) {
+        if ($this->RecuperarClave_m->existeEmailCuenta($_POST['email'])) {
             $email = $_POST['email'];
             //Generamos un token de longitud 100
             $token = bin2hex(random_bytes("100"));

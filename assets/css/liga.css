@@ -41,22 +41,20 @@ aside {
     height: calc(100% - 86.66px - 52px);
 }
 
+#foto-perfil {
+    width: 130px;
+    height: 150px;
+}
+
 footer {
     background: #23282D;
     color: white;
     padding: 10px;
 }
 
-#partido {
-    border: 3px solid black;
-}
-
 #partido img {
     width: 150px;
-}
-
-#partido p {
-    font-weight: bold;
+    height: 150px;
 }
 
 #proxpartido {

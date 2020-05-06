@@ -99,59 +99,16 @@ class Partidos_c extends CI_Controller
 
         $mpdf = new \Mpdf\Mpdf(['margin_left' => 0, 'margin_right' => 0, 'margin_top' => 0, 'margin_bottom' => 0, 'margin_header' => 0, 'margin_footer' => 0, 'dpi' => 100]);
         $mpdf->AddPage('L'); // Adds a new page in Landscape orientation
-        $html =
-            "<style>
-
-            #equipos {
-                width: 290mm;
-                margin: 0 auto;
-                height: 60mm;
-            }
-        
-            .equipo {
-                width: 95mm;
-                float: left;
-                text-align:center;
-                height: 60mm;
-            }
-
-            #img-vs {
-                margin-top:10mm;
-            }
-        
-            img {
-                display: block;
-                width: 150px;
-                height: 150px;
-                margin: 0 auto;
-            }
-        
-            div.equipo p {
-                width: 100%;
-                text-align: center;
-            }
-
-            #jugadores_stats {
-                width: 290mm;
-                height: 140mm;
-                border:2px solid green;
-            }
-        
-            table {
-                width: 290mm;
-            }
-            tr td {
-                text-align: center;
-            }
-
-            tr td input {
-                text-align: center;
-                border: 0;
-            }
-            </style>";
+        $partido = $this->Partidos_m->getPartido($idpartido);
+        $jugadores = $this->Partidos_m->getJugadoresPartidos($idpartido);
+        $html = "
+        <style>body{box-sizing: border-box;}#contenedor{width: 100%; background: url(" . base_url('assets/img/background-liga.jpg') . ");}#partido{background-color: rgb(35,40,45); margin: 0 auto; width: 100%; padding: 0; height: 100%;}#plataforma{margin: 0 auto; text-align: center; background-color: rgb(35,40,45); width: 100%;}#logo{width: 200px;}#contenedor-equipos{width: 90%; height:25%; margin: 0 auto; background-color: white;}#equipos{width: 100%; float: left;}.equipo{width: 33.14%; height: 35%; border: 1px solid black; float: left; text-align: center;}.escudo{width: 175px; height: 180px;}.vs{margin-top: 50px;}.equipo p{width: 100%; text-align: center;}.resultado{font-size: 20px;}#jugadores_stats{background-color: white; margin: 0 auto; text-align: center; width: 90%; height: 48.6%;}#titulos{width: 100%; margin: 0 auto;}.titulo{float: left; width: 14.28%; font-size: 14px;}#titulos div{width: 14.28%; border-bottom: 1px solid black; float: left; font-size: 14px; margin-bottom: 7px;}#titulos div:last-child{margin-bottom: 0px;}</style> <div id='partido'> <div id='plataforma'> <img id='logo' src='" . base_url('assets/img/logo2.png') . "'> </div><div id='contenedor'> <div id='contenedor-equipos'> <div id='equipos'> <div class='equipo'> <img class='escudo' src='" . base_url($partido->escudo_local) . "'> <p>$partido->equipo_local</p><p class='resultado'>$partido->resultado_local</p></div><div class='equipo'> <img class='escudo vs' src='" . base_url('assets/img/vs.png') . "'> </div><div class='equipo'> <img class='escudo' src='" . base_url($partido->escudo_visitante) . "'> <p>$partido->equipo_visitante</p><p class='resultado'>$partido->resultado_visitante</p></div></div></div><div id='jugadores_stats'> <div id='titulos'><div class='titulo'>Jugador</div><div class='titulo'>Equipo</div><div class='titulo'>Triples Metidos</div><div class='titulo'>Tiros de 2 Metidos</div><div class='titulo'>Tiros libres metidos</div><div class='titulo'>Tapones</div><div class='titulo'>Robos</div>";
+        foreach ($jugadores as $jugador) {
+            $html .= "<div>$jugador->apenom</div><div>$jugador->equipo</div><div>$jugador->triples_metidos</div><div>$jugador->tiros_2_metidos</div><div>$jugador->tiros_libres_metidos</div><div>$jugador->tapones</div><div>$jugador->robos</div>";
+        }
+        $html .= "</div></div></div></div>";
         $resultado = preg_replace('/<button id="boton" type="button" class="btn btn-outline-success btn-lg mx-auto">Guardar Partido<\/button>/i', '', $documento);
         $resultado = preg_replace('/<td class="d-none">(.*?)<\/td>/i', '', $resultado);
-        $html .= $resultado;
         $mpdf->WriteHTML($html);
         $mpdf->Output('C:/xampp/htdocs/TuBasket/assets/pdfPartidos/' . $idpartido . '.pdf', 'F');
     }
@@ -194,5 +151,113 @@ class Partidos_c extends CI_Controller
         $this->email->message("Partido disputado el $datos_partido->fecha a las $datos_partido->hora de la liga $datos_partido->liga");
         // Enviamos EMAIL
         $this->email->send();
+    }
+
+    public function prueba($idpartido)
+    {
+        $partido = $this->Partidos_m->getPartido($idpartido);
+        $jugadores = $this->Partidos_m->getJugadoresPartidos($idpartido);
+        $html = "
+        <style>
+        body{
+            box-sizing: border-box;
+            background: #23282D;
+        }
+        #partido {
+            background-color: white;
+            margin: 0 auto;
+            width: 90%;
+            padding: 0;
+            height: 100%;
+        }
+
+        #plataforma {
+            width: 50%;
+            margin: 0 auto;
+            height: 20%;
+            border: 1px solid red;
+            text-align: center;
+        }
+
+        #logo {
+            width: 200px;
+        }
+
+        #contenedor-equipos{
+            width: 90%;
+            height:40%;
+            margin: 0 auto;
+        }
+
+        #equipos {
+            width: 100%;
+            float: left;
+        }
+
+        .equipo {
+            width: 33%;
+            height: 50%;
+            border: 1px solid black;
+            float: left;
+        }
+        .equipo p {
+            width: 100%;
+            text-align: center;
+        }
+
+        #jugadores_stats {
+            height:45%;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        #titulos {
+            width: 90%;
+            margin: 0 auto;
+            border: 1px solid black;
+        }
+        
+        .titulo {
+            float: left;
+            width: 14.28%;
+            font-size: 14px;
+        }
+
+        #titulos div {
+            width: 14.28%; 
+            border-bottom: 1px solid black;
+            float: left;
+            font-size: 14px;
+        }
+        </style>
+        <div id='partido'>
+        <div id='plataforma'>
+        <img id='logo' src='" . base_url('assets/img/logo2.png') . "'>
+        </div>
+        <div id='contenedor-equipos'>
+        <div id='equipos'>
+        <div class='equipo'>
+        <img src='" . base_url($partido->escudo_local) . "'>
+        <p>$partido->equipo_local</p>
+        <p>$partido->resultado_local</p>
+        </div>
+        <div class='equipo'>
+        <img src='" . base_url('assets/img/vs.png') . "'>
+        </div>
+        <div class='equipo'>
+        <img src='" . base_url($partido->escudo_visitante) . "'>
+        <p>$partido->equipo_visitante</p>
+        <p>$partido->resultado_visitante</p>
+        </div>
+        </div>
+        </div>
+        <div id='jugadores_stats'>
+        <div id='titulos'><div class='titulo'>Jugador</div><div class='titulo'>Equipo</div><div class='titulo'>Triples Metidos</div><div class='titulo'>Tiros de 2 Metidos</div><div class='titulo'>Tiros libres metidos</div><div class='titulo'>Tapones</div><div class='titulo'>Robos</div>
+        ";
+        foreach ($jugadores as $jugador) {
+            $html .= "<div>$jugador->apenom</div><div>$jugador->equipo</div><div>$jugador->triples_metidos</div><div>$jugador->tiros_2_metidos</div><div>$jugador->tiros_libres_metidos</div><div>$jugador->tapones</div><div>$jugador->robos</div>";
+        }
+        $html .= "</div></div></div>";
+        echo $html;
     }
 }

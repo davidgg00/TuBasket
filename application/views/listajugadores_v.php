@@ -51,7 +51,8 @@
     }
 
     td img {
-        width: 100px;
+        width: 110px;
+        height: 120px;
     }
 
     #alerta-comparar {
@@ -78,7 +79,7 @@
                     <tr class="text-center">
                         <td style="display:none;"><?= $jugador->username ?></td>
                         <td>
-                            <img class="img-fluid" src="<?= base_url($jugador->foto_perfil) ?>" alt="">
+                            <img class="img-fluid rounded-circle" src="<?= base_url($jugador->foto_perfil) ?>" alt="">
                         </td>
                         <td><?= $jugador->apenom ?></td>
                         <td><?= $jugador->fecha_nac ?></td>
