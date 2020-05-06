@@ -140,8 +140,14 @@ class Partidos_c extends CI_Controller
         //Añadimos también al array a los entrenadores
         $entrenadorlocal = $this->Partidos_m->getEmailEntrenador($datos_partido->id_local);
         $entrenadorvisitante = $this->Partidos_m->getEmailEntrenador($datos_partido->id_visitante);
-        array_push($array_emails, $entrenadorlocal->email);
-        array_push($array_emails, $entrenadorvisitante->email);
+        if (isset($entrenadorlocal)) {
+            array_push($array_emails, $entrenadorlocal->email);
+        }
+        if (isset($entrenadorvisitante)) {
+            array_push($array_emails, $entrenadorvisitante->email);
+        }
+
+
 
         // Añadimos el array como destinatario
         $this->email->to($array_emails);
@@ -153,111 +159,12 @@ class Partidos_c extends CI_Controller
         $this->email->send();
     }
 
-    public function prueba($idpartido)
+    public function prueba($id)
     {
-        $partido = $this->Partidos_m->getPartido($idpartido);
-        $jugadores = $this->Partidos_m->getJugadoresPartidos($idpartido);
-        $html = "
-        <style>
-        body{
-            box-sizing: border-box;
-            background: #23282D;
-        }
-        #partido {
-            background-color: white;
-            margin: 0 auto;
-            width: 90%;
-            padding: 0;
-            height: 100%;
-        }
-
-        #plataforma {
-            width: 50%;
-            margin: 0 auto;
-            height: 20%;
-            border: 1px solid red;
-            text-align: center;
-        }
-
-        #logo {
-            width: 200px;
-        }
-
-        #contenedor-equipos{
-            width: 90%;
-            height:40%;
-            margin: 0 auto;
-        }
-
-        #equipos {
-            width: 100%;
-            float: left;
-        }
-
-        .equipo {
-            width: 33%;
-            height: 50%;
-            border: 1px solid black;
-            float: left;
-        }
-        .equipo p {
-            width: 100%;
-            text-align: center;
-        }
-
-        #jugadores_stats {
-            height:45%;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        #titulos {
-            width: 90%;
-            margin: 0 auto;
-            border: 1px solid black;
-        }
-        
-        .titulo {
-            float: left;
-            width: 14.28%;
-            font-size: 14px;
-        }
-
-        #titulos div {
-            width: 14.28%; 
-            border-bottom: 1px solid black;
-            float: left;
-            font-size: 14px;
-        }
-        </style>
-        <div id='partido'>
-        <div id='plataforma'>
-        <img id='logo' src='" . base_url('assets/img/logo2.png') . "'>
-        </div>
-        <div id='contenedor-equipos'>
-        <div id='equipos'>
-        <div class='equipo'>
-        <img src='" . base_url($partido->escudo_local) . "'>
-        <p>$partido->equipo_local</p>
-        <p>$partido->resultado_local</p>
-        </div>
-        <div class='equipo'>
-        <img src='" . base_url('assets/img/vs.png') . "'>
-        </div>
-        <div class='equipo'>
-        <img src='" . base_url($partido->escudo_visitante) . "'>
-        <p>$partido->equipo_visitante</p>
-        <p>$partido->resultado_visitante</p>
-        </div>
-        </div>
-        </div>
-        <div id='jugadores_stats'>
-        <div id='titulos'><div class='titulo'>Jugador</div><div class='titulo'>Equipo</div><div class='titulo'>Triples Metidos</div><div class='titulo'>Tiros de 2 Metidos</div><div class='titulo'>Tiros libres metidos</div><div class='titulo'>Tapones</div><div class='titulo'>Robos</div>
-        ";
-        foreach ($jugadores as $jugador) {
-            $html .= "<div>$jugador->apenom</div><div>$jugador->equipo</div><div>$jugador->triples_metidos</div><div>$jugador->tiros_2_metidos</div><div>$jugador->tiros_libres_metidos</div><div>$jugador->tapones</div><div>$jugador->robos</div>";
-        }
-        $html .= "</div></div></div>";
-        echo $html;
+        $datos_partido = $this->Partidos_m->getPartido($id);
+        $entrenadorlocal = $this->Partidos_m->getEmailEntrenador($datos_partido->id_local);
+        $entrenadorvisitante = $this->Partidos_m->getEmailEntrenador($datos_partido->id_visitante);
+        print_r($entrenadorlocal->email);
+        print_r($entrenadorvisitante->email);
     }
 }
