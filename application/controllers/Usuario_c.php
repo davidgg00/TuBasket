@@ -83,18 +83,6 @@ class Usuario_c extends CI_Controller
         $this->load->view("modulos/footer");
     }
 
-    //Función que devuelve el calendario de partidos y nos la muestra en una vista.
-    public function partidos()
-    {
-        $datos["liga"] = $_SESSION["liga"];
-        $datos["partidos"] = self::mostrarPartidos($_SESSION["liga"]);
-        $datos["nequipos"] = self::numeroEquiposLiga($_SESSION["liga"]);
-        $this->load->view("modulos/head", array("css" => array("liga", "partidos")));
-        $this->load->view("modulos/header", $datos);
-        $this->load->view('partidos_v');
-        $this->load->view("modulos/footer");
-    }
-
     public function listaJugadores()
     {
         $this->load->model("GestionJugadores_m");
@@ -110,7 +98,7 @@ class Usuario_c extends CI_Controller
 
     public function notificaciones()
     {
-        $datos["fichajes_pendientes"] = self::fichajesPendiente();
+        $datos["fichajes"] = self::verFichajes();
         $datos["liga"] = $_SESSION["liga"];
         $this->load->view("modulos/head", array("css" => array("liga", "notificaciones")));
         $this->load->view("modulos/header", $datos);
@@ -255,9 +243,9 @@ class Usuario_c extends CI_Controller
         echo $mensaje;
     }
 
-    public function fichajesPendiente()
+    public function verFichajes()
     {
-        $datos = $this->Entrenador_m->verFichajesPendientes($_SESSION["equipo"]);
+        $datos = $this->Entrenador_m->verFichajes($_SESSION["equipo"]);
         return $datos;
     }
 

@@ -58,13 +58,14 @@ class Entrenador_m extends CI_Model
         }
     }
 
-    public function verFichajesPendientes($idequipo)
+    public function verFichajes($idequipo)
     {
-        $this->db->select('e.equipo AS `solicitante`, f.username_jugador1 AS `pide`, f.username_jugador2 AS `ofrece`, e2.equipo AS `equipo`, f.id as `idfichaje`');
+        $this->db->select('e.id as `idEquipoSolicitante` , e.equipo AS `equipoSolicitante`, f.username_jugador1 AS `pide`,u.imagen as `img_jugador_pide`, f.username_jugador2 AS `ofrece`, u2.imagen as `img_jugador_ofrece`, e2.id AS `idEquipoRecibe`,e2.equipo AS `equipoRecibe`, f.id as `idfichaje`, f.estado as `estado`, f.leido as `leido`');
         $this->db->from('fichajes f');
         $this->db->join('equipo e', 'e.id = f.IdEquipoSolicita');
         $this->db->join('equipo e2', 'e2.id = f.IdEquipoRecibe');
-        $this->db->where('f.estado', "PENDIENTE");
+        $this->db->join('usuarios u', 'u.username = f.username_jugador1');
+        $this->db->join('usuarios u2', 'u2.username = f.username_jugador2');
         $this->db->where('f.IdEquipoRecibe', $idequipo);
         $resultado = $this->db->get();
         return $resultado->result();

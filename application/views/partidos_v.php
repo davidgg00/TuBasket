@@ -67,7 +67,7 @@
         $(".fa-edit").on("click", function() {
             id = $(this).data('id');
             //Al hacer click te redirige al partido.
-            window.location.href = "<?php echo base_url('Partidos_c/resultadoPartido/' . $liga) ?>" + "/" + id + "";
+            window.location.href = "<?php echo base_url('Admin_c/partido/' . $liga) ?>" + "/" + id + "";
         });
 
         //Añadimos el tooltip al .fa-edit

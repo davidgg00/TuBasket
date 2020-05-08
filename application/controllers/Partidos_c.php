@@ -10,17 +10,46 @@ class Partidos_c extends CI_Controller
         $this->load->model("Partidos_m");
     }
 
+    //Función que devuelve el calendario de partidos y nos la muestra en una vista.
+    public function partidos($liga = null)
+    {
+        //Si no se pasa ningún parámetro es que el nombre de liga lo tenemos en la sesión (cuentas jugador y entrenador)
+        if ($liga == null) {
+            $liga = $_SESSION['liga'];
+        }
+        $datos["liga"] = $liga;
+        $datos["partidos"] = self::mostrarPartidos($liga);
+        $datos["nequipos"] = self::numeroEquiposLiga($liga);
+        $this->load->view("modulos/head", array("css" => array("liga", "partidos")));
+        $this->load->view("modulos/header", $datos);
+        $this->load->view('partidos_v');
+        $this->load->view("modulos/footer");
+    }
+
+    //Función que devuelve el calendario de partidos de una liga
+    public function mostrarPartidos($liga)
+    {
+        $partidos = $this->Partidos_m->getPartidos($liga);
+        return $partidos->result();
+    }
+
+    public function numeroEquiposLiga($liga)
+    {
+        $nequipos = $this->Partidos_m->getNumEquipos($liga);
+        return $nequipos;
+    }
+
     //MÉTODOS PARTIDO INDIVIDUAL SELECCIONADO
     public function getJugadoresPartidos($id)
     {
         $partidos = $this->Partidos_m->getJugadoresPartidos($id);
-        echo json_encode($partidos);
+        return $partidos;
     }
 
     public function getPartido($id)
     {
         $partido = $this->Partidos_m->getPartido($id);
-        echo json_encode($partido);
+        return $partido;
     }
 
     public function insertarResultadoEquipos()
@@ -53,10 +82,12 @@ class Partidos_c extends CI_Controller
         }
     }
 
-    function resultadoPartido($liga, $id)
+    public function resultadoPartido($liga, $id)
     {
         $datos['liga'] = $liga;
         $datos['id'] = $id;
+        $datos['equipos'] = self::getPartido($id);
+        $datos['jugadores'] = self::getJugadoresPartidos($id);
         $this->load->view("modulos/head", array("css" => array("liga", "partido")));
         $this->load->view("modulos/header", $datos);
         $this->load->view("partido_v");
@@ -147,8 +178,6 @@ class Partidos_c extends CI_Controller
             array_push($array_emails, $entrenadorvisitante->email);
         }
 
-
-
         // Añadimos el array como destinatario
         $this->email->to($array_emails);
         // Asunto del email
@@ -157,14 +186,5 @@ class Partidos_c extends CI_Controller
         $this->email->message("Partido disputado el $datos_partido->fecha a las $datos_partido->hora de la liga $datos_partido->liga");
         // Enviamos EMAIL
         $this->email->send();
-    }
-
-    public function prueba($id)
-    {
-        $datos_partido = $this->Partidos_m->getPartido($id);
-        $entrenadorlocal = $this->Partidos_m->getEmailEntrenador($datos_partido->id_local);
-        $entrenadorvisitante = $this->Partidos_m->getEmailEntrenador($datos_partido->id_visitante);
-        print_r($entrenadorlocal->email);
-        print_r($entrenadorvisitante->email);
     }
 }

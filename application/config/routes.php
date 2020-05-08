@@ -52,3 +52,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 $route['default_controller'] = 'Login_c';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+
+$route['Admin_c/partido/(:any)/(:num)'] = 'Partidos_c/resultadoPartido/$1/$2';
+
+$route['Admin_c/partidos/(:any)'] = 'Partidos_c/partidos/$1';
+
+$route['Usuario_c/partidos'] = 'Partidos_c/partidos';
