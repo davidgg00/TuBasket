@@ -1,34 +1,33 @@
 body {
     height: 100vh;
 }
-
+* {
+    box-sizing: border-box;
+}
 .row {
     flex: 0;
 }
 
-#lista_equipos {
+#contenedor {
     padding: 10px;
     background:  rgba(255, 255, 255, 0.6);
-    height: 60%;
+    height: 70%;
 }
-
-#equipos {
-    height: calc(100% - 33px);
+ 
+#lista_equipos {
+    height: calc(100% - 38px);
+    width: 100%;
 }
 
 .equipo {
-    width: 17%;
-    height: 40%;
-}
-
-.equipo a {
-    width: 80%;
-    height: calc(100% - 24px)
+   min-width: 20%;
+   max-width: fit-content;
+   height: 50%;
 }
 
 .equipo a img {
-    width: 100%;
-    height: 100%;
+    width: 110px;
+    height: 140px;
 }
 
 .equipo p {
