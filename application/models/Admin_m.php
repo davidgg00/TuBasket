@@ -54,4 +54,21 @@ class Admin_m extends CI_Model
         //Retornamos el numero de filas
         return $query->num_rows();
     }
+
+    public function updateAdmin($apenom, $email, $fechanac, $path = null)
+    {
+        $this->db->set('apenom', $apenom);
+        $this->db->set('email', $email);
+        $this->db->set('fecha_nac', $fechanac);
+        if ($path != null) {
+            $this->db->set('imagen', $path);
+        }
+        $this->db->where('username', $_SESSION['username']);
+        $this->db->update('usuarios');
+
+        //Reemplazamos las variables de sesión
+        $this->session->set_userdata('apenom', $apenom);
+        $this->session->set_userdata('email', $email);
+        $this->session->set_userdata('fecha_nac', $fechanac);
+    }
 }

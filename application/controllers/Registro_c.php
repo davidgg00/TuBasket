@@ -57,6 +57,7 @@ class Registro_c extends CI_Controller
                 'email' => $this->input->post()['email'],
                 'apenom' => $this->input->post()['apenom'],
                 'fecha_nac' => $this->input->post()['fecha_nac'],
+                'imagen' => "assets/uploads/perfiles/pordefecto.png"
             );
             //Los insertamos y redirigimos al login
             $this->Registro_m->insert_admin($datos_post);

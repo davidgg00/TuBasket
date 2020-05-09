@@ -96,9 +96,34 @@ class Admin_c extends CI_Controller
 
     public function getPartidosCarrusel($liga)
     {
-
         //Obtenemos las ligas para después mostrarlas en la linea 21
         $resultado = $this->Admin_m->getProx5Partidos($liga);
         return $resultado;
+    }
+
+    //Función que actualiza los datos de perfil del admin.
+    public function updateAdmin()
+    {
+        //Si se sube archivo
+        if ($_FILES['fotoperfil']['name']) {
+            $img = $_FILES['fotoperfil']['name'];
+            $tmp = $_FILES['fotoperfil']['tmp_name'];
+            $nombre_imagen = $img;
+            $path = "assets/uploads/perfiles/" . rand(1, 1000) . $nombre_imagen;
+            move_uploaded_file($tmp, $path);
+
+            if ($_SESSION['imagen'] != "assets/uploads/perfiles/pordefecto.png") {
+                unlink($_SESSION['imagen']);
+            }
+            //Modificamos la variable de sesión que tiene la foto de perfil
+            $_SESSION['imagen'] = $path;
+        }
+        //Si existe $path 
+        if (isset($path)) {
+            $this->Admin_m->updateAdmin($_POST['apenom'], $_POST['email'], $_POST['fecha_nac'], $path);
+        } else {
+            $this->Admin_m->updateAdmin($_POST['apenom'], $_POST['email'], $_POST['fecha_nac'], $path = null);
+        }
+        echo $path;
     }
 }

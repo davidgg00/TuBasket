@@ -33,7 +33,8 @@ class Login_c extends CI_Controller
                     'email' => $cuenta->email,
                     'apenom' => $cuenta->apenom,
                     'fecha_nac' => $cuenta->fecha_nac,
-                    'tipo_cuenta' => "Admin"
+                    'tipo_cuenta' => "Admin",
+                    'imagen' => $cuenta->imagen
                 );
                 //Creamos la session con los datos
                 $this->session->set_userdata($array);

@@ -44,9 +44,15 @@
         })
 
         $("#btn-guardarcambios").on("click", function(evento) {
+            let metodo;
             //Si al guardar los cambios del perfil no se ha modificado la contraseña
+            if ("<?= $_SESSION['tipo_cuenta'] ?>" == "Admin") {
+                metodo = "Admin_c/updateAdmin";
+            } else {
+                metodo = "Usuario_c/updateUsuario";
+            }
             $.ajax({
-                url: "<?php echo base_url() ?>" + "Usuario_c/updateUsuario",
+                url: "<?php echo base_url() ?>" + metodo,
                 type: "POST",
                 //El Objeto formdata nos permite transmitir nuestros datos en una codificación multipart/form-data
                 //Además que nos facilita bastante la subida de archivos a través de un <input type="file">
@@ -58,8 +64,9 @@
                      **pero para que aparezca la foto habría que recargar la página así que vamos a modificar a mano la foto de perfil
                      **Y ya cuando se mueva por la página se le habrá actualizado el $_SESSION */
                     if (response != "") {
+                        let url = "<?= base_url() ?>" + response;
                         console.log(response);
-                        $('#foto-perfil').attr('src', response);
+                        $('#foto-perfil').attr('src', url);
                     }
                     Swal.fire({
                         backdrop: false,
