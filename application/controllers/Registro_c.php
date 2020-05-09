@@ -54,9 +54,13 @@ class Registro_c extends CI_Controller
             $datos_post = array(
                 'username' => $this->input->post()['username'],
                 'password' => hash("sha512", $this->input->post()['password']),
+                'tipo' => 'Administrador',
                 'email' => $this->input->post()['email'],
                 'apenom' => $this->input->post()['apenom'],
                 'fecha_nac' => $this->input->post()['fecha_nac'],
+                'liga' => null,
+                'equipo'  => null,
+                'validado' => '1',
                 'imagen' => "assets/uploads/perfiles/pordefecto.png"
             );
             //Los insertamos y redirigimos al login

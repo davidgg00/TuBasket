@@ -50,18 +50,35 @@
             <div class="carousel-inner">
                 <h3 class="col-12 text-center">Liga: <?= $liga ?></h3>
                 <h3 class="col-12 text-center">Próximos Partidos</h3>
-                <?php foreach ($proxPartidos as $partido) : ?>
+                <?php if (count($proxPartidos) > 0) :
+                    foreach ($proxPartidos as $partido) : ?>
+                        <div class="carousel-item">
+                            <div id="partido" class="col-12 d-flex justify-content-around h-50">
+                                <img src="<?php echo base_url($partido->escudo_local) ?>" class="img-fluid">
+                                <img src="<?php echo base_url('assets/img/vs.png') ?>" class="img-fluid">
+                                <img src="<?php echo base_url($partido->escudo_visitante) ?>" class="img-fluid">
+                            </div>
+                            <p id="lugar" class="col-12 text-center">Jornada: <?= $partido->jornada ?></p>
+                            <p id="fecha" class="col-12 text-center">Fecha: <?= date("d-m-Y", strtotime($partido->fecha)) ?></p>
+                            <p id="hora" class="col-12 text-center">Hora: <?= $partido->hora ?></p>
+                        </div>
+                    <?php endforeach;
+                else : ?>
                     <div class="carousel-item">
                         <div id="partido" class="col-12 d-flex justify-content-around h-50">
-                            <img src="<?php echo base_url($partido->escudo_local) ?>" class="img-fluid">
+                            <img src="<?php echo base_url('assets/img/escudo-por-defecto.png') ?>" class="img-fluid">
                             <img src="<?php echo base_url('assets/img/vs.png') ?>" class="img-fluid">
-                            <img src="<?php echo base_url($partido->escudo_visitante) ?>" class="img-fluid">
+                            <img src="<?php echo base_url('assets/img/escudo-por-defecto.png') ?>" class="img-fluid">
                         </div>
-                        <p id="lugar" class="col-12 text-center">Jornada: <?= $partido->jornada ?></p>
-                        <p id="fecha" class="col-12 text-center">Fecha: <?= date("d-m-Y", strtotime($partido->fecha)) ?></p>
-                        <p id="hora" class="col-12 text-center">Hora: <?= $partido->hora ?></p>
+                        <?php if (isset($partido)) : ?>
+                            <p id="lugar" class="col-12 text-center">Jornada: <?= $partido->jornada ?></p>
+                            <p id="fecha" class="col-12 text-center">Fecha: <?= date("d-m-Y", strtotime($partido->fecha)) ?></p>
+                            <p id="hora" class="col-12 text-center">Hora: <?= $partido->hora ?></p>
+                        <?php else : ?>
+                            <h4 class="col-12 text-center mt-4">¡Liga no empezada!</h4>
+                        <?php endif; ?>
                     </div>
-                <?php endforeach; ?>
+                <?php endif; ?>
             </div>
             <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>

@@ -23,7 +23,7 @@
                 <a href="<?php echo base_url('Usuario_c/cerrarsesion') ?>"><img src="<?php echo base_url('assets/img/cerrarsesion2.png') ?>" class="img-fluid rounded-circle"></a>
                 <?php break; ?>
             <?php
-            case 'Admin': ?>
+            case 'Administrador': ?>
                 <a href="<?php echo base_url('Admin_c/index/' . $liga) ?>">Inicio</a>
                 <a href="<?php echo base_url('Admin_c/gestEquipo/' . $liga) ?>">Gestionar Equipos</a>
                 <a href="<?php echo base_url('Admin_c/gestJugadores/' . $liga) ?>">Gestionar Jugadores</a>

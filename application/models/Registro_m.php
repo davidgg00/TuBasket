@@ -10,7 +10,7 @@ class Registro_m extends CI_Model
 
     public function insert_admin($datos)
     {
-        $this->db->insert('admin', $datos);
+        $this->db->insert('usuarios', $datos);
     }
 
     public function insert_jugador($datos)
@@ -32,28 +32,20 @@ class Registro_m extends CI_Model
 
     public function select_username($username)
     {
-        //Comprobamos si existe el email tanto de cuenta administrador como de cuenta jugador
-        $queryAdmin = $this->db->get_where('admin', array('username' => $username))->row();
-        $queryUsuarios = $this->db->get_where('usuarios', array('username' => $username))->row();
-        if ($queryAdmin) {
-            return $queryAdmin;
-        }
-        if ($queryUsuarios) {
-            return $queryUsuarios;
+        //Comprobamos si existe el username
+        $query = $this->db->get_where('usuarios', array('username' => $username))->row();
+        if ($query) {
+            return $query;
         }
     }
 
 
     public function select_email($email)
     {
-        //Comprobamos si existe el email tanto de cuenta administrador como de cuenta jugador
-        $queryAdmin = $this->db->get_where('admin', array('email' => $email))->row();
-        $queryUsuarios = $this->db->get_where('usuarios', array('email' => $email))->row();
-        if ($queryAdmin) {
-            return $queryAdmin;
-        }
-        if ($queryUsuarios) {
-            return $queryUsuarios;
+        //Comprobamos si existe el email
+        $query = $this->db->get_where('usuarios', array('email' => $email))->row();
+        if ($query) {
+            return $query;
         }
     }
 }

@@ -26,14 +26,14 @@ class Login_c extends CI_Controller
             if (($cuenta->tipo == "Jugador" || $cuenta->tipo == "Entrenador") && $cuenta->equipo != null && $cuenta->validado == 0) {
                 $this->session->set_flashdata('error', 'No estás confirmado en la plataforma, debes de esperar a que el administrador te acepte');
                 redirect(base_url());
-            } else if (!isset($cuenta->tipo)) {
-                //Si no existe el campo "tipo" es que es una cuenta admin
+            } else if ($cuenta->tipo == "Administrador") {
+                //si es un administrador creamos las variables de sesion y redirigimos
                 $array = array(
                     'username' => $cuenta->username,
                     'email' => $cuenta->email,
                     'apenom' => $cuenta->apenom,
                     'fecha_nac' => $cuenta->fecha_nac,
-                    'tipo_cuenta' => "Admin",
+                    'tipo_cuenta' => "$cuenta->tipo",
                     'imagen' => $cuenta->imagen
                 );
                 //Creamos la session con los datos

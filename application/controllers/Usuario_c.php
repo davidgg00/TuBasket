@@ -262,7 +262,7 @@ class Usuario_c extends CI_Controller
     public function updateClave()
     {
 
-        $datos = $this->Jugador_m->actualizarClave(hash("sha512", $_POST["claveAntigua"]), hash("sha512", $_POST["claveNueva"]), $_POST["cuenta"], $_POST["username"]);
+        $datos = $this->Jugador_m->actualizarClave(hash("sha512", $_POST["claveAntigua"]), hash("sha512", $_POST["claveNueva"]), $_POST["username"]);
         if (!$datos) {
             echo "Error";
         }

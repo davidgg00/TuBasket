@@ -80,6 +80,8 @@ class Partidos_c extends CI_Controller
                 $this->Partidos_m->insertPartidos($local, $visitante, $jornada, $liga);
             }
         }
+
+        redirect('Admin_c/partidos/' . $liga);
     }
 
     public function resultadoPartido($liga, $id)

@@ -17,19 +17,19 @@
         </div>
         <div id="estadistica_media" class="w-50">
             <h2 class="text-center">Estadísticas Media</h2>
-            <h4>Triples metidos: <?= ($estadisticas->triples) ?  $estadisticas->triples / $estadisticas->partidos_jugados : "N/A"; ?></h4>
-            <h4>Tiros de 2 metidos: <?= ($estadisticas->tiros_2) ? $estadisticas->tiros_2 / $estadisticas->partidos_jugados : "N/A"; ?></h4>
-            <h4>Tiros libres metidos: <?= ($estadisticas->tiros_libres) ? $estadisticas->tiros_libres / $estadisticas->partidos_jugados : "N/A"; ?></h4>
-            <h4>Tapones: <?= ($estadisticas->tapones) ? $estadisticas->tapones / $estadisticas->partidos_jugados : "N/A"; ?></h4>
-            <h4>Robos: <?= ($estadisticas->robos) ? $estadisticas->robos / $estadisticas->partidos_jugados : "N/A"; ?></h4>
+            <h4>Triples metidos: <?= ($estadisticas->triples > -1) ?  $estadisticas->triples / $estadisticas->partidos_jugados : "N/A"; ?></h4>
+            <h4>Tiros de 2 metidos: <?= ($estadisticas->tiros_2 > -1) ? $estadisticas->tiros_2 / $estadisticas->partidos_jugados : "N/A"; ?></h4>
+            <h4>Tiros libres metidos: <?= ($estadisticas->tiros_libres > -1) ? $estadisticas->tiros_libres / $estadisticas->partidos_jugados : "N/A"; ?></h4>
+            <h4>Tapones: <?= ($estadisticas->tapones > -1) ? $estadisticas->tapones / $estadisticas->partidos_jugados : "N/A"; ?></h4>
+            <h4>Robos: <?= ($estadisticas->robos > -1) ? $estadisticas->robos / $estadisticas->partidos_jugados : "N/A"; ?></h4>
         </div>
         <div id="estadistica_total" class="w-50">
             <h2 class="text-center">Estadisticas Totales</h2>
-            <h4>Triples metidos: <?= ($estadisticas->triples) ? $estadisticas->triples : "N/A" ?></h4>
-            <h4>Tiros de 2 metidos: <?= ($estadisticas->tiros_2) ? $estadisticas->tiros_2 : "N/A" ?></h4>
-            <h4>Tiros libres metidos: <?= ($estadisticas->tiros_libres) ? $estadisticas->tiros_libres : "N/A" ?></h4>
-            <h4>Tapones: <?= ($estadisticas->tapones) ? $estadisticas->tapones : "N/A" ?></h4>
-            <h4>Robos: <?= ($estadisticas->robos) ? $estadisticas->robos : "N/A" ?></h4>
+            <h4>Triples metidos: <?= ($estadisticas->triples > -1) ? $estadisticas->triples : "N/A" ?></h4>
+            <h4>Tiros de 2 metidos: <?= ($estadisticas->tiros_2 > -1) ? $estadisticas->tiros_2 : "N/A" ?></h4>
+            <h4>Tiros libres metidos: <?= ($estadisticas->tiros_libres > -1) ? $estadisticas->tiros_libres : "N/A" ?></h4>
+            <h4>Tapones: <?= ($estadisticas->tapones > -1) ? $estadisticas->tapones : "N/A" ?></h4>
+            <h4>Robos: <?= ($estadisticas->robos > -1) ? $estadisticas->robos : "N/A" ?></h4>
         </div>
         <h3 class="mx-auto mt-3">Estadisticas partidos</h3>
         <div id="partidos" class="col-12">

@@ -26,8 +26,8 @@
             case 8:
                 for (let partido of partidos) {
                     //Si la cuenta es de tipo jugador la fila de modificar o resetear partido no debe de aparecer.
-                    $thaccion = ('<?php echo $_SESSION['tipo_cuenta'] ?>' == "Admin") ? "<th class='th-acccion'>Acción</th>" : "";
-                    $accion = ('<?php echo $_SESSION['tipo_cuenta'] ?>' == "Admin") ? "<td class='td-accion'><i class='fas fa-edit' data-id='" + partido.id + "' data-tippy-content='Haga click para escribir resultado'></i><i class='fas fa-sync btn-reset' data-id='" + partido.id + "'></i></td>" : "";
+                    $thaccion = ('<?php echo $_SESSION['tipo_cuenta'] ?>' == "Administrador") ? "<th class='th-acccion'>Acción</th>" : "";
+                    $accion = ('<?php echo $_SESSION['tipo_cuenta'] ?>' == "Administrador") ? "<td class='td-accion'><i class='fas fa-edit' data-id='" + partido.id + "' data-tippy-content='Haga click para escribir resultado'></i><i class='fas fa-sync btn-reset' data-id='" + partido.id + "'></i></td>" : "";
 
                     //Volteamos fecha debido al formato
                     let fechaArray = partido.fecha.split('-');
@@ -102,4 +102,8 @@
             );
         })
     </script>
+    <?php if (count($partidos) == 0) {
+        echo "<h2 class='col-12 text-center'>Liga no empezada!</h2>";
+        echo "<a href='" . base_url('Partidos_c/generarLiga/' . $liga) . "' class='col-12 text-center'>Generar Liga</a>";
+    } ?>
 </div>
