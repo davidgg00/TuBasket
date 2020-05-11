@@ -87,3 +87,15 @@ footer {
 #modalPerfil input {
     width: 50%;
 }
+
+.customPagination,
+.paginacionCursor {
+    margin: 20px 5px;
+    padding: 5px 8px;
+    color: #fff;
+    background: #880e4f;
+    cursor: pointer;
+    height: 34px;
+    width: 80px;
+    text-align: center;
+}

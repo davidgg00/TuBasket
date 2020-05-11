@@ -93,4 +93,5 @@
     </table>
     <div id="paginacion" class="col-10 mx-auto">
     </div>
+
 </div>

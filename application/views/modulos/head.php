@@ -29,6 +29,7 @@
     <!--PAGINATION-->
     <script src="<?php echo base_url('assets/js/pagination.min.js') ?>"></script>
     <script src="<?php echo base_url('assets/js/jquery.bootpag.min.js') ?>"></script>
+    <script src="<?php echo base_url('assets/js/HZpagination.js') ?>"></script>
     <!--Jquery UI-->
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
     <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>

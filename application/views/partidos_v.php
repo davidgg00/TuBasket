@@ -1,4 +1,4 @@
-<div class="row border mx-auto flex-wrap" id="contenedor">
+<div class="row border mx-auto flex-wrap paginacionWrapper" id="contenedor">
     <script>
         $(document).ready(function() {
             $("button#generarLiga").on("click", function(evento) {
@@ -37,7 +37,7 @@
 
                     //Si el partido es divisible entre 4 crear un nuevo div porque es nueva jornada (Solo funciona con ligas de 8 equipos)
                     if (npartido % 4 == 0 || npartido == 0) {
-                        $("#contenedor").append("<div class='jornada col-6 mt-2 table-responsive '><table class='table table-hover m-0 h-100 w-100'><thead><tr class='d-flex justify-content-center'><th colspan='6'>JORNADA " + jornada + "</th></tr><tr class='text-center d-flex'><th class='th-local text-center'>Local</th><th class='th-resultado text-center'>Resultado</th><th class='th-visitante text-center'>Visitante</th><th class='th-fecha'>Fecha</th><th class='th-hora'>Hora</th></th>" + $thaccion + "</tr></thead><tbody  id='jornada" + jornada + "'><tr class='text-center d-flex'><td class='td-local'>" + partido.equipo_local + "</td><td class='td-resultado'>" + resultado_completo + "</td><td class='td-visitante'>" + partido.equipo_visitante + "</td><td class='td-fecha'><input type='text' id='" + partido.id + "' class='datepick w-100 mx-auto' value='" + fecha + "' " + $disabled + "></td><td class='td-hora'><input id='" + partido.id + "' class='hora w-100 mx-auto text-center ' type='time' step='60' value='" + partido.hora + "'" + $disabled + "></td></td>" + $accion + "</tr></tbody></table></div>")
+                        $("#contenedor").append("<div class='itemPaginacion jornada col-6 mt-2 table-responsive h-25'><table class='table table-hover m-0 h-100 w-100'><thead><tr class='d-flex justify-content-center'><th colspan='6'>JORNADA " + jornada + "</th></tr><tr class='text-center d-flex'><th class='th-local text-center'>Local</th><th class='th-resultado text-center'>Resultado</th><th class='th-visitante text-center'>Visitante</th><th class='th-fecha'>Fecha</th><th class='th-hora'>Hora</th></th>" + $thaccion + "</tr></thead><tbody  id='jornada" + jornada + "'><tr class='text-center d-flex'><td class='td-local'>" + partido.equipo_local + "</td><td class='td-resultado'>" + resultado_completo + "</td><td class='td-visitante'>" + partido.equipo_visitante + "</td><td class='td-fecha'><input type='text' id='" + partido.id + "' class='datepick w-100 mx-auto' value='" + fecha + "' " + $disabled + "></td><td class='td-hora'><input id='" + partido.id + "' class='hora w-100 mx-auto text-center ' type='time' step='60' value='" + partido.hora + "'" + $disabled + "></td></td>" + $accion + "</tr></tbody></table></div>")
                         jornada++;
                     } else {
                         $("tbody").last().append("<tr class='text-center d-flex'><td class='d-flex align-items-center justify-content-center td-local'>" + partido.equipo_local + "</td><td class='d-flex align-items-center justify-content-center td-resultado'>" + resultado_completo + "</td><td class='d-flex align-items-center justify-content-center td-visitante'>" + partido.equipo_visitante + "</td><td class='d-flex align-items-center justify-content-center td-fecha'><p contenteditable='true'><input type='text' class='datepick w-100  mx-auto' id='" + partido.id + "' value='" + fecha + "' " + $disabled + "></p></td><td class='d-flex align-items-center justify-content-center td-hora'><input id='" + partido.id + "' class='hora w-100 mx-auto text-center ' type='time' step='60' value='" + partido.hora + "' " + $disabled + "></td></td>" + $accion + "</tr>")
@@ -55,7 +55,7 @@
 
                 //Si el partido es divisible entre 5 crear un nuevo div porque es nueva jornada (Solo funciona con ligas de 8 equipos)
                 if (npartido % 5 == 0 || npartido == 0) {
-                    $("#contenedor").append("<div class='jornada col-6 mt-2 table-responsive '><table class='table table-hover m-0 h-100'><thead><tr class='text-center'><th colspan='6'>JORNADA " + jornada + "</th></tr><tr class='text-center'><th class='td-local'>Local</th><th class='td-resultado'>Resultado</th><th class='td-visitante'>Visitante</th><th class='td-fecha'>Fecha</th><th class='td-hora'>Hora</th></th>" + $thaccion + "</tr></thead><tbody  id='jornada" + jornada + "'><tr class='text-center'><td>" + partido.equipo_local + "</td><td class='resultado'>" + resultado_completo + "</td><td>" + partido.equipo_visitante + "</td><td><input type='text' id='" + partido.id + "' class='datepick w-100  mx-auto' value='" + fecha + "' " + $disabled + "></td><td><input id='" + partido.id + "' class='hora w-100 mx-auto text-center ' type='time' step='60' value='" + partido.hora + "'" + $disabled + "></td></td>" + $accion + "</tr></tbody></table></div>");
+                    $("#contenedor").append("<div class='itemPaginacion jornada col-6 mt-2 table-responsive '><table class='table table-hover m-0 h-100'><thead><tr class='text-center'><th colspan='6'>JORNADA " + jornada + "</th></tr><tr class='text-center'><th class='td-local'>Local</th><th class='td-resultado'>Resultado</th><th class='td-visitante'>Visitante</th><th class='td-fecha'>Fecha</th><th class='td-hora'>Hora</th></th>" + $thaccion + "</tr></thead><tbody  id='jornada" + jornada + "'><tr class='text-center'><td>" + partido.equipo_local + "</td><td class='resultado'>" + resultado_completo + "</td><td>" + partido.equipo_visitante + "</td><td><input type='text' id='" + partido.id + "' class='datepick w-100  mx-auto' value='" + fecha + "' " + $disabled + "></td><td><input id='" + partido.id + "' class='hora w-100 mx-auto text-center ' type='time' step='60' value='" + partido.hora + "'" + $disabled + "></td></td>" + $accion + "</tr></tbody></table></div>");
                     jornada++;
                 } else {
                     $("tbody").last().append("<tr class='text-center'><td>" + partido.equipo_local + "</td><td class='resultado'>" + resultado_completo + "</td><td>" + partido.equipo_visitante + "</td><td><p contenteditable='true'><input type='text' class='datepick w-100  mx-auto' id='" + partido.id + "' value='" + fecha + "' " + $disabled + "></p></td><td><input id='" + partido.id + "' class='hora w-100 mx-auto ' type='time' step='1' value='" + partido.hora + "'" + $disabled + "></td></td>" + $accion + "</tr>")
@@ -106,4 +106,10 @@
         echo "<h2 class='col-12 text-center'>Liga no empezada!</h2>";
         echo "<a href='" . base_url('Partidos_c/generarLiga/' . $liga) . "' class='col-12 text-center'>Generar Liga</a>";
     } ?>
+
+    <div id="pagination-container" class="w-50 d-flex mx-auto align-self-end justify-content-center">
+        <p class='paginacionCursor' id="beforePagination">
+            < </p> <p class='paginacionCursor' id="afterPagination">>
+        </p>
+    </div>
 </div>
