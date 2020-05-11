@@ -62,22 +62,23 @@ class Partidos_c extends CI_Controller
     {
         //obtenemos todos los equipos de la liga que queremos
         $data = $this->Partidos_m->obtenerEquiposLiga($liga);
+        //Creamos un array donde se guardarán las ids de los equipos
         $equipos = array();
-        $equipos2 = $equipos;
         foreach ($data as $dato) {
             $equipos[] = $dato->id;
-            $equipos2[] = $dato->equipo;
         }
-        for ($i = 1; $i < count($equipos); $i++) {
-            echo "-----------------JORNADA " . $i . "-------------------";
-            echo "<br>";
-            shuffle($equipos);
-            for ($j = 0; $j < count($equipos);) {
-                $local =  $equipos[$j];
-                $j++;
-                $visitante = $equipos[$j++];
-                $jornada = $i;
-                $this->Partidos_m->insertPartidos($local, $visitante, $jornada, $liga);
+
+        //Generamos el número de jornadas
+        $jornadas = (($count = count($equipos)) % 2 === 0 ? $count - 1 : $count) * 2;
+
+        //Utilizamos la libreria ScheduleBuilder para que nos genere un array con los enfrentamientos
+        $scheduleBuilder = new ScheduleBuilder($equipos, $jornadas);
+        $schedule = $scheduleBuilder->build();
+
+        //Recorremos el array y vamos insertando los partidos que se han generado en la Base de Datos
+        foreach ($schedule as $jornada => $partidos) {
+            foreach ($partidos as $equipo) {
+                $this->Partidos_m->insertPartidos($equipo[0], $equipo[1], $jornada, $liga);
             }
         }
 
