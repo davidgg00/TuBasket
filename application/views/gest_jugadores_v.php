@@ -1,65 +1,19 @@
 <script>
-    function getJugadoresSinConfirmar() {
-        //Creamos Ajax por GET para obtener los jugadores que no están validados en la plataforma
-        $.get("<?php echo base_url('GestionJugadores_c/obtenerJugadoresSinConfirmar/' . $liga) ?>",
-            function(dato_devuelto) {
-                //Lo parseamos.
-                let jugadores = JSON.parse(dato_devuelto);
-                //Y los mostramos después del thead
-                for (let dato of jugadores) {
-                    $("thead.alert-warning").after("<tr><th scope='row'>" + dato.username + "</th><td>" + dato.email + "</td><td>" + dato.apenom + "</td><td>" + dato.fecha_nac + "</td> <td>" + dato.nombre_equipo + "</td><td class='d-flex justify-content-around'><i data-tippy-content='Aceptar Jugador' class='tippy fas fa-check-square aceptar' id='aceptar' data-username='" + dato.username + "'></i><i data-tippy-content='Denegar Jugador' class='fas fa-window-close denegar' id='denegar' data-username='" + dato.username + "'></i></td> </tr>");
-                }
-
-                $(".aceptar").on("click", function(evento) {
-                    $.get(window.location.origin + "/TuBasket/GestionJugadores_c/aceptarJugador/" + $(this).data('username'), );
-                    $(this).parent().parent().remove();
-                    $("#jugadores_confirmados").html("");
-                    getJugadoresConfirmados();
-                })
-                $(".denegar").on("click", function(evento) {
-                    $.get(window.location.origin + "/TuBasket/GestionJugadores_c/eliminarJugador/" + $(this).data('username'), );
-                    $(this).parent().parent().remove();
-                })
-
-                //Añadimos tooltip a los .aceptar y .denegar
-                tippy('.aceptar, .denegar');
-            }
-        );
-    }
-
-    function template(jugadores) {
-        let html;
-        for (let dato of jugadores) {
-            html += "<tr><th scope='row'>" + dato.username + "</th><td>" + dato.email + "</td><td>" + dato.apenom + "</td><td>" + dato.fecha_nac + "</td> <td>" + dato.nombre_equipo + "</td></tr>"
-        }
-        return html;
-    }
-
-    function getJugadoresConfirmados() {
-        //Creamos paginacion con ajax
-        $("#paginacion").pagination({
-            dataSource: function(done) {
-                $.ajax({
-                    type: "GET",
-                    url: "<?php echo base_url('GestionJugadores_c/obtenerJugadoresConfirmados/' . $liga) ?>",
-                    success: function(response) {
-                        //Lo parseamos.
-                        let jugadores = JSON.parse(response);
-                        done(jugadores);
-                    }
-                });
-            },
-            locator: 'items',
-            pageSize: 10,
-            callback: function(data, pagination) {
-                var html = template(data);
-                $("#jugadores_confirmados").html(html)
-            }
-        })
-    }
     $(document).ready(function() {
-        getJugadoresSinConfirmar();
-        getJugadoresConfirmados();
+        $(".aceptar").on("click", function(evento) {
+            $.get(window.location.origin + "/TuBasket/GestionJugadores_c/aceptarJugador/" + $(this).data('username'), );
+            let html = "<tr class='itemPaginacion'><th scope='row'>" + $(this).parent().parent().children().eq(0).html() + "</th><td>" + $(this).parent().parent().children().eq(1).html() + "</td><td>" + $(this).parent().parent().children().eq(2).html() + "</td><td>" + $(this).parent().parent().children().eq(3).html() + "</td><td>" + $(this).parent().parent().children().eq(4).html() + "</td></tr>"
+            $("#jugadores_confirmados").append(html);
+            $(this).parent().parent().remove();
+            console.log(html);
+        });
+        $(".denegar").on("click", function(evento) {
+            $.get(window.location.origin + "/TuBasket/GestionJugadores_c/eliminarJugador/" + $(this).data('username'), );
+            $(this).parent().parent().remove();
+        })
+
+        //Añadimos tooltip a los .aceptar y .denegar
+        tippy('.aceptar, .denegar');
     });
 </script>
 
@@ -68,7 +22,7 @@
         <h2 class="mx-auto w-10 alert alert-warning mb-0">USUARIOS PENDIENTES DE VALIDAR</h2>
         <thead class="alert-warning" id="jugadores_sinConfirmar">
             <tr>
-                <th scope="col">Username</th>
+                <th scope="row">Username</th>
                 <th scope="col">Email</th>
                 <th scope="col">Apellidos y Nombre</th>
                 <th scope="col">Fecha nacimiento</th>
@@ -76,6 +30,20 @@
                 <th scope="col">Acción</th>
             </tr>
         </thead>
+        <tbody>
+
+            <?php foreach ($jugadoresSinConfirmar as $jugador) : ?>
+                <tr>
+                    <td><?= $jugador->username ?></td>
+                    <td><?= $jugador->email ?></td>
+                    <td><?= $jugador->apenom ?></td>
+                    <td><?= $jugador->fecha_nac ?></td>
+                    <td><?= $jugador->nombre_equipo ?></td>
+                    <td class='d-flex justify-content-around p-3'><i data-tippy-content='Aceptar Jugador' class='d-block h-100 tippy fas fa-check-square aceptar' id='aceptar' data-username='<?= $jugador->username ?>'></i><i data-tippy-content='Denegar Jugador' class='d-block fas fa-window-close denegar' id='denegar' data-username='<?= $jugador->username ?>'></i></td>
+                </tr>
+            <?php
+            endforeach; ?>
+        </tbody>
     </table>
     <table class="mx-auto table table-striped table-light table-bordered table-hover col-10">
         <h2 class="alert alert-dark text-center mb-0 mx-auto">USUARIOS DE LA LIGA</h2>
@@ -88,10 +56,22 @@
                 <th scope="col">Equipo</th>
             </tr>
         </thead>
-        <tbody class="text-center" id="jugadores_confirmados">
+        <tbody class="text-center paginacionWrapper" id="jugadores_confirmados">
+            <?php foreach ($jugadoresConfirmados as $jugador) : ?>
+                <tr class='itemPaginacion'>
+                    <th scope='row'><?= $jugador->username ?></th>
+                    <td><?= $jugador->email ?></td>
+                    <td><?= $jugador->apenom ?></td>
+                    <td><?= $jugador->fecha_nac ?></td>
+                    <td><?= $jugador->nombre_equipo ?></td>
+                </tr>
+            <?php endforeach; ?>
         </tbody>
     </table>
-    <div id="paginacion" class="col-10 mx-auto">
+    <div id="pagination-container" class="w-50 d-flex mx-auto align-self-end justify-content-center">
+        <p class='paginacionCursor' id="beforePagination">
+            < </p> <p class='paginacionCursor' id="afterPagination">>
+        </p>
     </div>
 
 </div>

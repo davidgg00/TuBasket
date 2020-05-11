@@ -11,15 +11,14 @@ class GestionJugadores_m extends CI_Model
     public function getJugadoresSinConfirmar($liga)
     {
         //Creamos la sentencia sql
-        $this->db->select('*');
+        $this->db->select('apenom, email, username, fecha_nac, equipo,nombre_equipo');
         $this->db->from('view_usuarios_liga');
         $this->db->where("liga", $liga);
         $this->db->where("validado", 0);
         $query = $this->db->get();
         //Retornamo resultado
-        return $query;
+        return $query->result();
     }
-
 
     public function aceptarJugador($username)
     {
@@ -38,13 +37,13 @@ class GestionJugadores_m extends CI_Model
     public function getJugadoresConfirmados($liga)
     {
         //Creamos la sentencia sql
-        $this->db->select('*');
+        $this->db->select('apenom, email, username, fecha_nac, equipo,nombre_equipo');
         $this->db->from('view_usuarios_liga');
         $this->db->where("liga", $liga);
         $this->db->where("validado", 1);
         $this->db->order_by('equipo', 'ASC');
         $query = $this->db->get();
         //Retornamo resultado
-        return $query;
+        return $query->result();
     }
 }
