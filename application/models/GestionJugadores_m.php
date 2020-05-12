@@ -37,7 +37,7 @@ class GestionJugadores_m extends CI_Model
     public function getJugadoresConfirmados($liga)
     {
         //Creamos la sentencia sql
-        $this->db->select('apenom, email, username, fecha_nac, equipo,nombre_equipo');
+        $this->db->select('apenom, email, username, fecha_nac, equipo,nombre_equipo,tipo,foto_perfil');
         $this->db->from('view_usuarios_liga');
         $this->db->where("liga", $liga);
         $this->db->where("validado", 1);

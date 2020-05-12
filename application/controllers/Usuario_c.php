@@ -9,6 +9,7 @@ class Usuario_c extends CI_Controller
         //cargamos los modelos
         $this->load->model("Jugador_m");
         $this->load->model("Entrenador_m");
+        $this->load->model("Notificaciones_m");
         //Si no hay una sesión activa redirigimos al Login
         /* if ($this->session->userdata['username'] == FALSE) {
             redirect('Login_c');
@@ -22,6 +23,7 @@ class Usuario_c extends CI_Controller
             $this->load->view("modulos/head", array("css" => array("liga", "jugador")));
             $data["liga"] = $_SESSION['liga'];
             $data["proxPartidos"] = self::proxPartido($_SESSION['liga'], $_SESSION['equipo']);
+            $data['numeroNotif'] = self::getnumeroNotificaciones();
             $this->load->view("modulos/header", $data);
             $this->load->view("liga_v", $data);
             $this->load->view("modulos/footer");
@@ -31,11 +33,12 @@ class Usuario_c extends CI_Controller
         }
     }
 
-    //Funcion que consulta las estadísticas totales y por partido del JUGADOR o jugadores y nos lo muestra en una vista
+    //Funcion que consulta las estadísticas totales y por partido del JUGADOR o JUGADORES y nos lo muestra en una vista
     public function estadisticas($username = null)
     {
         $this->load->view("modulos/head", array("css" => array("liga", "estadisticas")));
         $data["liga"] = $_SESSION['liga'];
+        $data['numeroNotif'] = self::getnumeroNotificaciones();
         if (isset($_POST['jugador'])) {
             $statsJugadores = [];
             $statsIndJugadores = [];
@@ -75,6 +78,7 @@ class Usuario_c extends CI_Controller
     //Función que consulta la clasificación y nos la muestra en una vista.
     public function clasificacion()
     {
+        $data['numeroNotif'] = self::getnumeroNotificaciones();
         $this->load->view("modulos/head", array("css" => array("liga", "clasificacion")));
         $data["liga"] = $_SESSION['liga'];
         $data["clasificacion"] = self::getClasificacion($_SESSION["liga"]);
@@ -85,11 +89,12 @@ class Usuario_c extends CI_Controller
 
     public function listaJugadores()
     {
+        $datos['numeroNotif'] = self::getnumeroNotificaciones();
         $this->load->model("GestionJugadores_m");
         $datos["liga"] = $_SESSION["liga"];
         $datos["partidos"] = self::mostrarPartidos($_SESSION["liga"]);
         $datos["nequipos"] = self::numeroEquiposLiga($_SESSION["liga"]);
-        $datos['jugadores'] = $this->GestionJugadores_m->getJugadoresConfirmados($_SESSION["liga"])->result();
+        $datos['jugadores'] = $this->GestionJugadores_m->getJugadoresConfirmados($_SESSION["liga"]);
         $this->load->view("modulos/head", array("css" => array("liga", "listaJugadores")));
         $this->load->view("modulos/header", $datos);
         $this->load->view('listajugadores_v');
@@ -98,6 +103,7 @@ class Usuario_c extends CI_Controller
 
     public function notificaciones()
     {
+        $datos['numeroNotif'] = "*";
         $datos["fichajes"] = self::verFichajes();
         $datos["liga"] = $_SESSION["liga"];
         $this->load->view("modulos/head", array("css" => array("liga", "notificaciones")));
@@ -237,26 +243,16 @@ class Usuario_c extends CI_Controller
         return $datos;
     }
 
-    public function OfrecerFichaje()
+    public function getnumeroNotificaciones()
     {
-        $mensaje = $this->Entrenador_m->OfrecerFichaje($_SESSION['equipo'], $_POST['jugadorAFichar'], $_POST['idEquipoRecibe'], $_POST['jugadorOfrecido']);
-        echo $mensaje;
+        $datos = $this->Notificaciones_m->numeroNotificaciones($_SESSION["equipo"]);
+        return $datos;
     }
 
     public function verFichajes()
     {
         $datos = $this->Entrenador_m->verFichajes($_SESSION["equipo"]);
         return $datos;
-    }
-
-    public function aceptarFichaje()
-    {
-        $this->Entrenador_m->aceptarFichaje($_POST['idfichaje']);
-    }
-
-    public function rechazarFichaje()
-    {
-        $this->Entrenador_m->rechazarFichaje($_POST['idfichaje']);
     }
 
     public function updateClave()

@@ -38,50 +38,19 @@ class Entrenador_m extends CI_Model
         return $query->result();
     }
 
-    public function OfrecerFichaje($equipo, $jugadorAFichar, $idEquipoRecibe, $jugadorOfrecido)
-    {
-        $datos = array(
-            'IdEquipoSolicita' => $equipo,
-            'username_jugador1' => $jugadorAFichar,
-            'IdEquipoRecibe' => $idEquipoRecibe,
-            'username_jugador2' => $jugadorOfrecido,
-            'Estado' => 'PENDIENTE'
-        );
-        $this->db->select('*');
-        $this->db->from('fichajes');
-        $this->db->where($datos);
-        $result = $this->db->get();
-        if ($result->num_rows() > 0) {
-            echo "Error";
-        } else {
-            $this->db->insert('fichajes', $datos);
-        }
-    }
 
     public function verFichajes($idequipo)
     {
-        $this->db->select('e.id as `idEquipoSolicitante` , e.equipo AS `equipoSolicitante`, f.username_jugador1 AS `pide`,u.imagen as `img_jugador_pide`, f.username_jugador2 AS `ofrece`, u2.imagen as `img_jugador_ofrece`, e2.id AS `idEquipoRecibe`,e2.equipo AS `equipoRecibe`, f.id as `idfichaje`, f.estado as `estado`, f.leido as `leido`');
+        $this->db->select('e.id as `idEquipoSolicitante` , e.equipo AS `equipoSolicitante`, f.username_jugador1 AS `pide`,u.imagen as `img_jugador_pide`, f.username_jugador2 AS `ofrece`, u2.imagen as `img_jugador_ofrece`, e2.id AS `idEquipoRecibe`,e2.equipo AS `equipoRecibe`, f.id as `idfichaje`, f.estado as `estado`, f.leidoEntrenadorSolicita, f.leidoEntrenadorRecibe');
         $this->db->from('fichajes f');
         $this->db->join('equipo e', 'e.id = f.IdEquipoSolicita');
         $this->db->join('equipo e2', 'e2.id = f.IdEquipoRecibe');
         $this->db->join('usuarios u', 'u.username = f.username_jugador1');
         $this->db->join('usuarios u2', 'u2.username = f.username_jugador2');
-        $this->db->where('f.IdEquipoRecibe', $idequipo);
+        $this->db->where("(f.idEquipoSolicita='$idequipo') OR (f.IdEquipoRecibe='$idequipo')", NULL, FALSE);
+        $this->db->order_by('f.id', 'DESC');
+        $this->db->order_by('f.id', 'DESC');
         $resultado = $this->db->get();
         return $resultado->result();
-    }
-
-    public function aceptarFichaje($idfichaje)
-    {
-        $this->db->set('estado', 'ACEPTADO');
-        $this->db->where('id', $idfichaje);
-        $this->db->update('fichajes');
-    }
-
-    public function rechazarFichaje($idfichaje)
-    {
-        $this->db->set('estado', 'DENEGADO');
-        $this->db->where('id', $idfichaje);
-        $this->db->update('fichajes');
     }
 }

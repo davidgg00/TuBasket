@@ -18,6 +18,7 @@ class Partidos_c extends CI_Controller
             $liga = $_SESSION['liga'];
         }
         $datos["liga"] = $liga;
+        $datos['numeroNotif'] = self::getnumeroNotificaciones();
         $datos["partidos"] = self::mostrarPartidos($liga);
         $datos["nequipos"] = self::numeroEquiposLiga($liga);
         $this->load->view("modulos/head", array("css" => array("liga", "partidos")));
@@ -189,5 +190,12 @@ class Partidos_c extends CI_Controller
         $this->email->message("Partido disputado el $datos_partido->fecha a las $datos_partido->hora de la liga $datos_partido->liga");
         // Enviamos EMAIL
         $this->email->send();
+    }
+
+    public function getnumeroNotificaciones()
+    {
+        $this->load->model("Notificaciones_m");
+        $datos = $this->Notificaciones_m->numeroNotificaciones($_SESSION["equipo"]);
+        return $datos;
     }
 }

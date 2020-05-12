@@ -43,7 +43,6 @@
     });
 </script>
 <div class="row justify-content-end" id="informacion">
-
     <section class="col-8 d-flex flex-wrap justify-content-center align-items-center" id="proxpartido">
 
         <div id="carouselExampleControls" class="carousel slide w-100 border border-dark" data-ride="carousel">

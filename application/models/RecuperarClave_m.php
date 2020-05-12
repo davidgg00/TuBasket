@@ -42,6 +42,21 @@ class RecuperarClave_m extends CI_Model
         }
     }
 
+    public function existeEmailCuenta($email)
+    {
+        $this->db->select("*");
+        $this->db->from("usuarios");
+        $this->db->where("email", $email);
+
+        $nresultados = $this->db->count_all_results();
+
+        if ($nresultados == 1) {
+            return TRUE;
+        } else {
+            return false;
+        }
+    }
+
     //Función que te devuelve el día de expiración de un token
     public function getDatosToken($token)
     {
@@ -58,9 +73,6 @@ class RecuperarClave_m extends CI_Model
         $this->db->where('email', $email);
         $this->db->update('usuarios', $data);
         if ($this->db->affected_rows() > 0) {
-            return TRUE;
-        } else {
-            $this->db->update('admin', $data);
             return TRUE;
         }
     }

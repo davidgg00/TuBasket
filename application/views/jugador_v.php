@@ -109,7 +109,7 @@
     function ofrecerFichaje() {
         $.ajax({
             type: "POST",
-            url: "<?= base_url('Usuario_c/OfrecerFichaje'); ?>",
+            url: "<?= base_url('Fichajes_c/OfrecerFichaje'); ?>",
             data: {
                 //Enviamos el username del jugador que queremos fichar, el id de su equipo actual y el username del jugador que ofrece
                 jugadorAFichar: $("#nombreFichaje").html(),
