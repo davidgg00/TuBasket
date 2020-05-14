@@ -69,51 +69,49 @@
             <img src="<?php echo base_url('assets/img/ofrecerfichaje.jpg'); ?>" alt="" id="ofrecerFichaje" class="mx-auto" data-toggle="modal" data-target="#modalFichaje">
         <?php endif; ?>
 
-        <!--Creamos modal si existe el $datos_jugador (si no existe y te genera el modal con un objeto vacío el html te hace bug-->
-        <?php if (isset($datos_jugador)) : ?>
-            <div class="modal fade" id="modalFichaje" tabindex="-1" role="dialog" aria-labelledby="modalFichaje" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="titulo_modal">Ofrecer un fichaje</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form method="post" id="formCrearLiga" class="text-center">
-                                <h3>Fichar a</h3>
-                                <h4 id="nombreFichaje" data-idequipo="<?= $datos_jugador->equipo ?>"><?= $jugador ?></h4>
-                                <h3>por</h3>
-                                <select name="jugadores" id="jugadores">
-                                    <?php foreach ($tusJugadores as $Jugador) :
-                                        if ($Jugador->tipo == "Jugador") :
-                                    ?>
-                                            <option value="<?= $Jugador->username ?>"><?= $Jugador->apenom ?></option>
-                                    <?php endif;
-                                    endforeach; ?>
-                                </select>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type="submit" form="formCrearLiga" onclick="ofrecerFichaje(); return false;" class="btn btn-primary">Ofrecer Fichaje</button>
-                        </div>
+        <div class="modal fade" id="modalFichaje" tabindex="-1" role="dialog" aria-labelledby="modalFichaje" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="titulo_modal">Ofrecer un fichaje</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" id="formCrearLiga" class="text-center">
+                            <h3>Fichar a</h3>
+                            <h4 id="nombreFichaje" data-entrenador="<?= $entrenador->Entrenador ?>"><?= $jugador ?></h4>
+                            <h3>por</h3>
+                            <select name="jugadores" id="jugadores">
+                                <?php foreach ($tusJugadores as $Jugador) :
+                                    if ($Jugador->tipo == "Jugador") :
+                                ?>
+                                        <option value="<?= $Jugador->username ?>"><?= $Jugador->apenom ?></option>
+                                <?php endif;
+                                endforeach; ?>
+                            </select>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" form="formCrearLiga" onclick="ofrecerFichaje(); return false;" class="btn btn-primary">Ofrecer Fichaje</button>
                     </div>
                 </div>
             </div>
-        <?php endif; ?>
+        </div>
     </div>
 </div>
 <script>
     function ofrecerFichaje() {
+        console.log($("#nombreFichaje").html());
         $.ajax({
             type: "POST",
             url: "<?= base_url('Fichajes_c/OfrecerFichaje'); ?>",
             data: {
                 //Enviamos el username del jugador que queremos fichar, el id de su equipo actual y el username del jugador que ofrece
                 jugadorAFichar: $("#nombreFichaje").html(),
-                idEquipoRecibe: $("#nombreFichaje").data("idequipo"),
+                entrenadorRecibe: $("#nombreFichaje").data("entrenador"),
                 jugadorOfrecido: $("#jugadores").val()
             },
             success: function(response) {

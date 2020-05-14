@@ -13,7 +13,7 @@ class Fichajes_c extends CI_Controller
 
     public function OfrecerFichaje()
     {
-        $mensaje = $this->Fichajes_m->OfrecerFichaje($_SESSION['equipo'], $_POST['jugadorAFichar'], $_POST['idEquipoRecibe'], $_POST['jugadorOfrecido']);
+        $mensaje = $this->Fichajes_m->OfrecerFichaje($_SESSION['username'], $_POST['jugadorAFichar'], $_POST['entrenadorRecibe'], $_POST['jugadorOfrecido']);
         echo $mensaje;
     }
 

@@ -98,34 +98,14 @@ class Jugador_m extends CI_Model
         return $query->row();
     }
 
-    public function updateJugador($apenom, $email, $fechanac, $path = null)
+    public function getEntrenadorJugador($jugador)
     {
-        $this->db->set('apenom', $apenom);
-        $this->db->set('email', $email);
-        $this->db->set('fecha_nac', $fechanac);
-        if ($path != null) {
-            $this->db->set('imagen', $path);
-        }
-        $this->db->where('username', $_SESSION['username']);
-        $this->db->update('usuarios');
-
-        //Reemplazamos las variables de sesión
-        $this->session->set_userdata('apenom', $apenom);
-        $this->session->set_userdata('email', $email);
-        $this->session->set_userdata('fecha_nac', $fechanac);
-    }
-
-    public function actualizarClave($claveAntigua, $claveNueva, $username)
-    {
-        $this->db->set('password', $claveNueva);
-        $this->db->where('username', $username);
-        $this->db->where('password', $claveAntigua);
-        $this->db->update('usuarios');
-
-        if ($this->db->affected_rows() > 0) {
-            return TRUE;
-        } else {
-            return FALSE;
-        }
+        $this->db->select('u2.username as `Entrenador`');
+        $this->db->from('usuarios u');
+        $this->db->join('usuarios u2', 'u2.equipo = u.equipo');
+        $this->db->where('u.username', $jugador);
+        $this->db->where('u2.tipo', "Entrenador");
+        $query = $this->db->get();
+        return $query->row();
     }
 }

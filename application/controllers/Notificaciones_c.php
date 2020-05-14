@@ -12,13 +12,12 @@ class Notificaciones_c extends CI_Controller
 
     public function leerTodasNotificaciones()
     {
-        //Dependiendo de si el entrenador que lo lee es el solicitante o el recibidor, se marcará como leído un campo u otro.
-        if ($_POST['equipo'] == $_POST['equipo_solicitante']) {
-            $this->Notificaciones_m->leerNotificacionSolicitante($_POST['idfichaje']);
-            echo "xd";
-        } else {
-            $this->Notificaciones_m->leerNotificacionRecibidor($_POST['idfichaje']);
-            echo "no";
-        }
+        $this->Notificaciones_m->leerNotificaciones($_POST['idfichaje'], $_SESSION['username']);
+    }
+
+    public function getnumeroNotificaciones()
+    {
+        $datos = $this->Notificaciones_m->numeroNotificaciones($_SESSION["username"]);
+        echo json_encode($datos);
     }
 }

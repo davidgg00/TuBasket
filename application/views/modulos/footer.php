@@ -44,15 +44,8 @@
         })
 
         $("#btn-guardarcambios").on("click", function(evento) {
-            let metodo;
-            //Si al guardar los cambios del perfil no se ha modificado la contraseña
-            if ("<?= $_SESSION['tipo_cuenta'] ?>" == "Admin") {
-                metodo = "Admin_c/updateAdmin";
-            } else {
-                metodo = "Usuario_c/updateUsuario";
-            }
             $.ajax({
-                url: "<?php echo base_url() ?>" + metodo,
+                url: "<?php echo base_url('Perfiles_c/updateUsuario') ?>",
                 type: "POST",
                 //El Objeto formdata nos permite transmitir nuestros datos en una codificación multipart/form-data
                 //Además que nos facilita bastante la subida de archivos a través de un <input type="file">
@@ -99,9 +92,6 @@
         let hoy = new Date();
         $("#modal_date").attr('min', hoy.getFullYear() - 100 + "-" + ("0" + (hoy.getMonth() + 1)).slice(-2) + "-" + hoy.getDate());
         $("#modal_date").attr('max', hoy.getFullYear() - 18 + "-" + ("0" + (hoy.getMonth() + 1)).slice(-2) + "-" + hoy.getDate());
-        $("#formUpdatePerfil").on("submit", function(evento) {
-            alert("xd");
-        })
     });
 </script>
 <footer class="row d-flex justify-content-center align-items-center">

@@ -13,7 +13,7 @@
                     $("#span-claveNueva").html("Las contraseñas no pueden ser iguales");
                 } else {
                     $("#span-claveNueva").html("&nbsp;");
-                    $.post("<?= base_url('Usuario_c/updateClave') ?>", {
+                    $.post("<?= base_url('Perfiles_c/cambiarClave') ?>", {
                             claveAntigua: $("#claveAntigua").val(),
                             claveNueva: $("#claveNueva").val(),
                             cuenta: "<?= $_SESSION["tipo_cuenta"] ?>",

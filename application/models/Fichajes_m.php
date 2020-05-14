@@ -8,12 +8,13 @@ class Fichajes_m extends CI_Model
         parent::__construct();
     }
 
-    public function OfrecerFichaje($equipo, $jugadorAFichar, $idEquipoRecibe, $jugadorOfrecido)
+    public function OfrecerFichaje($username, $jugadorAFichar, $entrenadorRecibe, $jugadorOfrecido)
     {
         $datos = array(
-            'IdEquipoSolicita' => $equipo,
+            'id' => "",
+            'EntrenadorSolicita' => $username,
             'username_jugador1' => $jugadorAFichar,
-            'IdEquipoRecibe' => $idEquipoRecibe,
+            'EntrenadorRecibe' => $entrenadorRecibe,
             'username_jugador2' => $jugadorOfrecido,
             'Estado' => 'PENDIENTE'
         );

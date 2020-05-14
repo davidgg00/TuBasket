@@ -18,7 +18,9 @@ class Partidos_c extends CI_Controller
             $liga = $_SESSION['liga'];
         }
         $datos["liga"] = $liga;
-        $datos['numeroNotif'] = self::getnumeroNotificaciones();
+        if (isset($_SESSION['equipo'])) {
+            $datos['numeroNotif'] = self::getnumeroNotificaciones();
+        }
         $datos["partidos"] = self::mostrarPartidos($liga);
         $datos["nequipos"] = self::numeroEquiposLiga($liga);
         $this->load->view("modulos/head", array("css" => array("liga", "partidos")));

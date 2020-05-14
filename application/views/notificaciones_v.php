@@ -38,7 +38,7 @@
         $(".notificacion").each(function() {
 
             if ($(this).data('estado') != "PENDIENTE") {
-
+                console.log($(this));
                 $.post("<?= base_url('Notificaciones_c/leerTodasNotificaciones') ?>", {
                         idfichaje: $(this).data('idfichaje'),
                         equipo: <?= $_SESSION['equipo'] ?>,
@@ -46,9 +46,7 @@
                     },
                     function(dato_devuelto) {
                         console.log(dato_devuelto);
-                        console.log("hey");
-                    },
-                    "dataType"
+                    }
                 );
             }
         });
@@ -58,9 +56,9 @@
     <section class="col-10" id="proxpartido">
         <?php
         foreach ($fichajes as $n => $fichaje) : ?>
-            <div class="notificacion border border-dark col-12 text-center p-3" data-equipo_solicitante="<?= $fichaje->idEquipoSolicitante ?>" data-estado="<?= $fichaje->estado ?>" data-idfichaje="<?= $fichaje->idfichaje ?>">
+            <div class="notificacion border border-dark col-12 text-center p-3" data-estado="<?= $fichaje->estado ?>" data-idfichaje="<?= $fichaje->idfichaje ?>">
                 <?php if ($fichaje->estado == "PENDIENTE") : ?>
-                    <?php if ($fichaje->idEquipoRecibe == $_SESSION['equipo']) : ?>
+                    <?php if ($fichaje->EntrenadorRecibe == $_SESSION['username']) : ?>
                         <h5>El <?= $fichaje->equipoSolicitante ?> desea realizar un intercambio</h5>
                         <div class="d-flex align-items-center justify-content-between w-75 mx-auto border fotos">
                             <img src="<?= base_url($fichaje->img_jugador_ofrece) ?>" class="img-fluid rounded-circle" alt="">
@@ -80,13 +78,13 @@
                             </div>
                         </div>
                     <?php else : ?>
-                        <h5><?= $n += 1 ?>. El fichaje a <?= $fichaje->equipoRecibe ?> (<?= $fichaje->pide ?> -> <?= $fichaje->ofrece ?>) está <?= $fichaje->estado ?></h5>
+                        <h5><?= $n += 1 ?>. El fichaje (<?= $fichaje->pide ?> -> <?= $fichaje->ofrece ?>) está <?= $fichaje->estado ?></h5>
                     <?php endif; ?>
                 <?php else : ?>
-                    <?php if ($fichaje->idEquipoRecibe == $_SESSION['equipo']) : ?>
+                    <?php if ($fichaje->EntrenadorRecibe == $_SESSION['username']) : ?>
                         <h5><?= $n += 1 ?>. Has <?= $fichaje->estado ?> la propuesta del <?= $fichaje->equipoSolicitante ?>(<?= $fichaje->pide ?> -> <?= $fichaje->ofrece ?>)</h5>
                     <?php else : ?>
-                        <h5><?= $n += 1 ?>. El <?= $fichaje->equipoRecibe ?> te ha <?= $fichaje->estado ?> la propuesta del (<?= $fichaje->pide ?> -> <?= $fichaje->ofrece ?>)</h5>
+                        <h5><?= $n += 1 ?>. La propuesta del (<?= $fichaje->pide ?> -> <?= $fichaje->ofrece ?>) ha sido <?= $fichaje->estado ?></h5>
                     <?php endif; ?>
                 <?php endif; ?>
             </div>

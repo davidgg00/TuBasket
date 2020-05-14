@@ -39,15 +39,16 @@ class Entrenador_m extends CI_Model
     }
 
 
-    public function verFichajes($idequipo)
+    public function verFichajes($username)
     {
-        $this->db->select('e.id as `idEquipoSolicitante` , e.equipo AS `equipoSolicitante`, f.username_jugador1 AS `pide`,u.imagen as `img_jugador_pide`, f.username_jugador2 AS `ofrece`, u2.imagen as `img_jugador_ofrece`, e2.id AS `idEquipoRecibe`,e2.equipo AS `equipoRecibe`, f.id as `idfichaje`, f.estado as `estado`, f.leidoEntrenadorSolicita, f.leidoEntrenadorRecibe');
+        $this->db->select('f.entrenadorSolicita AS `entrenadorSolicita`, f.username_jugador1 AS `pide`,u.imagen as `img_jugador_pide`, f.username_jugador2 AS `ofrece`, u2.imagen as `img_jugador_ofrece`, f.EntrenadorRecibe AS `EntrenadorRecibe`,e.equipo AS `equipoSolicitante`, f.id as `idfichaje`, f.estado as `estado`');
         $this->db->from('fichajes f');
-        $this->db->join('equipo e', 'e.id = f.IdEquipoSolicita');
-        $this->db->join('equipo e2', 'e2.id = f.IdEquipoRecibe');
         $this->db->join('usuarios u', 'u.username = f.username_jugador1');
         $this->db->join('usuarios u2', 'u2.username = f.username_jugador2');
-        $this->db->where("(f.idEquipoSolicita='$idequipo') OR (f.IdEquipoRecibe='$idequipo')", NULL, FALSE);
+        $this->db->join('usuarios u3', 'u3.username = f.EntrenadorSolicita');
+        $this->db->join('usuarios u4', 'u4.username = f.EntrenadorRecibe');
+        $this->db->join('equipo e', 'e.id = u3.equipo');
+        $this->db->where("(f.entrenadorSolicita='$username') OR (f.EntrenadorRecibe='$username')", NULL, FALSE);
         $this->db->order_by('f.id', 'DESC');
         $this->db->order_by('f.id', 'DESC');
         $resultado = $this->db->get();
