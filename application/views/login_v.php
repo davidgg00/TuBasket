@@ -16,22 +16,18 @@
                     <?php endif; ?>
                 </div>
                 <form action="<?php echo base_url() . 'login_c/iniciarsesion' ?>" method="POST">
-                    <div class="form-group text-center w-50 mx-auto input-group mb-3">
-                        <label for="exampleInputEmail1" class="col-12">Username</label>
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
-                        </div>
-                        <input type="text" name="username" class="form-control" placeholder="Escriba su Username..." aria-label="Username" aria-describedby="basic-addon1" required>
+                    <div class="md-form w-50 mx-auto">
+                        <i class="fas fa-user prefix"></i>
+                        <input type="text" id="usernamecorreo" name="username" class="form-control">
+                        <label for="usernamecorreo">Username o Correo</label>
                     </div>
-                    <div class="form-group text-center mx-auto w-50 mx-auto input-group mb-3">
-                        <label for="exampleInputPassword1" class="col-12">Contraseña</label>
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock"></i></span>
-                        </div>
-                        <input type="password" name="password" class="form-control" placeholder="Escriba su contraseña..." aria-label="Username" aria-describedby="basic-addon1" required>
+                    <div class="md-form w-50 mx-auto">
+                        <i class="fas fa-lock prefix"></i>
+                        <input type="password" id="clave" name="password" class="form-control">
+                        <label for="clave">Contraseña</label>
                     </div>
                     <div class="form-group mx-auto text-center w-25">
-                        <button type="submit" class="btn btn-lg btn-block ">Ingresar</button>
+                        <button type="submit" class="btn btn-rounded btn-light-green">Ingresar</button>
                     </div>
                     <div class="form-group mx-auto text-center w-50 m-1">
                         <p class="text-dark">¿Aún no tienes cuenta?</p>

@@ -12,13 +12,16 @@ body {
 }
 
 .btn {
-    background: #19B697;
     color: white;
     padding: 10px !important;
 }
 
 .form-group {
     margin-top: 10px;
+}
+
+.md-form {
+    margin-bottom:2.5rem;
 }
 
 .text-dark {
