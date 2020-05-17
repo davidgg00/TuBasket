@@ -60,3 +60,5 @@ $route['Admin_c/partidos/(:any)'] = 'Partidos_c/partidos/$1';
 $route['Admin_c/gestJugadores/(:any)'] = 'GestionJugadores_c/gestJugadores/$1';
 
 $route['Usuario_c/partidos'] = 'Partidos_c/partidos';
+
+$route['Admin_c/gestEquipo/(:any)'] = 'GestionEquipos_c/index/$1';

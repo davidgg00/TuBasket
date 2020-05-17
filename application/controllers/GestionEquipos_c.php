@@ -9,6 +9,16 @@ class GestionEquipos_c extends CI_Controller
         $this->load->model("GestionEquipos_m");
     }
 
+    public function index($liga)
+    {
+        $datos["equipos"] = $this->GestionEquipos_m->getEquipos($liga)->result();
+        $datos["liga"] = $liga;
+        $this->load->view("modulos/head", array("css" => array("liga", "gestion_equipos")));
+        $this->load->view("modulos/header", $datos);
+        $this->load->view('gest_equipos_v');
+        $this->load->view("modulos/footer");
+    }
+
     public function modificarEquipo()
     {
         $this->GestionEquipos_m->updateEquipo($_POST['equipo'], $_POST['campo'], $_POST['contenido']);
@@ -41,6 +51,7 @@ class GestionEquipos_c extends CI_Controller
             move_uploaded_file($tmp, $path);
             $this->GestionEquipos_m->insertarEquipo($_POST['equipo'], $_POST['pabellon'], $_POST['ciudad'], $path, $_POST['liga']);
         }
+        echo json_encode($this->GestionEquipos_m->getUltimoEquipoInsertado());
     }
 
     public function cambiarImgEquipo()
@@ -54,11 +65,10 @@ class GestionEquipos_c extends CI_Controller
             $path = "assets/uploads/escudos/" . rand(1, 1000) . $nombre_imagen;
             move_uploaded_file($tmp, $path);
             $this->GestionEquipos_m->updateImgEquipo($path, $_POST['idImagen']);
-        }
-    }
 
-    public function borrarEscudoAntiguo($idequipo)
-    {
-        $equipo = $this->GestionEquipos_m->getEquipo($idequipo);
+            //Devolvemos por AJAX el escudo antiguo y nuevo para cambiarlo en el DOM
+            $escudos = ["escudoAntiguo" => $_POST['idImagen'], "escudoNuevo" => $path];
+            echo json_encode($escudos, JSON_UNESCAPED_SLASHES);
+        }
     }
 }

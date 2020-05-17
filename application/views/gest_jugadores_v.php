@@ -49,7 +49,7 @@
             </table>
         </div>
     <?php endif; ?>
-    <div id="listaJugadoresConfirmados" class="listaJugadores d-flex flex-column mx-auto h-100 border">
+    <div id="listaJugadoresConfirmados" class="listaJugadores d-flex flex-column mx-auto h-100">
         <h2 class="alert alert-dark text-center mb-0 mx-auto">USUARIOS DE LA LIGA</h2>
         <table class="mx-auto table table-striped table-light table-bordered table-hover col-12">
             <thead class="thead-dark">

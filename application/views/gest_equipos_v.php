@@ -3,9 +3,6 @@
     let liga_actual = "<?php echo $liga ?>";
 </script>
 <script src="<?php echo base_url('assets/js/') ?>gestEquipos.js"></script>
-<script>
-    mostrarEquipo();
-</script>
 <div class="row" id="contenedor">
     <table class="table table-hover">
         <thead>
@@ -31,11 +28,28 @@
                     </td>
                 </form>
             </tr>
+            <?php foreach ($equipos as $equipo) : ?>
+                <tr class='text-center datos'>
+                    <td id='id' class='d-none'><?= $equipo->id ?></td>
+                    <td class='equipo'>
+                        <p data-tippy-content='Haga click para editar el campo' class='dato_td' contenteditable='true'><?= $equipo->equipo ?> </p>
+                    </td>
+                    <td class='pabellon'>
+                        <p data-tippy-content='Haga click para editar el campo' class='dato_td' contenteditable='true'> <?= $equipo->pabellon ?> </p>
+                    </td>
+                    <td class='ciudad'>
+                        <p data-tippy-content='Haga click para editar el campo' class='dato_td' contenteditable='true'> <?= $equipo->ciudad ?> </p>
+                    </td>
+                    <td><img data-toggle='modal' data-target='#miModal' src='<?= base_url($equipo->escudo_ruta) ?> ' data-id='<?= $equipo->escudo_ruta ?>' data-tippy-content='Haga click para cambiar el escudo' class='dato_td escudo'>
+                    </td>
+                    <td><i data-tippy-content='Borrar Equipo' class='fas fa-trash-alt eliminar'></i></td>
+                </tr>
+            <?php endforeach; ?>
         </tbody>
     </table>
 </div>
 <script>
-    //Si se va a enviar el formulario
+    //Si se va a enviar el formulario con el equipo a añadir
     $("#formulario").on("submit", function(evento) {
         evento.preventDefault();
         $.ajax({
@@ -65,7 +79,7 @@
         //Si no hay ninguna clase error en los inputs enviamos el formulario por ajax
         if (!$("#equipo").hasClass("is-invalid") && !$("#pabellon").hasClass("is-invalid") && !$("#ciudad").hasClass("is-invalid") && $("#formulario").hasClass("max-equipos") == false) {
             $.ajax({
-                url: "<?php echo base_url() ?>" + "GestionEquipos_c/enviarEquipo",
+                url: "<?php echo base_url() ?>" + "GestionEquipos_c/enviarEquipo ",
                 type: "POST",
                 //El Objeto formdata nos permite transmitir nuestros datos en una codificación multipart/form-data
                 //Además que nos facilita bastante la subida de archivos a través de un <input type="file">
@@ -73,9 +87,32 @@
                 processData: false,
                 contentType: false,
                 success: function(response) {
-                    console.log(response);
-                    $("tr.datos").remove();
-                    mostrarEquipo();
+                    let equipo = JSON.parse(response);
+                    $("tbody").append("<tr class='text-center datos'><td id='id' class='d-none'>" + equipo.id + "</td><td class='equipo'><p data-tippy-content='Haga click para editar el campo' class='dato_td' contenteditable='true' >" + equipo.equipo + "</p></td><td class='pabellon'><p data-tippy-content='Haga click para editar el campo' class='dato_td' contenteditable='true'>" + equipo.pabellon + "</p></td><td class='ciudad'><p data-tippy-content='Haga click para editar el campo' class='dato_td' contenteditable='true'>" + equipo.ciudad + "</p></td><td><img  data-toggle='modal' data-target='#miModal' src='" + baseurl + equipo.escudo_ruta + "' data-id='" + equipo.escudo_ruta + "' data-tippy-content='Haga click para cambiar el escudo' class='dato_td escudo'></td><td><i data-tippy-content='Borrar Equipo' class='fas fa-trash-alt eliminar'></i></td></tr>")
+
+                    //Añadimos las acciones al nuevo equipo añadido
+
+                    ajaxContentEditable();
+                    ajaxEliminarEquipo();
+
+                    //Si clickamos en un escudo que aparezca el modal creado con el formulario y añadimos la url de la imagen antigua
+                    $(".escudo").on("click", function() {
+                        $(".modal-body #idImagen").val($(this).data('id'));
+                    });
+
+                    //Añadimos tooltip a los .dato_td y i.eliminar
+                    tippy('.dato_td');
+                    tippy('i.eliminar', {
+                        followCursor: 'horizontal',
+                    });
+
+                    //Si presionamos enter en el contenteditable te genera <br> así que
+                    //vamos a hacer que si presionamos enter no haga nada
+                    $('p[contenteditable]').keydown(function(e) {
+                        if (e.keyCode === 13) {
+                            return false;
+                        }
+                    });
                 }
             });
 
@@ -125,9 +162,11 @@
                         processData: false,
                         contentType: false,
                         success: function(response) {
-                            console.log(response);
-                            $("tr.datos").remove();
-                            mostrarEquipo();
+                            let escudos = JSON.parse(response);
+                            //Cambiamos el src en el DOM y el data-id
+                            $("img[src*='" + escudos.escudoAntiguo + "']").removeAttr('data-id');
+                            $("img[src*='" + escudos.escudoAntiguo + "']").data('id', escudos.escudoNuevo)
+                            $("img[src*='" + escudos.escudoAntiguo + "']").attr('src', '<?= base_url() ?>' + escudos.escudoNuevo);
                         }
                     });
                 }

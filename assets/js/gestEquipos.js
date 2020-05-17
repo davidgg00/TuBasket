@@ -1,3 +1,33 @@
+$(document).ready(function () {
+    //Cuando el documento se cargue que ejecute estas funciones
+
+    ajaxContentEditable();
+
+    ajaxEliminarEquipo();
+
+    //Si clickamos en un escudo que aparezca el modal creado con el formulario y añadimos la url de la imagen antigua
+    $(".escudo").on("click", function () {
+        $(".modal-body #idImagen").val($(this).data('id'));
+    });
+
+    //Añadimos tooltip a los .dato_td y i.eliminar
+    tippy('.dato_td');
+    tippy('i.eliminar', {
+        followCursor: 'horizontal',
+    });
+
+    //Si presionamos enter en el contenteditable te genera <br> así que
+    //vamos a hacer que si presionamos enter no haga nada
+    $('p[contenteditable]').keydown(function (e) {
+        if (e.keyCode === 13) {
+            return false;
+        }
+    });
+});
+
+
+
+
 //Función que nos permite crear el envio del ContentEditable a la base de datos por AJAX
 function ajaxContentEditable() {
 
@@ -52,48 +82,6 @@ function ajaxEliminarEquipo() {
             },
         });
     })
-}
-
-
-//Función que lista los equipos de la base de datos y ejecuta las demás funciones que hay en el archivo
-function mostrarEquipo() {
-    $.ajax({
-        type: "get",
-        url: baseurl + "GestionEquipos_c/obtenerEquipos/" + liga_actual,
-        liga: liga_actual,
-        success: function (dato_devuelto) {
-            let datos = JSON.parse(dato_devuelto);
-            for (let dato of datos) {
-                $("tbody").append("<tr class='text-center datos'><td id='id' class='d-none'>" + dato.id + "</td><td class='equipo'><p data-tippy-content='Haga click para editar el campo' class='dato_td' contenteditable='true' >" + dato.equipo + "</p></td><td class='pabellon'><p data-tippy-content='Haga click para editar el campo' class='dato_td' contenteditable='true'>" + dato.pabellon + "</p></td><td class='ciudad'><p data-tippy-content='Haga click para editar el campo' class='dato_td' contenteditable='true'>" + dato.ciudad + "</p></td><td><img  data-toggle='modal' data-target='#miModal' src='" + baseurl + dato.escudo_ruta + "' id='" + dato.escudo_ruta + "' data-tippy-content='Haga click para cambiar el escudo' class='dato_td img-fluid escudo'></td><td><i data-tippy-content='Borrar Equipo' class='fas fa-trash-alt eliminar'></i></td></tr>")
-            }
-
-            //Si presionamos enter en el contenteditable te genera <br> así que
-            //vamos a hacer que si presionamos enter no haga nada
-            $('p[contenteditable]').keydown(function (e) {
-                if (e.keyCode === 13) {
-                    return false;
-                }
-            });
-
-            ajaxContentEditable();
-            ajaxEliminarEquipo();
-
-            //Si clickamos en un escudo que aparezca el modal creado con el formulario
-            $(".escudo").on("click", function () {
-                $(".modal-body #idImagen").val($(this).attr('id'));
-            });
-
-            //Añadimos tooltip a los .dato_td y i.eliminar
-            tippy('.dato_td');
-            tippy('i.eliminar', {
-                followCursor: 'horizontal',
-            });
-            console.log($(".escudo"));
-            $("#miModal").on("show.bs.modal", function (evento) {
-                console.log($(this));
-            })
-        }
-    });
 }
 
 //Función que comprueba el numero de equipos que hay nada mas meternos en la pestaña

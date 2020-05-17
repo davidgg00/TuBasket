@@ -33,6 +33,16 @@ class GestionEquipos_m extends CI_Model
         return $query;
     }
 
+    public function getUltimoEquipoInsertado()
+    {
+        $this->db->select('*');
+        $this->db->from('equipo');
+        $this->db->order_by('id', 'desc');
+        $this->db->limit(1);
+        $query = $this->db->get();
+        return $query->row();
+    }
+
     public function insertarEquipo($equipo, $pabellon, $ciudad, $escudo, $liga)
     {
         $data = array(
