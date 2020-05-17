@@ -8,11 +8,25 @@ div.row {
 }
 
 .equipo img {
-    width: 50%;
+    width: 120px;
+    height: 150px;
     margin: 0 auto;
+}
+
+.equipo span {
+    font-size: 1.2em;
 }
 
 p {
     margin: 0;
     padding: 0;
+}
+
+#equipo {
+    width: 15%;
+}
+
+.form-control {
+    width: 50%;
+    text-align: center;
 }

@@ -21,7 +21,7 @@
             <thead>
                 <tr class='text-center'>
                     <th class="w-25">Jugador</th>
-                    <th>Equipo</th>
+                    <th id='equipo'>Equipo</th>
                     <th>Triples Metidos</th>
                     <th>Tiros de 2 Metidos</th>
                     <th>Tiros libres metidos</th>
@@ -42,11 +42,11 @@
                         <td class='d-none'><?= $jugador->username ?></td>
                         <td class='datos'><?= $jugador->apenom ?></td>
                         <td class='datos'><?= $jugador->equipo ?></td>
-                        <td><input <?= $disabled ?> value="<?= $valuetriples ?>" data-equipo="<?= $jugador->equipo ?>" min=' 0' class='w-50' class='w-50' size='10' type='number' name='triples'></td>
-                        <td><input <?= $disabled ?> value="<?= $valuetiros2 ?>" data-equipo="<?= $jugador->equipo ?>" min='0' class='w-50' size='10' type='number' name='tiros2'></td>
-                        <td><input <?= $disabled ?> value="<?= $valuetiroslibres ?>" data-equipo="<?= $jugador->equipo ?>" min='0' class='w-50' size='10' type='number' name='tiroslibres'></td>
-                        <td><input <?= $disabled ?> value="<?= $tapones ?>" data-equipo="<?= $jugador->equipo ?>" min='0' class='w-50' size='10' type='number' name='tapones'></td>
-                        <td><input <?= $disabled ?> value="<?= $robos ?>" data-equipo="<?= $jugador->equipo ?>" min='0' class='w-50' size='10' type='number' name='robos'></td>
+                        <td><input class="form-control mx-auto" <?= $disabled ?> value="<?= $valuetriples ?>" data-equipo="<?= $jugador->equipo ?>" min='0' class='w-50' class='w-50' size='10' type='number' name='triples'></td>
+                        <td><input class="form-control mx-auto" <?= $disabled ?> value="<?= $valuetiros2 ?>" data-equipo="<?= $jugador->equipo ?>" min='0' class='w-50' size='10' type='number' name='tiros2'></td>
+                        <td><input class="form-control mx-auto" <?= $disabled ?> value="<?= $valuetiroslibres ?>" data-equipo="<?= $jugador->equipo ?>" min='0' class='w-50' size='10' type='number' name='tiroslibres'></td>
+                        <td><input class="form-control mx-auto" <?= $disabled ?> value="<?= $tapones ?>" data-equipo="<?= $jugador->equipo ?>" min='0' class='w-50' size='10' type='number' name='tapones'></td>
+                        <td><input class="form-control mx-auto" <?= $disabled ?> value="<?= $robos ?>" data-equipo="<?= $jugador->equipo ?>" min='0' class='w-50' size='10' type='number' name='robos'></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
