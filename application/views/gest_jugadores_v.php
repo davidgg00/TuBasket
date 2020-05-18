@@ -20,7 +20,7 @@
 <div class="row">
     <?php if (count($jugadoresSinConfirmar) > 0) : ?>
         <div id="listaJugadoresSinConfirmar" class="listaJugadores d-flex flex-column mx-auto h-25">
-            <table class="mx-auto table table-striped table-light table-bordered table-hover col-12">
+            <table class="mx-auto table table-striped table-light table-hover col-12">
                 <h2 class="mx-auto w-10 alert alert-warning mb-0">USUARIOS PENDIENTES DE VALIDAR</h2>
                 <thead class="alert-warning" id="jugadores_sinConfirmar">
                     <tr>
@@ -51,7 +51,7 @@
     <?php endif; ?>
     <div id="listaJugadoresConfirmados" class="listaJugadores d-flex flex-column mx-auto h-100">
         <h2 class="alert alert-dark text-center mb-0 mx-auto">USUARIOS DE LA LIGA</h2>
-        <table class="mx-auto table table-striped table-light table-bordered table-hover col-12">
+        <table class="mx-auto table table-striped table-light table-hover col-12">
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">Username</th>

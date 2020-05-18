@@ -3,26 +3,6 @@
     background: rgba(255, 255, 255, 0.9);
 }
 
-.th-local, .td-local {
-    width: 18%;
-}
-
-.th-resultado,.td-resultado {
-    width: 18%;
-}
-
-.th-visitante,.td-visitante {
-    width: 18%;
-}
-
-.th-fecha,.td-fecha {
-    width: 25%;
-}
-
-.th-hora,.td-hora {
-    width: 20%;
-}
-
 p {
     width: 100%;
 }
@@ -33,16 +13,10 @@ table {
     table-layout: fixed;
 }
 
-table thead {
-    display:table;
-  width: 100%;
-}
-
 .datepick, .hora {
     border: none;
     background: none;
 }
-
 .fa-edit:hover,
 .fa-sync:hover{
     cursor: pointer;
@@ -53,9 +27,27 @@ table thead {
     font-size: 1.3em;
 }
 
+.fa-edit {
+    margin: 0 auto;
+    font-size: 1.4em;;
+}
+
 input[type="time"]::-webkit-clear-button { 
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
     margin: 0; 
+}
+
+th,td {
+         text-align: center;
+    }
+
+#fecha {
+    width: 20%;
+}
+
+.jornada {
+    margin: 0 5px;
+    width: calc(50% - 10px);
 }

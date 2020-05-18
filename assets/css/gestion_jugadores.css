@@ -12,3 +12,7 @@ h2 {
 .listaJugadores {
     width: 85%;
 }
+
+th {
+    text-align: center;
+}

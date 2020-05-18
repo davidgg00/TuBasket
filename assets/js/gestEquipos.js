@@ -17,10 +17,10 @@ $(document).ready(function () {
     });
 
     //Si presionamos enter en el contenteditable te genera <br> así que
-    //vamos a hacer que si presionamos enter no haga nada
+    //voy a hacer que si lo presionas pierda el foco.
     $('p[contenteditable]').keydown(function (e) {
         if (e.keyCode === 13) {
-            return false;
+            $(this).blur();
         }
     });
 });
