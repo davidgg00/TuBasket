@@ -51,3 +51,8 @@ th,td {
     margin: 0 5px;
     width: calc(50% - 10px);
 }
+
+table td img {
+    width: 120px;
+    height: 130px;
+}

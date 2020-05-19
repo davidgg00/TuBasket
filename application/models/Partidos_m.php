@@ -25,6 +25,14 @@ class Partidos_m extends CI_Model
         return $query->num_rows();
     }
 
+    public function getEquipos($liga)
+    {
+        //Creamos la sentencia sql
+        $query = $this->db->get_where('equipo ', array('liga' => $liga));
+        //Retornamos
+        return $query->result();
+    }
+
     public function getJugadoresPartidos($id)
     {
         $this->db->select('apenom,username,equipo.equipo,triples_metidos,tiros_2_metidos,tiros_libres_metidos,tapones,robos');

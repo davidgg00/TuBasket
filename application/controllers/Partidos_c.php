@@ -23,6 +23,7 @@ class Partidos_c extends CI_Controller
         }
         $datos["partidos"] = self::mostrarPartidos($liga);
         $datos["nequipos"] = self::numeroEquiposLiga($liga);
+        $datos["equipos"] =  $nequipos = $this->Partidos_m->getEquipos($liga);
         $this->load->view("modulos/head", array("css" => array("liga", "partidos")));
         $this->load->view("modulos/header", $datos);
         $this->load->view('partidos_v');
