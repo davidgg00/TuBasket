@@ -57,9 +57,18 @@
                                 <img src="<?php echo base_url('assets/img/vs.png') ?>" class="img-fluid">
                                 <img src="<?php echo base_url($partido->escudo_visitante) ?>" class="img-fluid">
                             </div>
+
                             <p id="lugar" class="col-12 text-center">Jornada: <?= $partido->jornada ?></p>
-                            <p id="fecha" class="col-12 text-center">Fecha: <?= date("d-m-Y", strtotime($partido->fecha)) ?></p>
-                            <p id="hora" class="col-12 text-center">Hora: <?= $partido->hora ?></p>
+                            <?php if ($partido->fecha != "0000-00-00") : ?>
+                                <p id="fecha" class="col-12 text-center">Fecha: <?= date("d-m-Y", strtotime($partido->fecha)) ?></p>
+                            <?php else : ?>
+                                <p id="fecha" class="col-12 text-center">Fecha: NO DECIDIDA</p>
+                            <?php endif; ?>
+                            <?php if (isset($partido->hora)) : ?>
+                                <p id="hora" class="col-12 text-center">Hora: <?= date("d-m-Y", strtotime($partido->fecha)) ?></p>
+                            <?php else : ?>
+                                <p id="hora" class="col-12 text-center">Hora: NO DECIDIDA</p>
+                            <?php endif; ?>
                         </div>
                     <?php endforeach;
                 else : ?>

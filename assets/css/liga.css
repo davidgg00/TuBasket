@@ -99,3 +99,9 @@ footer {
     width: 80px;
     text-align: center;
 }
+
+#previsualizacion {
+    width: 162.5px;
+    height: 187.5px;
+    margin: 0 auto;
+}

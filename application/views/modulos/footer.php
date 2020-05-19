@@ -18,7 +18,12 @@
                     <label for="apenom">Foto de perfil</label>
                     <input type="file" name="fotoperfil" id="fotoperfil">
                     <label for="previsualizacion" class="d-block mx-auto">Previsualización de la foto de perfil</label>
-                    <img src="" name="previsualizacion" id="previsualizacion" class="w-100 h-50 img-fluid rounded-circle d-block" alt="">
+                    <?php if (isset($_SESSION['imagen'])) : ?>
+                        <img src="<?= base_url($_SESSION['imagen']) ?>" name="previsualizacion" id="previsualizacion" class="img-fluid rounded-circle d-block" alt="">
+                    <?php else : ?>
+                        <img src="<?= base_url("assets/uploads/perfiles/pordefecto.png") ?>" name="previsualizacion" id="previsualizacion" class="img-fluid rounded-circle d-block" alt="">
+                    <?php endif; ?>
+
                     <label for="claveAntigua" class="d-none">Introduzca la clave actual</label>
                     <input type="text" name="claveAntigua" id="" class="d-none">
                     <label for="claveNueva" class="d-none">Introduzca la clave nueva</label>
