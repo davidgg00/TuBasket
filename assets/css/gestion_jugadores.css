@@ -16,3 +16,15 @@ h2 {
 th {
     text-align: center;
 }
+
+td i {
+    font-size: 1.5em;
+}
+
+td i:hover {
+    cursor: pointer;
+}
+
+td {
+    vertical-align: middle;
+}

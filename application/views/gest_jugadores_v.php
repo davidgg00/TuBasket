@@ -14,6 +14,36 @@
 
         //Añadimos tooltip a los .aceptar y .denegar
         tippy('.aceptar, .denegar');
+
+        //Añadimos accion al borrado de jugadores
+        $(".borrarJugador").on("click", function(evento) {
+            Swal.fire({
+                title: '¿Estás seguro de que quieres borrar la Liga?',
+                text: "¡Una ve que la elimines no podrás recuperarla!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Cancelar',
+                confirmButtonText: 'Confirmar',
+                backdrop: false,
+            }).then((result) => {
+                if (result.value) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Jugador Borrado!',
+                        text: 'Has borrado el jugador correctamente.',
+                        backdrop: false,
+                    }).then(() => {
+                        //Enviamos el username
+                        $.post(window.location.origin + "/TuBasket/GestionJugadores_c/eliminarJugador/" + $(this).parent().parent().children(":first").html());
+                        //quitamos el el tr del DOM y recargamos la paginación.
+                        $(this).parent().parent().remove();
+                        $(".activePagination").click();
+                    })
+                }
+            })
+        })
     });
 </script>
 
@@ -59,6 +89,7 @@
                     <th scope="col">Apellidos y Nombre</th>
                     <th scope="col">Fecha nacimiento</th>
                     <th scope="col">Equipo</th>
+                    <th scope="col">Borrar</th>
                 </tr>
             </thead>
             <tbody class="text-center paginacionWrapper" id="jugadores_confirmados">
@@ -69,6 +100,7 @@
                         <td><?= $jugador->apenom ?></td>
                         <td><?= $jugador->fecha_nac ?></td>
                         <td><?= $jugador->nombre_equipo ?></td>
+                        <td><i data-tippy-content='Borrar Equipo' class='fas fa-trash-alt borrarJugador'></i></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
