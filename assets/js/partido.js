@@ -32,38 +32,41 @@ $(document).ready(function () {
     //Creamos evento al boton de enviar para enviar los datos del partido
     $("#boton").on("click", function (evento) {
 
-        //Este array guardará los <td> con la información que queremos
-        let miArray = [];
+        //SI EL RESULTADO NO ES EMPATE, SE GUARDA LOS DATOS DEL PARTIDO
+        if ($(".equipo:first-child span").html() != $(".equipo:last-child span").html()) {
 
-        //por cada td
-        $.each($("tr td"), function () {
-            //Si el td tiene un hijo (si tiene un input) guardamos en el array el valor del hijo (el valor del input)
-            if ($(this).children().length > 0) {
-                miArray.push($(this).children().val());
-            } else {
-                /*Si no hay hijo, es que hay texto,
-                * Pero si tiene la clase d-none es que lleva el USERNAME ya que lo tenemos escondido
-                * y lo necesitamos después para hacer la consulta */
-                if ($(this).hasClass("d-none")) {
-                    miArray.push($(this).html());
+            //Este array guardará los <td> con la información que queremos
+            let miArray = [];
+
+            //por cada td
+            $.each($("tr td"), function () {
+                //Si el td tiene un hijo (si tiene un input) guardamos en el array el valor del hijo (el valor del input)
+                if ($(this).children().length > 0) {
+                    miArray.push($(this).children().val());
+                } else {
+                    /*Si no hay hijo, es que hay texto,
+                    * Pero si tiene la clase d-none es que lleva el USERNAME ya que lo tenemos escondido
+                    * y lo necesitamos después para hacer la consulta */
+                    if ($(this).hasClass("d-none")) {
+                        miArray.push($(this).html());
+                    }
                 }
-            }
-        });
+            });
 
-        //Enviamos las estadísticas de lo usuarios por AJAX
-        $.post(base_url + "Partidos_c/enviarResultado/" + idpartido, {
-            miform: miArray
-        });
 
-        //Enviamos el resultado del encuentro por AJAX
-        $.post(base_url + "Partidos_c/insertarResultadoEquipos", {
-            //Cogemos el total de puntos de cada equipo, el id y la liga
-            equipolocal: $(".equipo:first-child span").html(),
-            equipovisitante: $(".equipo:last-child span").html(),
-            id: idpartido,
-            liga: liga_actual
-        },
-            function (dato_devuelto) {
+            //Enviamos las estadísticas de lo usuarios por AJAX
+            $.post(base_url + "Partidos_c/enviarResultado/" + idpartido, {
+                miform: miArray
+            });
+
+            //Enviamos el resultado del encuentro por AJAX
+            $.post(base_url + "Partidos_c/insertarResultadoEquipos", {
+                //Cogemos el total de puntos de cada equipo, el id y la liga
+                equipolocal: $(".equipo:first-child span").html(),
+                equipovisitante: $(".equipo:last-child span").html(),
+                id: idpartido,
+                liga: liga_actual
+            }, function (dato_devuelto) {
                 //Si nos devuelve Insertado es que ha funcionado correctamente y mostramos SWAL
                 if (dato_devuelto == "Insertado") {
                     Swal.fire({
@@ -74,7 +77,30 @@ $(document).ready(function () {
                     })
                 }
             }
-        );
+            );
+
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: '¡Resultado Erróneo!',
+                text: 'Un partido no puede quedar empate. Tiene que haber ganador SI o SI.',
+                backdrop: false,
+            })
+        }
+    })
+
+    //Los inputs no podrán tener valores negativos.
+    $(".stat").on("keypress", function (evento) {
+        if (evento.keyCode == 45) {
+            return false;
+        }
+    })
+
+    //Número máximo 99
+    $(".stat").on("keyup", function (evento) {
+        if ($(this).val() >= 100) {
+            $(this).val("99");
+        }
     })
 });
 
@@ -118,8 +144,6 @@ function sumarMarcador() {
                 break;
         }
         //Añadimos el valor total a los marcadores
-        console.log(totalLocal);
-        console.log(totalVisitante);
         $(".equipo:first-child span").text(totalLocal);
         $(".equipo:last-child span").text(totalVisitante);
     })

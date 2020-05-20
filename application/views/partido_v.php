@@ -10,7 +10,7 @@
             <div class='equipo d-flex justify-content-center flex-wrap align-items-center'><img id='<?= $equipos->id_local ?>' class='img-fluid' src="<?= base_url($equipos->escudo_local) ?>">
                 <p class='w-100 text-center'><?= $equipos->equipo_local ?></p> <span id="<?= $equipos->id_local ?>" data-id='<?= $equipos->equipo_local ?>'></span>
             </div>
-            <div class='equipo d-flex justify-content-center flex-wrap'><img id='img-vs' class='img-fluid' src='<?= base_url('assets/img/vs.png') ?>'></div>
+            <div class='equipo d-flex justify-content-center flex-wrap align-items-center'><img id='img-vs' class='img-fluid' src='<?= base_url('assets/img/vs.png') ?>'></div>
             <div class='equipo d-flex justify-content-center flex-wrap align-items-center'><img id='<?= $equipos->id_visitante ?>' class='img-fluid' src="<?= base_url($equipos->escudo_visitante) ?>">
                 <p class='w-100 text-center'><?= $equipos->equipo_visitante ?></p><span id="<?= $equipos->id_visitante ?>" data-id='<?= $equipos->equipo_visitante ?>'></span>
             </div>
@@ -42,11 +42,11 @@
                         <td class='d-none'><?= $jugador->username ?></td>
                         <td class='datos'><?= $jugador->apenom ?></td>
                         <td class='datos'><?= $jugador->equipo ?></td>
-                        <td><input class="form-control mx-auto" <?= $disabled ?> value="<?= $valuetriples ?>" data-equipo="<?= $jugador->equipo ?>" min='0' class='w-50' class='w-50' size='10' type='number' name='triples'></td>
-                        <td><input class="form-control mx-auto" <?= $disabled ?> value="<?= $valuetiros2 ?>" data-equipo="<?= $jugador->equipo ?>" min='0' class='w-50' size='10' type='number' name='tiros2'></td>
-                        <td><input class="form-control mx-auto" <?= $disabled ?> value="<?= $valuetiroslibres ?>" data-equipo="<?= $jugador->equipo ?>" min='0' class='w-50' size='10' type='number' name='tiroslibres'></td>
-                        <td><input class="form-control mx-auto" <?= $disabled ?> value="<?= $tapones ?>" data-equipo="<?= $jugador->equipo ?>" min='0' class='w-50' size='10' type='number' name='tapones'></td>
-                        <td><input class="form-control mx-auto" <?= $disabled ?> value="<?= $robos ?>" data-equipo="<?= $jugador->equipo ?>" min='0' class='w-50' size='10' type='number' name='robos'></td>
+                        <td><input class="stat form-control mx-auto" <?= $disabled ?> value="<?= $valuetriples ?>" data-equipo="<?= $jugador->equipo ?>" min='0' class='w-50' class='w-50' size='10' type='number' name='triples'></td>
+                        <td><input class="stat form-control mx-auto" <?= $disabled ?> value="<?= $valuetiros2 ?>" data-equipo="<?= $jugador->equipo ?>" min='0' class='w-50' size='10' type='number' name='tiros2'></td>
+                        <td><input class="stat form-control mx-auto" <?= $disabled ?> value="<?= $valuetiroslibres ?>" data-equipo="<?= $jugador->equipo ?>" min='0' class='w-50' size='10' type='number' name='tiroslibres'></td>
+                        <td><input class="stat form-control mx-auto" <?= $disabled ?> value="<?= $tapones ?>" data-equipo="<?= $jugador->equipo ?>" min='0' class='w-50' size='10' type='number' name='tapones'></td>
+                        <td><input class="stat form-control mx-auto" <?= $disabled ?> value="<?= $robos ?>" data-equipo="<?= $jugador->equipo ?>" min='0' class='w-50' size='10' type='number' name='robos'></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
