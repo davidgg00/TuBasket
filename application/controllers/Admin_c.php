@@ -59,6 +59,21 @@ class Admin_c extends CI_Controller
 
     public function borrarLiga()
     {
+        //Al borrar una liga también vamos a borrar las imagenes del servidor de los jugadores y escudos.
+
+        $imgEscudos = $this->Admin_m->getEscudos($_POST['liga']);
+        foreach ($imgEscudos as $imgEscudo) {
+            unlink($imgEscudo->escudo_ruta);
+        }
+
+        $imgJugadores = $this->Admin_m->getPerfilesJugadores($_POST['liga']);
+        foreach ($imgJugadores as $imgJugador) {
+            //Si la imagen no es la de por defecto se borra.
+            if ($imgJugador->imagen != "assets/uploads/perfiles/pordefecto.png") {
+                unlink($imgJugador->imagen);
+            }
+        }
+        //Y finalmente borramos la liga.
         $this->Admin_m->borrarLiga($_POST['liga']);
     }
 

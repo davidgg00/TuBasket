@@ -71,4 +71,22 @@ class Admin_m extends CI_Model
         $this->session->set_userdata('email', $email);
         $this->session->set_userdata('fecha_nac', $fechanac);
     }
+
+    public function getPerfilesJugadores($liga)
+    {
+        $this->db->select('imagen');
+        $this->db->where('liga', $liga);
+        $this->db->from('usuarios u');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function getEscudos($liga)
+    {
+        $this->db->select('escudo_ruta');
+        $this->db->where('liga', $liga);
+        $this->db->from('equipo e');
+        $query = $this->db->get();
+        return $query->result();
+    }
 }
