@@ -1,10 +1,10 @@
 <script>
     $(document).ready(function() {
+
         //Añadimos la clase active al primer item del carrusel nada mas que cargue
         //la página para que haya solo un elemento activo. (Si lo hacemos en el bucle)
         //Se ponen todos con esa clase y no funcionará el carrusel correctamente
         $(".carousel-item:first").addClass("active");
-
         $("#btn-guardarclave").on("click", function(evento) {
             //Si la clave antigua NO está vacía
             if ($("#claveAntigua").val() != "") {
@@ -44,7 +44,6 @@
 </script>
 <div class="row justify-content-end" id="informacion">
     <section class="col-8 d-flex flex-wrap justify-content-center align-items-center" id="proxpartido">
-
         <div id="carouselExampleControls" class="carousel slide w-100 border border-dark" data-ride="carousel">
             <div class="carousel-inner">
                 <h3 class="col-12 text-center">Liga: <?= $liga ?></h3>

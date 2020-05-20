@@ -168,6 +168,14 @@
                             $("img[src*='" + escudos.escudoAntiguo + "']").removeAttr('data-id');
                             $("img[src*='" + escudos.escudoAntiguo + "']").data('id', escudos.escudoNuevo)
                             $("img[src*='" + escudos.escudoAntiguo + "']").attr('src', '<?= base_url() ?>' + escudos.escudoNuevo);
+
+                            //Notificamos que se cambió el escudo correctamente
+                            $.notify({
+                                title: '<strong class="">¡Escudo cambiado correctamente!</strong><br>',
+                                message: 'El escudo del equipo se ha guardado correctamente en nuestra base de datos.'
+                            }, {
+                                type: 'success'
+                            });
                         }
                     });
                 }

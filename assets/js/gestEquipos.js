@@ -45,20 +45,35 @@ $(document).ready(function () {
 
 //Función que nos permite crear el envio del ContentEditable a la base de datos por AJAX
 function ajaxContentEditable() {
+    var contenidoAnterior;
+    $("p").on("focus", function (evento) {
+        contenidoAnterior = $(this).html()
+    });
 
     //Una vez que se quite el foco del parrafo
     $("p").on("blur", function (evento) {
-        //Se crea un ajax ejecuta el método ModificarEquipo de GestionEquipos_c
-        //Y se envía el contenido, el campo que se ha cambiado y el equipo
-        $.ajax({
-            type: "post",
-            url: baseurl + "GestionEquipos_c/modificarEquipo",
-            data: {
-                contenido: $(this).html(),
-                campo: $(this).parent().attr('class'),
-                equipo: $(this).parent().parent().children().eq(0).html()
-            }
-        });
+        //Si se ha cambiado el contenido del contenteditable
+        if (contenidoAnterior != $(this).html()) {
+            //Si se ha cambiado algo se lanza ajax y notificación
+            //Se crea un ajax ejecuta el método ModificarEquipo de GestionEquipos_c
+            //Y se envía el contenido, el campo que se ha cambiado y el equipo
+            $.ajax({
+                type: "post",
+                url: baseurl + "GestionEquipos_c/modificarEquipo",
+                data: {
+                    contenido: $(this).html(),
+                    campo: $(this).parent().attr('class'),
+                    equipo: $(this).parent().parent().children().eq(0).html()
+                }, success: function () {
+                    $.notify({
+                        title: '<strong class="">¡Información cambiada correctamente!</strong><br>',
+                        message: 'La infomación del equipo se ha guardado correctamente en nuestra base de datos.'
+                    }, {
+                        type: 'success'
+                    });
+                }
+            });
+        }
     })
 }
 
