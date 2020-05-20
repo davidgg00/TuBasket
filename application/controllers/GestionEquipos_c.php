@@ -13,6 +13,7 @@ class GestionEquipos_c extends CI_Controller
     {
         $datos["equipos"] = $this->GestionEquipos_m->getEquipos($liga)->result();
         $datos["liga"] = $liga;
+        $datos["nPartidosLiga"] = $this->GestionEquipos_m->getNPartidosLiga($liga);
         $this->load->view("modulos/head", array("css" => array("liga", "gestion_equipos")));
         $this->load->view("modulos/header", $datos);
         $this->load->view('gest_equipos_v');
@@ -27,6 +28,8 @@ class GestionEquipos_c extends CI_Controller
     public function eliminarEquipo()
     {
         $this->GestionEquipos_m->eliminarEquipo($_POST['id']);
+        //Eliminamos la imagen del equipo
+        unlink($_POST['rutaImagen']);
     }
 
     public function obtenerNumEquipos($liga)

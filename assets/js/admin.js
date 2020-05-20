@@ -30,7 +30,6 @@ function obtenerLigas() {
             })
             //Cuando se haga click en el icono de borrar una liga
             $(".borrarLiga").on("click", function (evento) {
-                console.log($(this).attr('id'));
                 Swal.fire({
                     title: '¿Estás seguro de que quieres borrar la Liga?',
                     text: "¡Una ve que la elimines no podrás recuperarla!",

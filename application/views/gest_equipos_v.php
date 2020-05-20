@@ -1,6 +1,7 @@
 <script>
     let baseurl = "<?php echo base_url() ?>";
     let liga_actual = "<?php echo $liga ?>";
+    let npartidos = "<?= $nPartidosLiga ?>"
 </script>
 <script src="<?php echo base_url('assets/js/') ?>gestEquipos.js"></script>
 <div class="row" id="contenedor">
@@ -40,7 +41,7 @@
                     <td class='ciudad'>
                         <p data-tippy-content='Haga click para editar el campo' class='dato_td' contenteditable='true'> <?= $equipo->ciudad ?> </p>
                     </td>
-                    <td><img data-toggle='modal' data-target='#miModal' src='<?= base_url($equipo->escudo_ruta) ?> ' data-id='<?= $equipo->escudo_ruta ?>' data-tippy-content='Haga click para cambiar el escudo' class='dato_td escudo'>
+                    <td class="td-escudo"><img data-toggle='modal' data-target='#miModal' src='<?= base_url($equipo->escudo_ruta) ?> ' data-id='<?= $equipo->escudo_ruta ?>' data-tippy-content='Haga click para cambiar el escudo' class='dato_td escudo'>
                     </td>
                     <td><i data-tippy-content='Borrar Equipo' class='fas fa-trash-alt eliminar'></i></td>
                 </tr>
@@ -88,7 +89,7 @@
                 contentType: false,
                 success: function(response) {
                     let equipo = JSON.parse(response);
-                    $("tbody").append("<tr class='text-center datos'><td id='id' class='d-none'>" + equipo.id + "</td><td class='equipo'><p data-tippy-content='Haga click para editar el campo' class='dato_td' contenteditable='true' >" + equipo.equipo + "</p></td><td class='pabellon'><p data-tippy-content='Haga click para editar el campo' class='dato_td' contenteditable='true'>" + equipo.pabellon + "</p></td><td class='ciudad'><p data-tippy-content='Haga click para editar el campo' class='dato_td' contenteditable='true'>" + equipo.ciudad + "</p></td><td><img  data-toggle='modal' data-target='#miModal' src='" + baseurl + equipo.escudo_ruta + "' data-id='" + equipo.escudo_ruta + "' data-tippy-content='Haga click para cambiar el escudo' class='dato_td escudo'></td><td><i data-tippy-content='Borrar Equipo' class='fas fa-trash-alt eliminar'></i></td></tr>")
+                    $("tbody").append("<tr class='text-center datos'><td id='id' class='d-none'>" + equipo.id + "</td><td class='equipo'><p data-tippy-content='Haga click para editar el campo' class='dato_td' contenteditable='true' >" + equipo.equipo + "</p></td><td class='pabellon'><p data-tippy-content='Haga click para editar el campo' class='dato_td' contenteditable='true'>" + equipo.pabellon + "</p></td><td class='ciudad'><p data-tippy-content='Haga click para editar el campo' class='dato_td' contenteditable='true'>" + equipo.ciudad + "</p></td><td class='td-escudo'><img  data-toggle='modal' data-target='#miModal' src='" + baseurl + equipo.escudo_ruta + "' data-id='" + equipo.escudo_ruta + "' data-tippy-content='Haga click para cambiar el escudo' class='dato_td escudo'></td><td><i data-tippy-content='Borrar Equipo' class='fas fa-trash-alt eliminar'></i></td></tr>")
 
                     //Añadimos las acciones al nuevo equipo añadido
 

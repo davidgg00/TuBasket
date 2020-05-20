@@ -63,4 +63,11 @@ class GestionEquipos_m extends CI_Model
         $this->db->where('escudo_ruta', $id);
         $this->db->update('equipo');
     }
+
+    public function getNPartidosLiga($liga)
+    {
+        //Vamos a ver si la liga ya tiene unos enfrentamientos generados.
+        $query = $this->db->get_where('partido', array('liga' => $liga));
+        return $query->num_rows();
+    }
 }

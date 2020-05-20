@@ -23,6 +23,21 @@ $(document).ready(function () {
             $(this).blur();
         }
     });
+
+    //Función que comprueba el numero de equipos que hay nada mas meternos en la pestaña
+    //Si hay 10 como máximo, no permitiremos meter más.
+
+    $.ajax({
+        type: "post",
+        url: baseurl + "GestionEquipos_c/obtenerNumEquipos/" + liga_actual,
+        success: function (dato_devuelto) {
+            if (dato_devuelto >= 10) {
+                $("#formulario").addClass("max-equipos");
+            } else {
+                $("#formulario").removeClass("max-equipos");
+            }
+        },
+    });
 });
 
 
@@ -50,21 +65,60 @@ function ajaxContentEditable() {
 //Función que nos permite eliminar un Equipo de la base de datos por AJAX
 function ajaxEliminarEquipo() {
     $(".eliminar").on("click", function (evento) {
-        //Al hacer click en eliminar guardamos la id del equipo a borrar y la fila (tr)
-        //Se ejecuta el método eliminarEquipo de GestionEquipos_c y borramos el tr.
+        //Si todavía no se ha generado los enfrentamientos
+        if (npartidos == 0) {
+            //Aparece una confirmacion de que si quiere eliminar el equipo
+            Swal.fire({
+                title: '¿Estás seguro de que quieres borrar la Liga?',
+                text: "¡Una ve que la elimines no podrás recuperarla!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Cancelar',
+                confirmButtonText: 'Confirmar',
+                backdrop: false,
+            }).then((result) => {
+                console.log($(this).parent().parent().find("td.td-escudo"));
+                var imgEquipo = $(this).parent().parent().find("td.td-escudo").children().data('id');
+                console.log(imgEquipo);
+                if (result.value) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Equipo Borrado!',
+                        text: 'Has borrado el equipo correctamente.',
+                        backdrop: false,
+                    }).then(() => {
+                        //Al hacer click en eliminar guardamos la id del equipo a borrar y la fila (tr)
+                        //Se ejecuta el método eliminarEquipo de GestionEquipos_c y borramos el tr.
+                        let idEquipo = $(this).parent().parent().children().eq(0).html();
+                        let fila = $(this).parent().parent();
 
-        let idEquipo = $(this).parent().parent().children().eq(0).html();
-        let fila = $(this).parent().parent();
-        $.ajax({
-            type: "post",
-            url: baseurl + "GestionEquipos_c/eliminarEquipo",
-            data: {
-                id: idEquipo
-            },
-            success: function (response) {
-                $(fila).remove();
-            }
-        });
+                        $.ajax({
+                            type: "post",
+                            url: baseurl + "GestionEquipos_c/eliminarEquipo",
+                            data: {
+                                id: idEquipo,
+                                rutaImagen: imgEquipo
+                            },
+                            success: function (response) {
+                                $(fila).remove();
+                                console.log(response);
+                                console.log(imgEquipo);
+                            }
+                        });
+                    })
+                }
+            })
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: '¡La liga ya ha empezado!',
+                text: 'No puedes borrar a un equipo cuando la liga ya está empezada',
+                backdrop: false,
+            })
+        }
+
 
         //Si había 10 equipos (los máximos), no se podía añadir más pero al borrar uno
         //Comprobamos por ajax el numero de equipos de la liga, si es menor que 10 
@@ -84,17 +138,4 @@ function ajaxEliminarEquipo() {
     })
 }
 
-//Función que comprueba el numero de equipos que hay nada mas meternos en la pestaña
-//Si hay 10 como máximo, no permitiremos meter más.
 
-$.ajax({
-    type: "post",
-    url: baseurl + "GestionEquipos_c/obtenerNumEquipos/" + liga_actual,
-    success: function (dato_devuelto) {
-        if (dato_devuelto >= 10) {
-            $("#formulario").addClass("max-equipos");
-        } else {
-            $("#formulario").removeClass("max-equipos");
-        }
-    },
-});
