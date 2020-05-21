@@ -45,10 +45,10 @@ class Partidos_m extends CI_Model
         *  En ese caso, el encuentro se ha disputado pero el admin quiere editar alguna estadística, entonces
         *  Deberá de mostrar las estadísticas REALES del partido y no los campos a 0 */
         if (!empty($query->result())) {
-            return $query->result();
+            return $query;
         } else {
             //Si no retorna la anterior consulta nada, es que se va a escribir las estadísticas de un partido NO DISPUTADO.
-            return $this->db->get_where('view_jugadores_partidos', array('idpartido' => $id))->result();
+            return $this->db->get_where('view_jugadores_partidos', array('idpartido' => $id));
         }
     }
 
@@ -143,5 +143,15 @@ class Partidos_m extends CI_Model
         $this->db->where('tipo', "Entrenador");
         $query = $this->db->get();
         return $query->row();
+    }
+
+    public function getNJugadoresPartidos($id)
+    {
+        $this->db->select('count(*) as totalEquipo');
+        $this->db->from('view_jugadores_partidos');
+        $this->db->where('idpartido', $id);
+        $this->db->group_by('idequipo');
+        $query = $this->db->get();
+        return $query;
     }
 }

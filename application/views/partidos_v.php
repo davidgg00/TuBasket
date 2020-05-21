@@ -83,9 +83,27 @@
 
         //Añadimos acciones a los botones de acciones
         $(".fa-edit").on("click", function() {
-            id = $(this).data('id');
-            //Al hacer click te redirige al partido.
-            window.location.href = "<?php echo base_url('Admin_c/partido/' . $liga) ?>" + "/" + id + "";
+            var id = $(this).data('id');
+            //Antes de editar un partido, si el equipo no tiene el numero de jugadores minimo no podrá ser editado.
+            $.get("<?= base_url('Partidos_c/getNJugadoresPartido/') ?>" + id,
+                function(njugadores) {
+                    let njugadoresEncuentro = JSON.parse(njugadores);
+                    if (njugadoresEncuentro[0].totalEquipo >= 5 && njugadoresEncuentro[1].totalEquipo >= 5) {
+                        //Redirigimos al partido.
+
+                        window.location.href = "<?php echo base_url('Admin_c/partido/' . $liga) ?>" + "/" + id + "";
+                    } else {
+                        Swal.fire({
+                            backdrop: false,
+                            icon: 'error',
+                            title: 'Ooops....',
+                            text: 'Algún equipo (o ambos) no tiene como mínimo 5 jugadores en su plantilla.',
+                        })
+                    }
+                },
+            );
+
+
         });
 
         //Añadimos el tooltip al .fa-edit

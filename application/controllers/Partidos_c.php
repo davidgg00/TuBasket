@@ -46,7 +46,7 @@ class Partidos_c extends CI_Controller
     //MÉTODOS PARTIDO INDIVIDUAL SELECCIONADO
     public function getJugadoresPartidos($id)
     {
-        $partidos = $this->Partidos_m->getJugadoresPartidos($id);
+        $partidos = $this->Partidos_m->getJugadoresPartidos($id)->result();
         return $partidos;
     }
 
@@ -200,5 +200,12 @@ class Partidos_c extends CI_Controller
         $this->load->model("Notificaciones_m");
         $datos = $this->Notificaciones_m->numeroNotificaciones($_SESSION["equipo"]);
         return $datos;
+    }
+
+    public function getNJugadoresPartido($id)
+    {
+
+        $njugadores = $this->Partidos_m->getNJugadoresPartidos($id)->result();
+        echo json_encode($njugadores);
     }
 }
