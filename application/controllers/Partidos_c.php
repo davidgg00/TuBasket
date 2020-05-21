@@ -46,7 +46,7 @@ class Partidos_c extends CI_Controller
     //MÉTODOS PARTIDO INDIVIDUAL SELECCIONADO
     public function getJugadoresPartidos($id)
     {
-        $partidos = $this->Partidos_m->getJugadoresPartidos($id)->result();
+        $partidos = $this->Partidos_m->getJugadoresPartidos($id);
         return $partidos;
     }
 
@@ -112,7 +112,7 @@ class Partidos_c extends CI_Controller
         }
         $datos_jugadores = $this->Partidos_m->getEmailJugadores($id);
         $datos_partido = $this->Partidos_m->getPartido($id);
-        self::generarPDF($_POST['html'], $id);
+        self::generarPDF($id);
         self::EnviarMail($id, $datos_jugadores, $datos_partido);
     }
 
@@ -131,22 +131,26 @@ class Partidos_c extends CI_Controller
         $this->Partidos_m->resetPartido($_POST['idPartido']);
     }
 
-    public function generarPDF($documento, $idpartido)
+    public function generarPDF($idpartido)
     {
-        unlink('assets/pdfPartidos/' . $idpartido . '.pdf');
+        if (file_exists('assets/pdfPartidos/' . $idpartido . '.pdf')) {
+            unlink('assets/pdfPartidos/' . $idpartido . '.pdf');
+        } else {
+            echo "The file does not exist";
+        }
+
 
         $mpdf = new \Mpdf\Mpdf(['margin_left' => 0, 'margin_right' => 0, 'margin_top' => 0, 'margin_bottom' => 0, 'margin_header' => 0, 'margin_footer' => 0, 'dpi' => 100]);
         $mpdf->AddPage('L'); // Adds a new page in Landscape orientation
         $partido = $this->Partidos_m->getPartido($idpartido);
         $jugadores = $this->Partidos_m->getJugadoresPartidos($idpartido);
+        print_r($jugadores);
         $html = "
         <style>body{box-sizing: border-box;}#contenedor{width: 100%; background: url(" . base_url('assets/img/background-liga.jpg') . ");}#partido{background-color: rgb(35,40,45); margin: 0 auto; width: 100%; padding: 0; height: 100%;}#plataforma{margin: 0 auto; text-align: center; background-color: rgb(35,40,45); width: 100%;}#logo{width: 200px;}#contenedor-equipos{width: 90%; height:25%; margin: 0 auto; background-color: white;}#equipos{width: 100%; float: left;}.equipo{width: 33.14%; height: 35%; border: 1px solid black; float: left; text-align: center;}.escudo{width: 175px; height: 180px;}.vs{margin-top: 50px;}.equipo p{width: 100%; text-align: center;}.resultado{font-size: 20px;}#jugadores_stats{background-color: white; margin: 0 auto; text-align: center; width: 90%; height: 48.6%;}#titulos{width: 100%; margin: 0 auto;}.titulo{float: left; width: 14.28%; font-size: 14px;}#titulos div{width: 14.28%; border-bottom: 1px solid black; float: left; font-size: 14px; margin-bottom: 7px;}#titulos div:last-child{margin-bottom: 0px;}</style> <div id='partido'> <div id='plataforma'> <img id='logo' src='" . base_url('assets/img/logo2.png') . "'> </div><div id='contenedor'> <div id='contenedor-equipos'> <div id='equipos'> <div class='equipo'> <img class='escudo' src='" . base_url($partido->escudo_local) . "'> <p>$partido->equipo_local</p><p class='resultado'>$partido->resultado_local</p></div><div class='equipo'> <img class='escudo vs' src='" . base_url('assets/img/vs.png') . "'> </div><div class='equipo'> <img class='escudo' src='" . base_url($partido->escudo_visitante) . "'> <p>$partido->equipo_visitante</p><p class='resultado'>$partido->resultado_visitante</p></div></div></div><div id='jugadores_stats'> <div id='titulos'><div class='titulo'>Jugador</div><div class='titulo'>Equipo</div><div class='titulo'>Triples Metidos</div><div class='titulo'>Tiros de 2 Metidos</div><div class='titulo'>Tiros libres metidos</div><div class='titulo'>Tapones</div><div class='titulo'>Robos</div>";
         foreach ($jugadores as $jugador) {
             $html .= "<div>$jugador->apenom</div><div>$jugador->equipo</div><div>$jugador->triples_metidos</div><div>$jugador->tiros_2_metidos</div><div>$jugador->tiros_libres_metidos</div><div>$jugador->tapones</div><div>$jugador->robos</div>";
         }
         $html .= "</div></div></div></div>";
-        $resultado = preg_replace('/<button id="boton" type="button" class="btn btn-outline-success btn-lg mx-auto">Guardar Partido<\/button>/i', '', $documento);
-        $resultado = preg_replace('/<td class="d-none">(.*?)<\/td>/i', '', $resultado);
         $mpdf->WriteHTML($html);
         $mpdf->Output('C:/xampp/htdocs/TuBasket/assets/pdfPartidos/' . $idpartido . '.pdf', 'F');
     }

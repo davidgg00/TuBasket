@@ -34,6 +34,11 @@ $(document).ready(function () {
 
         //SI EL RESULTADO NO ES EMPATE, SE GUARDA LOS DATOS DEL PARTIDO
         if ($(".equipo:first-child span").html() != $(".equipo:last-child span").html()) {
+            //Enviamos una notificación al usuario que, se están guardando los datos del partido.
+            var notify = $.notify('<strong>Guardando los datos del partido</strong> No cierres la página...', {
+                allow_dismiss: false,
+                showProgressbar: true,
+            });
 
             //Este array guardará los <td> con la información que queremos
             let miArray = [];
@@ -66,16 +71,8 @@ $(document).ready(function () {
                 equipovisitante: $(".equipo:last-child span").html(),
                 id: idpartido,
                 liga: liga_actual
-            }, function (dato_devuelto) {
-                //Si nos devuelve Insertado es que ha funcionado correctamente y mostramos SWAL
-                if (dato_devuelto == "Insertado") {
-                    Swal.fire({
-                        backdrop: false,
-                        icon: 'success',
-                        title: '¡Los datos han sido guardados correctamente!',
-                        text: 'Puede ir a la sección Partidos para ver que aparece correctamente.',
-                    })
-                }
+            }, function () {
+                notify.update({ 'type': 'success', 'message': '<strong>Estadísticas subidas</strong><br> El resultado ha sido correctamente subido a la plataforma.' });
             }
             );
 
