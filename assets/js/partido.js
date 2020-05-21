@@ -62,19 +62,23 @@ $(document).ready(function () {
             //Enviamos las estadísticas de lo usuarios por AJAX
             $.post(base_url + "Partidos_c/enviarResultado/" + idpartido, {
                 miform: miArray
+            }).done(function () {
+                //Enviamos el resultado del encuentro por AJAX
+                $.post(base_url + "Partidos_c/insertarResultadoEquipos", {
+                    //Cogemos el total de puntos de cada equipo, el id y la liga
+                    equipolocal: $(".equipo:first-child span").html(),
+                    equipovisitante: $(".equipo:last-child span").html(),
+                    id: idpartido,
+                    liga: liga_actual
+                }, function () {
+                    setTimeout(function () {
+                        notify.update({ 'type': 'success', 'message': '<strong>Estadísticas subidas</strong><br> El resultado ha sido correctamente subido a la plataforma.', delay: 10000 });
+                    }, 1000);
+                }
+                );
             });
 
-            //Enviamos el resultado del encuentro por AJAX
-            $.post(base_url + "Partidos_c/insertarResultadoEquipos", {
-                //Cogemos el total de puntos de cada equipo, el id y la liga
-                equipolocal: $(".equipo:first-child span").html(),
-                equipovisitante: $(".equipo:last-child span").html(),
-                id: idpartido,
-                liga: liga_actual
-            }, function () {
-                notify.update({ 'type': 'success', 'message': '<strong>Estadísticas subidas</strong><br> El resultado ha sido correctamente subido a la plataforma.' });
-            }
-            );
+
 
         } else {
             Swal.fire({
@@ -100,7 +104,6 @@ $(document).ready(function () {
         }
     })
 });
-
 function sumarMarcador() {
     let totalLocal = 0;
     let totalVisitante = 0;
