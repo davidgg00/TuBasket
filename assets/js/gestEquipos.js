@@ -26,7 +26,12 @@ $(document).ready(function () {
 
     //Función que comprueba el numero de equipos que hay nada mas meternos en la pestaña
     //Si hay 10 como máximo, no permitiremos meter más.
+    comprobarMaxEquipos();
 
+});
+
+
+function comprobarMaxEquipos() {
     $.ajax({
         type: "post",
         url: baseurl + "GestionEquipos_c/obtenerNumEquipos/" + liga_actual,
@@ -38,10 +43,7 @@ $(document).ready(function () {
             }
         },
     });
-});
-
-
-
+}
 
 //Función que nos permite crear el envio del ContentEditable a la base de datos por AJAX
 function ajaxContentEditable() {
@@ -139,17 +141,7 @@ function ajaxEliminarEquipo() {
         //Comprobamos por ajax el numero de equipos de la liga, si es menor que 10 
         //Quitamos la clase max-equipos
 
-        $.ajax({
-            type: "post",
-            url: baseurl + "GestionEquipos_c/obtenerNumEquipos/" + liga_actual,
-            success: function (dato_devuelto) {
-                if (dato_devuelto >= 10) {
-                    $("#formulario").addClass("max-equipos");
-                } else {
-                    $("#formulario").removeClass("max-equipos");
-                }
-            },
-        });
+        comprobarMaxEquipos();
     })
 }
 

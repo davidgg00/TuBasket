@@ -1,8 +1,3 @@
-<style>
-    i.fa-ban {
-        cursor: pointer;
-    }
-</style>
 <script>
     let base_url = '<?= base_url() ?>';
 </script>
@@ -36,33 +31,9 @@
         </div>
     </div>
 </div>
+
 <!-- Modal -->
-<script>
-    $(document).ready(function() {
-        $("#crearligadiv").on("click", function(evento) {
-            //Creamos AJAX que nos devuelva el número de ligas que tiene la cuenta administrador.
-            //Si tiene mas de 3, mostrará un error diciendo que has superado el numero de ligas creadas por cuenta.
-            $.ajax({
-                type: "post",
-                url: base_url + "Admin_c/obtenerNLigas",
-                success: function(numeroligas) {
-                    //Si el numero de liga es menos que 2 que se muestre el modal, de lo contrario que se muestre un error
-                    if (numeroligas <= 2) {
-                        $("#miModal").modal('show');
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: '¡Ligas Completas!',
-                            text: 'Has superado el máximo de ligas creadas (3), para crear otra deberá antes borrar una.',
-                            backdrop: false,
-                        })
-                    }
-                }
-            });
-        })
-    });
-</script>
-<div class="modal fade" id="miModal" tabindex="-1" role="dialog" aria-labelledby="miModal" aria-hidden="true">
+<div class="modal fade" id="modalCrearLiga" tabindex="-1" role="dialog" aria-labelledby="modalCrearLiga" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -74,7 +45,7 @@
             <div class="modal-body">
                 <form method="post" id="formCrearLiga">
                     <label for="nombre">Nombre de la Liga:</label>
-                    <input id="nombre" name="nombre" type="text" placeholder="Nombre de liga" id="nombreLiga" required />
+                    <input id="nombreLiga" name="nombre" type="text" placeholder="Nombre de liga" id="nombreLiga" required />
                     <label for="contrasenia">Contraseña de la Liga:</label>
                     <input id="contrasenia" name="contrasenia" type="password" placeholder="Contraseña Liga" required />
                     <label for="administrador">Administrador de la liga:</label>
@@ -83,6 +54,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <!--Ponemos el return false al submit porque no queremos que recargue la página.-->
                 <button type="submit" form="formCrearLiga" onclick="crearLiga(); return false;" class="btn btn-primary">Crear Liga</button>
             </div>
         </div>

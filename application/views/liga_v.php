@@ -1,6 +1,6 @@
 <script>
     $(document).ready(function() {
-
+        $(".alert-danger").hide();
         //Añadimos la clase active al primer item del carrusel nada mas que cargue
         //la página para que haya solo un elemento activo. (Si lo hacemos en el bucle)
         //Se ponen todos con esa clase y no funcionará el carrusel correctamente
@@ -9,35 +9,42 @@
             //Si la clave antigua NO está vacía
             if ($("#claveAntigua").val() != "") {
                 if ($("#claveAntigua").val() == $("#claveNueva").val()) {
-                    $("#span-clave").html("");
-                    $("#span-claveNueva").html("Las contraseñas no pueden ser iguales");
+                    $(".alert-danger").html("Las contraseñas no pueden ser iguales");
+                    $(".alert-danger").fadeIn();
                 } else {
-                    $("#span-claveNueva").html("&nbsp;");
-                    $.post("<?= base_url('Perfiles_c/cambiarClave') ?>", {
-                            claveAntigua: $("#claveAntigua").val(),
-                            claveNueva: $("#claveNueva").val(),
-                            cuenta: "<?= $_SESSION["tipo_cuenta"] ?>",
-                            username: "<?= $_SESSION["username"] ?>"
-                        },
-                        function(dato_devuelto) {
-                            console.log(dato_devuelto)
-                            if (dato_devuelto == "Error") {
-                                $("#span-clave").html("Contraseña Incorrecta");
-                            } else {
-                                $("#span-clave").html("&nbsp;");
-                                $("#modalPassword").modal('hide');
-                                //Mostramos alerta correcta
-                                Swal.fire({
-                                    backdrop: false,
-                                    icon: 'success',
-                                    title: 'Contraseña Actualizada',
-                                    text: 'La contraseña se cambió correctamente.',
-                                })
+                    if ($("#claveNueva").val().length > 5) {
+                        $("#span-claveNueva").html("&nbsp;");
+                        $.post("<?= base_url('Perfiles_c/cambiarClave') ?>", {
+                                claveAntigua: $("#claveAntigua").val(),
+                                claveNueva: $("#claveNueva").val(),
+                                cuenta: "<?= $_SESSION["tipo_cuenta"] ?>",
+                                username: "<?= $_SESSION["username"] ?>"
+                            },
+                            function(dato_devuelto) {
+                                console.log(dato_devuelto)
+                                if (dato_devuelto == "Error") {
+                                    $(".alert-danger").html("Contraseña actual incorrecta");
+                                    $(".alert-danger").fadeIn();
+                                } else {
+                                    $(".alert-danger").fadeOut();
+                                    $("#modalPassword").modal('hide');
+                                    //Mostramos alerta correcta
+                                    Swal.fire({
+                                        backdrop: false,
+                                        icon: 'success',
+                                        title: 'Contraseña Actualizada',
+                                        text: 'La contraseña se cambió correctamente.',
+                                    })
+                                }
                             }
-                        }
-                    );
+                        );
+                        $("#claveAntigua").val("");
+                        $("#claveNueva").val("");
+                    } else {
+                        $(".alert-danger").html("La contraseña nueva debe de tener minimo 6 caracteres");
+                        $(".alert-danger").fadeIn();
+                    }
                 }
-
             }
         })
     });
@@ -118,8 +125,12 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
+
             </div>
             <div class="modal-body">
+                <div class="alert alert-danger w-100" role="alert">
+                    &nbsp;
+                </div>
                 <form method="POST" enctype="multipart/form-data" id="formUpdatePassword" class="mx-auto">
                     <img src="<?php echo base_url($_SESSION['imagen']) ?>" class="img-fluid rounded-circle w-25 d-block mx-auto mb-3" id='foto-perfil' alt="">
                     <div id="campos" class="d-flex flex-wrap justify-content-around">
@@ -130,7 +141,7 @@
                         </div>
                         <label for="claveNueva">Introduzca la clave nueva: </label>
                         <div id="claveIgual" class="mb-2 text-center w-50">
-                            <input type="password" name="claveNueva" id="claveNueva">
+                            <input type="password" minlength="6" name="claveNueva" id="claveNueva" required>
                             <span class="w-100 d-block text-danger" id="span-claveNueva">&nbsp;</span>
                         </div>
                     </div>

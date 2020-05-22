@@ -1,6 +1,3 @@
-<script>
-
-</script>
 <div class="container-fluid border">
     <header class="row d-flex justify-content-around align-items-center">
         <img id="logo" src="<?php echo base_url('assets/img/logo2.png') ?>" class="img-fluid">

@@ -69,7 +69,7 @@
                 <th>Apellidos y Nombre</th>
                 <th>Fecha de nacimiento</th>
                 <th>Equipo</th>
-                <th><input type="submit" class="btn btn-success" value="Comparar" id="btn-comparar"></th>
+                <th><button type="submit" class="btn btn-success" id="btn-comparar">Comparar</button></th>
             </tr>
             <?php
             //Mostramos los datos de cada jugador que está en la liga
