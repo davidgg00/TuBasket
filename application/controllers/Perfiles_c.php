@@ -8,6 +8,12 @@ class Perfiles_c extends CI_Controller
         parent::__construct();
         //cargamos modelos
         $this->load->model("Perfiles_m");
+
+        //Si el usuario NO está LOGUEADO
+        if (!isset($this->session->userdata['tipo_cuenta'])) {
+            //El redirect lo ponemos vacío porque el controlador por defecto es Login_c.
+            redirect('');
+        }
     }
 
     public function cambiarClave()

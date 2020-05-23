@@ -7,6 +7,12 @@ class GestionJugadores_c extends CI_Controller
     {
         parent::__construct();
         $this->load->model("GestionJugadores_m");
+
+        //Si el usuario no es un Administrador, redirigimos LOGIN
+        if ($this->session->userdata['tipo_cuenta'] != 'Administrador') {
+            //El redirect lo ponemos vacío porque el controlador por defecto es Login_c.
+            redirect('');
+        }
     }
 
     public function obtenerJugadoresSinConfirmar($liga)

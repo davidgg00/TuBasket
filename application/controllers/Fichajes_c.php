@@ -8,6 +8,12 @@ class Fichajes_c extends CI_Controller
         parent::__construct();
         //cargamos modelos
         $this->load->model("Fichajes_m");
+
+        //Si el usuario no es un Administrador, redirigimos LOGIN
+        if ($this->session->userdata['tipo_cuenta'] != 'Entrenador') {
+            //El redirect lo ponemos vacío porque el controlador por defecto es Login_c.
+            redirect('');
+        }
     }
 
 

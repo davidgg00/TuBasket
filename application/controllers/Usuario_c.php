@@ -10,10 +10,11 @@ class Usuario_c extends CI_Controller
         $this->load->model("Jugador_m");
         $this->load->model("Entrenador_m");
         $this->load->model("Notificaciones_m");
-        //Si no hay una sesión activa redirigimos al Login
-        /* if ($this->session->userdata['username'] == FALSE) {
-            redirect('Login_c');
-        } */
+        //Si el usuario NO es jugador o entrenador, redirigimos LOGIN
+        if ($this->session->userdata['tipo_cuenta'] != 'Entrenador' || $this->session->userdata['tipo_cuenta'] != 'Jugador') {
+            //El redirect lo ponemos vacío porque el controlador por defecto es Login_c.
+            redirect('');
+        }
     }
 
     public function index()

@@ -8,6 +8,12 @@ class Admin_c extends CI_Controller
         parent::__construct();
         //cargamos modelos
         $this->load->model("Admin_m");
+
+        //Si el usuario no es un Administrador, redirigimos LOGIN
+        if ($this->session->userdata['tipo_cuenta'] != 'Administrador') {
+            //El redirect lo ponemos vacío porque el controlador por defecto es Login_c.
+            redirect('');
+        }
     }
 
     public function index($liga = "")

@@ -23,7 +23,7 @@ class Partidos_c extends CI_Controller
         }
         $datos["partidos"] = self::mostrarPartidos($liga);
         $datos["nequipos"] = self::numeroEquiposLiga($liga);
-        $datos["equipos"] =  $nequipos = $this->Partidos_m->getEquipos($liga);
+        $datos["equipos"] = $this->Partidos_m->getEquipos($liga);
         $this->load->view("modulos/head", array("css" => array("liga", "partidos")));
         $this->load->view("modulos/header", $datos);
         $this->load->view('partidos_v');
@@ -58,62 +58,70 @@ class Partidos_c extends CI_Controller
 
     public function insertarResultadoEquipos()
     {
-        $this->Partidos_m->insertarResultadoPartido($_POST['id'], $_POST['equipolocal'], $_POST['equipovisitante']);
-        echo "Insertado";
+        //Si el usuario es un administrador se comunica con el modelo
+        if ($this->session->userdata['tipo_cuenta'] == 'Administrador') {
+            $this->Partidos_m->insertarResultadoPartido($_POST['id'], $_POST['equipolocal'], $_POST['equipovisitante']);
+            echo "Insertado";
+        }
     }
 
     function generarLiga($liga)
     {
-        //obtenemos todos los equipos de la liga que queremos
-        $data = $this->Partidos_m->obtenerEquiposLiga($liga);
-        //Creamos un array donde se guardarán las ids de los equipos
-        $equipos = array();
-        foreach ($data as $dato) {
-            $equipos[] = $dato->id;
-        }
-
-        //Generamos el número de jornadas
-        $jornadas = (($count = count($equipos)) % 2 === 0 ? $count - 1 : $count) * 2;
-
-        //Utilizamos la libreria ScheduleBuilder para que nos genere un array con los enfrentamientos
-        $scheduleBuilder = new ScheduleBuilder($equipos, $jornadas);
-        $schedule = $scheduleBuilder->build();
-
-        //Recorremos el array y vamos insertando los partidos que se han generado en la Base de Datos
-        foreach ($schedule as $jornada => $partidos) {
-            foreach ($partidos as $equipo) {
-                $this->Partidos_m->insertPartidos($equipo[0], $equipo[1], $jornada, $liga);
+        if ($this->session->userdata['tipo_cuenta'] == 'Administrador') {
+            //obtenemos todos los equipos de la liga que queremos
+            $data = $this->Partidos_m->obtenerEquiposLiga($liga);
+            //Creamos un array donde se guardarán las ids de los equipos
+            $equipos = array();
+            foreach ($data as $dato) {
+                $equipos[] = $dato->id;
             }
-        }
 
-        redirect('Admin_c/partidos/' . $liga);
+            //Generamos el número de jornadas
+            $jornadas = (($count = count($equipos)) % 2 === 0 ? $count - 1 : $count) * 2;
+
+            //Utilizamos la libreria ScheduleBuilder para que nos genere un array con los enfrentamientos
+            $scheduleBuilder = new ScheduleBuilder($equipos, $jornadas);
+            $schedule = $scheduleBuilder->build();
+
+            //Recorremos el array y vamos insertando los partidos que se han generado en la Base de Datos
+            foreach ($schedule as $jornada => $partidos) {
+                foreach ($partidos as $equipo) {
+                    $this->Partidos_m->insertPartidos($equipo[0], $equipo[1], $jornada, $liga);
+                }
+            }
+            redirect('Admin_c/partidos/' . $liga);
+        }
     }
 
     public function resultadoPartido($liga, $id)
     {
-        $datos['liga'] = $liga;
-        $datos['id'] = $id;
-        $datos['equipos'] = self::getPartido($id);
-        $datos['jugadores'] = self::getJugadoresPartidos($id);
-        $this->load->view("modulos/head", array("css" => array("liga", "partido")));
-        $this->load->view("modulos/header", $datos);
-        $this->load->view("partido_v");
-        $this->load->view("modulos/footer");
+        if ($this->session->userdata['tipo_cuenta'] == 'Administrador') {
+            $datos['liga'] = $liga;
+            $datos['id'] = $id;
+            $datos['equipos'] = self::getPartido($id);
+            $datos['jugadores'] = self::getJugadoresPartidos($id);
+            $this->load->view("modulos/head", array("css" => array("liga", "partido")));
+            $this->load->view("modulos/header", $datos);
+            $this->load->view("partido_v");
+            $this->load->view("modulos/footer");
+        }
     }
 
     public function enviarResultado($id)
     {
-        //Bucle que recorre los tr y TD que se han enviado para después enviarlos al MODELO
-        for ($i = 0; $i <= count($_POST['miform']); $i++) {
-            if ($i % 6 == 0 && $i != 0) {
-                $valor = $i;
-                $this->Partidos_m->insertarEstadisticaPartido($id, $_POST['miform'][$valor - 6], $_POST['miform'][$valor - 5], $_POST['miform'][$valor - 4], $_POST['miform'][$valor - 3], $_POST['miform'][$valor - 2], $_POST['miform'][$valor - 1]);
+        if ($this->session->userdata['tipo_cuenta'] == 'Administrador') {
+            //Bucle que recorre los tr y TD que se han enviado para después enviarlos al MODELO
+            for ($i = 0; $i <= count($_POST['miform']); $i++) {
+                if ($i % 6 == 0 && $i != 0) {
+                    $valor = $i;
+                    $this->Partidos_m->insertarEstadisticaPartido($id, $_POST['miform'][$valor - 6], $_POST['miform'][$valor - 5], $_POST['miform'][$valor - 4], $_POST['miform'][$valor - 3], $_POST['miform'][$valor - 2], $_POST['miform'][$valor - 1]);
+                }
             }
+            $datos_jugadores = $this->Partidos_m->getEmailJugadores($id);
+            $datos_partido = $this->Partidos_m->getPartido($id);
+            self::generarPDF($id);
+            self::EnviarMail($id, $datos_jugadores, $datos_partido);
         }
-        $datos_jugadores = $this->Partidos_m->getEmailJugadores($id);
-        $datos_partido = $this->Partidos_m->getPartido($id);
-        self::generarPDF($id);
-        self::EnviarMail($id, $datos_jugadores, $datos_partido);
     }
 
     public function cambiarFecha()
