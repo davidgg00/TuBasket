@@ -17,9 +17,11 @@ class Jugador_m extends CI_Model
 
     public function mostrarClasificacion($liga)
     {
-        $this->db->where('liga', $liga);
+        $this->db->select("v.*, e.escudo_ruta");
+        $this->db->join('equipo e', 'e.equipo = v.equipo');
+        $this->db->where('v.liga', $liga);
         $this->db->order_by('puntos_clasificacion', 'DESC');
-        $query = $this->db->get('view_clasificacion');
+        $query = $this->db->get('view_clasificacion v');
         return $query->result();
     }
 
@@ -107,5 +109,15 @@ class Jugador_m extends CI_Model
         $this->db->where('u2.tipo', "Entrenador");
         $query = $this->db->get();
         return $query->row();
+    }
+
+    public function getNJugadoresEquipos($liga)
+    {
+        $this->db->select('equipo,count(*) as total');
+        $this->db->from('usuarios');
+        $this->db->where('liga', $liga);
+        $this->db->group_by('equipo');
+        $query = $this->db->get();
+        return $query->result();
     }
 }

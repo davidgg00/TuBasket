@@ -1,6 +1,11 @@
 <div class="row justify-content-center align-items-center h-100" id="clasificacion">
-    <table class="table table-bordered bg-white text-center">
+    <table class="table table-bordered bg-white text-center mt-3">
         <thead>
+            <tr>
+                <th colspan="7">
+                    <H3>CLASIFICACION</H3>
+                </th>
+            </tr>
             <tr>
                 <th scope="col">Posición</th>
                 <th scope="col">Equipo</th>
@@ -16,13 +21,13 @@
             foreach ($clasificacion as $posic => $equipo) {
                 $posic++;
                 echo "<tr>";
-                echo "<td>$posic</td>";
-                echo "<td>$equipo->equipo</td>";
-                echo "<td>$equipo->partidos_ganados</td>";
-                echo "<td>$equipo->partidos_perdidos</td>";
-                echo "<td>$equipo->puntos_favor</td>";
-                echo "<td>$equipo->puntos_contra</td>";
-                echo "<td>$equipo->puntos_clasificacion</td>";
+                echo "<td><p>$posic</p></td>";
+                echo "<td><img src='" . base_url($equipo->escudo_ruta) . "' class='ml-2'><p class='nombreEquipo'>$equipo->equipo</p></td>";
+                echo "<td><p>$equipo->partidos_ganados</p></td>";
+                echo "<td><p>$equipo->partidos_perdidos</p></td>";
+                echo "<td><p>$equipo->puntos_favor</p></td>";
+                echo "<td><p>$equipo->puntos_contra</p></td>";
+                echo "<td><p>$equipo->puntos_clasificacion</p></td>";
                 echo "</tr>";
             }
             ?>

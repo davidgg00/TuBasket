@@ -39,7 +39,7 @@
                     //Si la cuenta es de tipo jugador la fila de modificar o resetear partido no debe de aparecer.
                     $thaccion = ('<?php echo $_SESSION['tipo_cuenta'] ?>' == "Administrador") ? "<th>Acción</th>" : "";
                     $accion = ('<?php echo $_SESSION['tipo_cuenta'] ?>' == "Administrador") ? "<td><i class='fas fa-edit' data-id='" + partido.id + "' data-tippy-content='Haga click para escribir resultado'></i><i class='fas fa-sync btn-reset' data-id='" + partido.id + "'></i></td>" : "";
-
+                    let colspan = ('<?php echo $_SESSION['tipo_cuenta'] ?>' == "Administrador") ? "6" : "5";
                     //Volteamos fecha debido al formato que tiene PHPMYADMIN
                     let fechaArray = partido.fecha.split('-');
                     let fecha = fechaArray[2] + '-' + fechaArray[1] + '-' + fechaArray[0];
@@ -48,7 +48,7 @@
 
                     //Si el partido es divisible entre 4 crear un nuevo div porque es nueva jornada
                     if (npartido % 4 == 0 || npartido == 0) {
-                        $("#contenedor").append("<div class='itemPaginacion jornada mt-2 table-responsive p-0'><table class='table table-hover'><thead><tr><th colspan='6'>JORNADA " + jornada + "</th></tr><tr><th>Local</th><th>Resultado</th><th>Visitante</th><th id='fecha'>Fecha</th><th>Hora</th>" + $thaccion + "</tr></thead><tbody  id='jornada" + jornada + "'><tr><td>" + partido.equipo_local + "</td><td>" + resultado_completo + "</td><td>" + partido.equipo_visitante + "</td><td><input type='text' id='" + partido.id + "' class='datepick w-100 mx-auto' value='" + fecha + "' " + $disabled + "></td><td><input id='" + partido.id + "' class='hora w-100 mx-auto text-center ' type='time' step='60' value='" + partido.hora + "'" + $disabled + "></td></td>" + $accion + "</tr></tbody></table></div>")
+                        $("#contenedor").append("<div class='itemPaginacion jornada mt-2 table-responsive p-0'><table class='table table-hover'><thead><tr><th colspan='" + colspan + "'>JORNADA " + jornada + "</th></tr><tr><th>Local</th><th>Resultado</th><th>Visitante</th><th id='fecha'>Fecha</th><th>Hora</th>" + $thaccion + "</tr></thead><tbody  id='jornada" + jornada + "'><tr><td>" + partido.equipo_local + "</td><td>" + resultado_completo + "</td><td>" + partido.equipo_visitante + "</td><td><input type='text' id='" + partido.id + "' class='datepick w-100 mx-auto' value='" + fecha + "' " + $disabled + "></td><td><input id='" + partido.id + "' class='hora w-100 mx-auto text-center ' type='time' step='60' value='" + partido.hora + "'" + $disabled + "></td></td>" + $accion + "</tr></tbody></table></div>")
                         jornada++;
                     } else {
                         $("tbody").last().append("<tr><td>" + partido.equipo_local + "</td><td>" + resultado_completo + "</td><td>" + partido.equipo_visitante + "</td><td><input type='text' id='" + partido.id + "' class='datepick w-100 mx-auto' value='" + fecha + "' " + $disabled + "></td><td><input id='" + partido.id + "' class='hora w-100 mx-auto text-center ' type='time' step='60' value='" + partido.hora + "' " + $disabled + "></td></td>" + $accion + "</tr>")

@@ -1,0 +1,20 @@
+.table {
+   width: 85%;
+}
+
+
+td img {
+    width: 50px;
+    height: 60px;
+    float: left;
+}
+td p {
+    margin-top: 1rem;
+}
+.nombreEquipo {
+    text-align: left;
+    width: 40%;
+    margin: 0 auto;
+    margin-top: 1rem;
+    font-size: 1.1em;
+}

@@ -10,8 +10,8 @@ class Usuario_c extends CI_Controller
         $this->load->model("Jugador_m");
         $this->load->model("Entrenador_m");
         $this->load->model("Notificaciones_m");
-        //Si el usuario NO es jugador o entrenador, redirigimos LOGIN
-        if ($this->session->userdata['tipo_cuenta'] != 'Entrenador' || $this->session->userdata['tipo_cuenta'] != 'Jugador') {
+        //Si el usuario es Administrador, redirigimos al login
+        if ($this->session->userdata['tipo_cuenta'] == 'Administrador') {
             //El redirect lo ponemos vacío porque el controlador por defecto es Login_c.
             redirect('');
         }
@@ -28,8 +28,9 @@ class Usuario_c extends CI_Controller
             $this->load->view("liga_v", $data);
             $this->load->view("modulos/footer");
         } else {
+            $data['equipos'] = $this->Jugador_m->obtenerEquipos($_SESSION['liga']);
             $this->load->view("modulos/head", array("css" => array("liga", "sin_equipo")));
-            $this->load->view("sinequipo_v", self::obtenerEquiposLiga());
+            $this->load->view("sinequipo_v", $data);
         }
     }
 
@@ -113,14 +114,6 @@ class Usuario_c extends CI_Controller
         return $resultado;
     }
 
-    //Funcion que devuelve los equipos que tiene una liga
-    public function obtenerEquiposLiga()
-    {
-        //obtenemos todos los equipos de la liga que queremos
-        $data['equipos'] = $this->Jugador_m->obtenerEquipos($_SESSION['liga']);
-        return $data;
-    }
-
     //Funcion que hace un update en un jugador para unirse a un equipo.
     public function unirseEquipo($equipo, $username)
     {
@@ -176,5 +169,11 @@ class Usuario_c extends CI_Controller
     {
         $datos = $this->Entrenador_m->verFichajes($_SESSION["username"]);
         return $datos;
+    }
+
+    public function obtenerJugadoresEquiposLiga($liga)
+    {
+        $datos = $this->Jugador_m->getNJugadoresEquipos($liga);
+        echo json_encode($datos);
     }
 }
