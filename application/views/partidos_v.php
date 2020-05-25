@@ -186,7 +186,7 @@
     <?php endif; ?>
     <?php //Si la liga se ha generado que aparezca la paginación, de lo contrario que no aparezca.
     if (count($partidos) != 0) : ?>
-        <div id=" pagination-container" class="w-50 d-flex mx-auto align-self-end justify-content-center">
+        <div id="pagination-container" class="w-50 d-flex mx-auto align-self-end justify-content-center">
             <p class='paginacionCursor' id="beforePagination">
                 < </p> <p class='paginacionCursor' id="afterPagination">>
             </p>

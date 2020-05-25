@@ -56,7 +56,8 @@ class GestionEquipos_c extends CI_Controller
             $img = $_FILES['escudo']['name'];
             $tmp = $_FILES['escudo']['tmp_name'];
             $nombre_imagen =  $_POST['equipo'] . $img;
-            $path = "assets/uploads/escudos/" . rand(1, 1000) . $nombre_imagen;
+            $extension = pathinfo($img, PATHINFO_EXTENSION);
+            $path = "assets/uploads/escudos/" . $_POST['idEquipo'] . $extension;
             move_uploaded_file($tmp, $path);
             $this->GestionEquipos_m->insertarEquipo($_POST['equipo'], $_POST['pabellon'], $_POST['ciudad'], $path, $_POST['liga']);
         }
@@ -71,7 +72,8 @@ class GestionEquipos_c extends CI_Controller
             $img = $_FILES['escudo_nuevo']['name'];
             $tmp = $_FILES['escudo_nuevo']['tmp_name'];
             $nombre_imagen = $img;
-            $path = "assets/uploads/escudos/" . rand(1, 1000) . $nombre_imagen;
+            $extension = pathinfo($img, PATHINFO_EXTENSION);
+            $path = "assets/uploads/escudos/" . "escudoequipo" . $_POST['idEquipo'] . "." . $extension;
             move_uploaded_file($tmp, $path);
             $this->GestionEquipos_m->updateImgEquipo($path, $_POST['idImagen']);
 

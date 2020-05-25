@@ -31,7 +31,7 @@
             </tr>
             <?php foreach ($equipos as $equipo) : ?>
                 <tr class='text-center datos'>
-                    <td id='id' class='d-none'><?= $equipo->id ?></td>
+                    <td class='d-none idequipo'><?= $equipo->id ?></td>
                     <td class='equipo'>
                         <p data-tippy-content='Haga click para editar el campo' class='dato_td' contenteditable='true'><?= $equipo->equipo ?> </p>
                     </td>
@@ -165,6 +165,7 @@
                     <label for="exampleFormControlFile1">Selecciona la imagen</label>
                     <input type="file" class="form-control-file" id="fileEscudo" name="escudo_nuevo" required>
                     <input type="hidden" name="idImagen" id="idImagen">
+                    <input type="hidden" name="idEquipo" id="idEquipo">
                 </form>
             </div>
             <div class="modal-footer">
@@ -173,6 +174,7 @@
             </div>
             <script>
                 function enviarEscudo() {
+                    console.log($(this));
                     $.ajax({
                         type: "POST",
                         url: "<?php echo base_url("GestionEquipos_c/cambiarImgEquipo") ?>",
@@ -180,11 +182,14 @@
                         processData: false,
                         contentType: false,
                         success: function(response) {
+                            d = new Date();
                             let escudos = JSON.parse(response);
                             //Cambiamos el src en el DOM y el data-id
                             $("img[src*='" + escudos.escudoAntiguo + "']").removeAttr('data-id');
-                            $("img[src*='" + escudos.escudoAntiguo + "']").data('id', escudos.escudoNuevo)
-                            $("img[src*='" + escudos.escudoAntiguo + "']").attr('src', '<?= base_url() ?>' + escudos.escudoNuevo);
+                            $("img[src*='" + escudos.escudoAntiguo + "']").data('id', escudos.escudoNuevo);
+                            //Agrego una marca de tiempo a la URL para refrescar la imagen ya que va a tener el mismo nombre y alomejor la misma extensión
+                            //Entonces, al cambiar la URL el navegador no pilla la imagen por caché
+                            $("img[src*='" + escudos.escudoAntiguo + "']").attr('src', '<?= base_url() ?>' + escudos.escudoNuevo + "?" + d.getTime());
 
                             //Notificamos que se cambió el escudo correctamente
                             $.notify({

@@ -33,8 +33,9 @@ class Perfiles_c extends CI_Controller
             self::borrarImagenAntigua();
             $img = $_FILES['fotoperfil']['name'];
             $tmp = $_FILES['fotoperfil']['tmp_name'];
+            $extension = pathinfo($img, PATHINFO_EXTENSION);
             $nombre_imagen = $img;
-            $path = "assets/uploads/perfiles/" . rand(1, 1000) . $nombre_imagen;
+            $path = "assets/uploads/perfiles/" . $_SESSION['username'] . "." . $extension;
             move_uploaded_file($tmp, $path);
             //Modificamos la variable de sesión que tiene la foto de perfil
             $_SESSION['imagen'] = $path;

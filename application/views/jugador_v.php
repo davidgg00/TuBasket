@@ -31,7 +31,7 @@
             <h4>Tapones: <?= ($estadisticas->tapones > -1) ? $estadisticas->tapones : "N/A" ?></h4>
             <h4>Robos: <?= ($estadisticas->robos > -1) ? $estadisticas->robos : "N/A" ?></h4>
         </div>
-        <h3 class="mx-auto mt-3">Estadisticas partidos</h3>
+        <h3 class="mx-auto mt-3">Estadisticas por partidos</h3>
         <div id="partidos" class="col-12">
             <table class="table table-bordered bg-white text-center">
                 <thead>

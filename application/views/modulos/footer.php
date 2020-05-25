@@ -62,9 +62,11 @@
                      **pero para que aparezca la foto habría que recargar la página así que vamos a modificar a mano la foto de perfil
                      **Y ya cuando se mueva por la página se le habrá actualizado el $_SESSION */
                     if (response != "") {
+                        d = new Date();
                         let url = "<?= base_url() ?>" + response;
-                        console.log(response);
-                        $('#foto-perfil').attr('src', url);
+                        //Agrego una marca de tiempo a la URL para refrescar la imagen ya que va a tener el mismo nombre y alomejor la misma extensión
+                        //Entonces, al cambiar la URL el navegador no pilla la imagen por caché
+                        $('#foto-perfil').attr('src', url + "?" + d.getTime());
                     }
                     Swal.fire({
                         backdrop: false,

@@ -8,6 +8,7 @@ $(document).ready(function () {
     //Si clickamos en un escudo que aparezca el modal creado con el formulario y añadimos la url de la imagen antigua
     $(".escudo").on("click", function () {
         $(".modal-body #idImagen").val($(this).data('id'));
+        $(".modal-body #idEquipo").val($(this).parent().parent().find(">:first-child").html());
     });
 
     //Añadimos tooltip a los .dato_td y i.eliminar
