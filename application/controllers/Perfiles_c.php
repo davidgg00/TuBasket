@@ -57,4 +57,9 @@ class Perfiles_c extends CI_Controller
             unlink($_SESSION['imagen']);
         }
     }
+
+    public function verEmail()
+    {
+        echo $this->Perfiles_m->getEmail($_GET['email'], $_SESSION['username']);
+    }
 }

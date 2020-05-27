@@ -38,4 +38,13 @@ class Perfiles_m extends CI_Model
         $this->session->set_userdata('email', $email);
         $this->session->set_userdata('fecha_nac', $fechanac);
     }
+
+    public function getEmail($email, $usuario)
+    {
+        $this->db->select('email');
+        $this->db->where('email', $email);
+        $this->db->where('username <>', $usuario);
+        $query = $this->db->get('usuarios');
+        return $query->num_rows();
+    }
 }

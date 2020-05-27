@@ -105,3 +105,24 @@ footer {
     height: 187.5px;
     margin: 0 auto;
 }
+
+#formUpdatePerfil {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#formUpdatePerfil input {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#formUpdatePerfil label {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    margin-left: 5px;
+}
+
+#errorUpdatePerfil {
+    display: none;
+}
