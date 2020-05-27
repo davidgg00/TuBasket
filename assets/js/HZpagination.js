@@ -4,6 +4,8 @@ $(document).ready(function () {
   //Esta comprobación se hace para cambiar el numero de resultados por página si estás en la gestion de jugadores o en el calendario de partidos
   if (url.indexOf("gestJugadores") > 0) {
     npaginas = 8;
+  } else if (url.indexOf("notificaciones") > 0) {
+    npaginas = 5
   } else {
     npaginas = 4;
   }

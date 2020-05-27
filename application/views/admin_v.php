@@ -2,7 +2,6 @@
     let base_url = '<?= base_url() ?>';
 </script>
 <script src="<?php echo base_url('assets/js/admin.js') ?>"></script>
-
 <div class="container d-flex h-100">
     <div class="row align-items-center justify-content-center w-100">
         <div id="panel" class="row col-10 h-75 d-flex justify-content-center p-10 rounded">

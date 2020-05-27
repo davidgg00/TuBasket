@@ -1,3 +1,88 @@
 .aceptar:hover, .denegar:hover {
 cursor: pointer;
 }
+
+h4 {
+   height: 5%;
+
+}
+
+#notificacionesWrapper {
+   min-height: 85%;
+}
+
+.notificacion {
+    border-top: 1px solid #f8f9fa ;
+    border-bottom: 1px solid #f8f9fa ;
+}
+
+span {
+   float: left;
+   margin-right: 5%;
+}
+
+h5 {
+   text-align: left;
+}
+
+section {
+   background: rgba(255, 255, 255, 0.9);
+}
+
+.notificacion img {
+   width: 130px;
+   height: 150px;
+}
+
+.fa-arrow-right {
+   font-size: 5em;
+}
+
+.jugadores {
+   width: 80%;
+}
+
+.accion {
+   width: 90%;
+}
+
+i.fa-check {
+   font-size: 20px;
+}
+
+i.fa-times {
+   font-size: 22px;
+}
+
+.denegar {
+   padding: 10px 12px;
+}
+
+.aceptar {
+   padding: 10px;
+}
+
+.paginationjs-page,
+.paginationjs-prev,
+.paginationjs-next {
+   margin: 20px 5px;
+    padding: 5px 8px;
+    background: #880e4f;
+    cursor: pointer;
+    height: 34px;
+    width: 80px;
+    text-align: center;
+}
+
+.paginationjs-pages ul {
+   display: flex;
+}
+
+.paginationjs-pages li {
+   list-style: none;
+}
+
+.paginationjs-pages {
+   width: 50%;
+   margin: 0 auto;
+}
