@@ -18,10 +18,10 @@ $(document).ready(function () {
     })
 
     //Si el tipo de cuenta es administrador, aparecerá un botón para guardar partido, de lo contrario, un botón para volver
-    if (tipocuenta != 'Jugador') {
+    if (tipocuenta == 'Administrador') {
         $("table").after("<button id='boton' type='button' class='btn btn-outline-success btn-lg mx-auto'>Guardar Partido</button>");
     } else {
-        $("table").after("<button id='btn-volver' type='button' class='btn btn-outline-info btn-lg'>Volver Partido</button>");
+        $("table").after("<button id='btn-volver' type='button' class='btn btn-outline-info btn-lg'>Volver al Calendario</button>");
     }
 
     //Creamos evento al boton de volver partido

@@ -40,8 +40,12 @@ input[type="time"]::-webkit-clear-button {
 }
 
 th,td {
-         text-align: center;
-    }
+    text-align: center;
+}
+
+td input {
+   text-align: center;
+}
 
 .table td {
     padding: 0.4em;

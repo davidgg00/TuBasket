@@ -48,10 +48,10 @@
 
                     //Si el partido es divisible entre 4 crear un nuevo div porque es nueva jornada
                     if (npartido % 4 == 0 || npartido == 0) {
-                        $("#contenedor").append("<div class='itemPaginacion jornada mt-2 table-responsive p-0'><table class='table table-hover'><thead><tr><th colspan='" + colspan + "'>JORNADA " + jornada + "</th></tr><tr><th>Local</th><th>Resultado</th><th>Visitante</th><th id='fecha'>Fecha</th><th>Hora</th>" + $thaccion + "</tr></thead><tbody  id='jornada" + jornada + "'><tr><td>" + partido.equipo_local + "</td><td>" + resultado_completo + "</td><td>" + partido.equipo_visitante + "</td><td><input type='text' id='" + partido.id + "' class='datepick w-100 mx-auto' value='" + fecha + "' " + $disabled + "></td><td><input id='" + partido.id + "' class='hora w-100 mx-auto text-center ' type='time' step='60' value='" + partido.hora + "'" + $disabled + "></td></td>" + $accion + "</tr></tbody></table></div>")
+                        $("#contenedor").append("<div class='itemPaginacion jornada mt-2 table-responsive p-0'><table class='table table-hover'><thead><tr><th colspan='" + colspan + "'>JORNADA " + jornada + "</th></tr><tr><th>Local</th><th>Resultado</th><th>Visitante</th><th id='fecha'>Fecha</th><th>Hora</th>" + $thaccion + "</tr></thead><tbody  id='jornada" + jornada + "'><tr class='partido'><td>" + partido.equipo_local + "</td><td data-id='" + partido.id + "'>" + resultado_completo + "</td><td>" + partido.equipo_visitante + "</td><td><input type='text' id='" + partido.id + "' class='datepick w-100 mx-auto' value='" + fecha + "' " + $disabled + "></td><td><input id='" + partido.id + "' class='hora w-100 mx-auto text-center ' type='time' step='60' value='" + partido.hora + "'" + $disabled + "></td></td>" + $accion + "</tr></tbody></table></div>")
                         jornada++;
                     } else {
-                        $("tbody").last().append("<tr><td>" + partido.equipo_local + "</td><td>" + resultado_completo + "</td><td>" + partido.equipo_visitante + "</td><td><input type='text' id='" + partido.id + "' class='datepick w-100 mx-auto' value='" + fecha + "' " + $disabled + "></td><td><input id='" + partido.id + "' class='hora w-100 mx-auto text-center ' type='time' step='60' value='" + partido.hora + "' " + $disabled + "></td></td>" + $accion + "</tr>")
+                        $("tbody").last().append("<tr class='partido'><td>" + partido.equipo_local + "</td><td data-id='" + partido.id + "'>" + resultado_completo + "</td><td>" + partido.equipo_visitante + "</td><td><input type='text' id='" + partido.id + "' class='datepick w-100 mx-auto' value='" + fecha + "' " + $disabled + "></td><td><input id='" + partido.id + "' class='hora w-100 mx-auto text-center ' type='time' step='60' value='" + partido.hora + "' " + $disabled + "></td></td>" + $accion + "</tr>")
                     }
                     npartido++;
                 }
@@ -69,12 +69,12 @@
                     //Creamos una variable que almacene el resultado directamente
                     resultado_completo = partido.resultado_local + " - " + partido.resultado_visitante
 
-                    //Si el partido es divisible entre 4 crear un nuevo div porque es nueva jornada
+                    //Si el partido es divisible entre 5 crear un nuevo div porque es nueva jornada
                     if (npartido % 5 == 0 || npartido == 0) {
-                        $("#contenedor").append("<div class='itemPaginacion jornada mt-2 table-responsive p-0'><table class='table table-hover'><thead><tr><th colspan='6'>JORNADA " + jornada + "</th></tr><tr><th>Local</th><th>Resultado</th><th>Visitante</th><th id='fecha'>Fecha</th><th>Hora</th>" + $thaccion + "</tr></thead><tbody  id='jornada" + jornada + "'><tr><td>" + partido.equipo_local + "</td><td>" + resultado_completo + "</td><td>" + partido.equipo_visitante + "</td><td><input type='text' id='" + partido.id + "' class='datepick w-100 mx-auto' value='" + fecha + "' " + $disabled + "></td><td><input id='" + partido.id + "' class='hora w-100 mx-auto text-center ' type='time' step='60' value='" + partido.hora + "'" + $disabled + "></td></td>" + $accion + "</tr></tbody></table></div>")
+                        $("#contenedor").append("<div class='itemPaginacion jornada mt-2 table-responsive p-0'><table class='table table-hover'><thead><tr><th colspan='" + colspan + "'>JORNADA " + jornada + "</th></tr><tr><th>Local</th><th>Resultado</th><th>Visitante</th><th id='fecha'>Fecha</th><th>Hora</th>" + $thaccion + "</tr></thead><tbody  id='jornada" + jornada + "'><tr class='partido'><td>" + partido.equipo_local + "</td><td data-id='" + partido.id + "'>" + resultado_completo + "</td><td>" + partido.equipo_visitante + "</td><td><input type='text' id='" + partido.id + "' class='datepick w-100 mx-auto' value='" + fecha + "' " + $disabled + "></td><td><input id='" + partido.id + "' class='hora w-100 mx-auto text-center ' type='time' step='60' value='" + partido.hora + "'" + $disabled + "></td></td>" + $accion + "</tr></tbody></table></div>")
                         jornada++;
                     } else {
-                        $("tbody").last().append("<tr><td>" + partido.equipo_local + "</td><td>" + resultado_completo + "</td><td>" + partido.equipo_visitante + "</td><td><input type='text' id='" + partido.id + "' class='datepick w-100 mx-auto' value='" + fecha + "' " + $disabled + "></td><td><input id='" + partido.id + "' class='hora w-100 mx-auto text-center ' type='time' step='60' value='" + partido.hora + "' " + $disabled + "></td></td>" + $accion + "</tr>")
+                        $("tbody").last().append("<tr class='partido'><td>" + partido.equipo_local + "</td><td data-id='" + partido.id + "'>" + resultado_completo + "</td><td>" + partido.equipo_visitante + "</td><td><input type='text' id='" + partido.id + "' class='datepick w-100 mx-auto' value='" + fecha + "' " + $disabled + "></td><td><input id='" + partido.id + "' class='hora w-100 mx-auto text-center ' type='time' step='60' value='" + partido.hora + "' " + $disabled + "></td></td>" + $accion + "</tr>")
                     }
                     npartido++;
                 }
@@ -90,7 +90,6 @@
                     let njugadoresEncuentro = JSON.parse(njugadores);
                     if (njugadoresEncuentro[0].totalEquipo >= 5 && njugadoresEncuentro[1].totalEquipo >= 5) {
                         //Redirigimos al partido.
-
                         window.location.href = "<?php echo base_url('Admin_c/partido/' . $liga) ?>" + "/" + id + "";
                     } else {
                         Swal.fire({
@@ -102,8 +101,6 @@
                     }
                 },
             );
-
-
         });
 
         //Añadimos el tooltip al .fa-edit
@@ -138,6 +135,15 @@
                 },
             );
         });
+
+        //al clickar en un partido te rederige al encuentro
+        $("tr").on("click", function(evento) {
+            console.log($(this).children('td'))
+            if ($(this).children('td').length > 0 && '<?= $_SESSION["tipo_cuenta"] ?>' != "Administrador") {
+                let idpartido = $(this).children('td').eq(1).data('id');
+                window.location.href = "<?php echo base_url('Usuario_c/partido/' . $liga) ?>" + "/" + idpartido + "";
+            }
+        })
     </script>
     <!--Si la liga no se ha generado-->
     <?php if (count($partidos) == 0) : ?>
@@ -193,3 +199,11 @@
         </div>
     <?php endif; ?>
 </div>
+
+<style>
+    <?php if ($_SESSION["tipo_cuenta"] != "Administrador") : ?>table tr.partido:hover {
+        cursor: pointer;
+    }
+
+    <?php endif; ?>
+</style>

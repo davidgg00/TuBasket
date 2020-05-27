@@ -53,6 +53,8 @@ $route['default_controller'] = 'Login_c';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
+
+$route['Usuario_c/partido/(:any)/(:num)'] = 'Partidos_c/resultadoPartido/$1/$2';
 $route['Admin_c/partido/(:any)/(:num)'] = 'Partidos_c/resultadoPartido/$1/$2';
 
 $route['Admin_c/partidos/(:any)'] = 'Partidos_c/partidos/$1';

@@ -30,3 +30,17 @@ p {
     width: 50%;
     text-align: center;
 }
+
+input:disabled.form-control{
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    text-align: center !important;
+}
+
+input:disabled.form-control::-webkit-inner-spin-button, 
+input:disabled.form-control::-webkit-outer-spin-button { 
+   display: none;
+
+}

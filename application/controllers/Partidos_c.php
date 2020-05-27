@@ -95,16 +95,14 @@ class Partidos_c extends CI_Controller
 
     public function resultadoPartido($liga, $id)
     {
-        if ($this->session->userdata['tipo_cuenta'] == 'Administrador') {
-            $datos['liga'] = $liga;
-            $datos['id'] = $id;
-            $datos['equipos'] = self::getPartido($id);
-            $datos['jugadores'] = self::getJugadoresPartidos($id);
-            $this->load->view("modulos/head", array("css" => array("liga", "partido")));
-            $this->load->view("modulos/header", $datos);
-            $this->load->view("partido_v");
-            $this->load->view("modulos/footer");
-        }
+        $datos['liga'] = $liga;
+        $datos['id'] = $id;
+        $datos['equipos'] = self::getPartido($id);
+        $datos['jugadores'] = self::getJugadoresPartidos($id);
+        $this->load->view("modulos/head", array("css" => array("liga", "partido")));
+        $this->load->view("modulos/header", $datos);
+        $this->load->view("partido_v");
+        $this->load->view("modulos/footer");
     }
 
     public function enviarResultado($id)
