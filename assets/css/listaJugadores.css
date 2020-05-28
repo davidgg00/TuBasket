@@ -1,0 +1,15 @@
+.table thead th,
+.table tbody td {
+    vertical-align: middle;
+    text-align: center;
+    border-bottom: 0;
+}
+
+td .img.fluid {
+    width: 100px;
+    height: 130px;
+}
+
+td {
+    width: 20%;
+}
