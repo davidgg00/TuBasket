@@ -2,14 +2,54 @@
     $(document).ready(function() {
         $(".aceptar").on("click", function(evento) {
             $.get(window.location.origin + "/TuBasket/GestionJugadores_c/aceptarJugador/" + $(this).data('username'), );
-            let html = "<tr class='itemPaginacion'><th scope='row'>" + $(this).parent().parent().children().eq(0).html() + "</th><td>" + $(this).parent().parent().children().eq(1).html() + "</td><td>" + $(this).parent().parent().children().eq(2).html() + "</td><td>" + $(this).parent().parent().children().eq(3).html() + "</td><td>" + $(this).parent().parent().children().eq(4).html() + "</td></tr>"
+            let html = "<tr class='itemPaginacion'><th scope='row'>" + $(this).parent().parent().children().eq(0).html() + "</th><td>" + $(this).parent().parent().children().eq(1).html() + "</td><td>" + $(this).parent().parent().children().eq(2).html() + "</td><td>" + $(this).parent().parent().children().eq(3).html() + "</td><td>" + $(this).parent().parent().children().eq(4).html() + "</td><td><i data-tippy-content='Borrar Equipo' class='fas fa-trash-alt borrarJugador'></i></td></tr>"
             $("#jugadores_confirmados").append(html);
             $(this).parent().parent().remove();
-            console.log(html);
+            if ($("#listaJugadoresSinConfirmar table tbody").children().length == 0) {
+                $("#listaJugadoresSinConfirmar").stop().fadeOut('slow', function(evento) {
+                    $(this).removeClass("d-flex");
+                    $(this).css('display', 'none')
+                });
+            }
+            //Añadimos accion al borrado de jugadores
+            $(".borrarJugador").on("click", function(evento) {
+                Swal.fire({
+                    title: '¿Estás seguro de que quieres borrar el usuario?',
+                    text: "¡Una vez que lo elimines no podrás recuperarlo!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    cancelButtonText: 'Cancelar',
+                    confirmButtonText: 'Confirmar',
+                    backdrop: false,
+                }).then((result) => {
+                    if (result.value) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: '¡Jugador Borrado!',
+                            text: 'Has borrado el jugador correctamente.',
+                            backdrop: false,
+                        }).then(() => {
+                            //Enviamos el username
+                            $.post(window.location.origin + "/TuBasket/GestionJugadores_c/eliminarJugador/" + $(this).parent().parent().children(":first").html());
+                            //quitamos el el tr del DOM y recargamos la paginación.
+                            $(this).parent().parent().remove();
+                            $(".activePagination").click();
+                        })
+                    }
+                })
+            })
         });
         $(".denegar").on("click", function(evento) {
             $.get(window.location.origin + "/TuBasket/GestionJugadores_c/eliminarJugador/" + $(this).data('username'), );
             $(this).parent().parent().remove();
+            if ($("#listaJugadoresSinConfirmar table tbody").children().length == 0) {
+                $("#listaJugadoresSinConfirmar").stop().fadeOut('slow', function(evento) {
+                    $(this).removeClass("d-flex");
+                    $(this).css('display', 'none')
+                });
+            }
         })
 
         //Añadimos tooltip a los .aceptar y .denegar
@@ -18,8 +58,8 @@
         //Añadimos accion al borrado de jugadores
         $(".borrarJugador").on("click", function(evento) {
             Swal.fire({
-                title: '¿Estás seguro de que quieres borrar la Liga?',
-                text: "¡Una ve que la elimines no podrás recuperarla!",
+                title: '¿Estás seguro de que quieres borrar el usuario?',
+                text: "¡Una vez que lo elimines no podrás recuperarlo!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -65,7 +105,7 @@
                 <tbody>
 
                     <?php foreach ($jugadoresSinConfirmar as $jugador) : ?>
-                        <tr>
+                        <tr class="text-center">
                             <td><?= $jugador->username ?></td>
                             <td><?= $jugador->email ?></td>
                             <td><?= $jugador->apenom ?></td>
@@ -83,7 +123,7 @@
         <h2 class="alert alert-dark text-center mb-0 mx-auto">USUARIOS DE LA LIGA</h2>
         <table class="mx-auto table table-striped table-light table-hover col-12">
             <thead class="thead-dark">
-                <tr>
+                <tr class="text-center">
                     <th scope="col">Username</th>
                     <th scope="col">Email</th>
                     <th scope="col">Apellidos y Nombre</th>
