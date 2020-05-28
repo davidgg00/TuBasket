@@ -1,4 +1,4 @@
-<div class="row border mx-auto flex-wrap paginacionWrapper" id="contenedor">
+<div class="row border mx-auto flex-wrap paginacionWrapper align-items-start" id="contenedor">
     <script>
         $(document).ready(function() {
             $("button#generarLiga").on("click", function(evento) {
@@ -62,7 +62,7 @@
                     //Si la cuenta es de tipo jugador la fila de modificar o resetear partido no debe de aparecer.
                     $thaccion = ('<?php echo $_SESSION['tipo_cuenta'] ?>' == "Administrador") ? "<th>Acción</th>" : "";
                     $accion = ('<?php echo $_SESSION['tipo_cuenta'] ?>' == "Administrador") ? "<td><i class='fas fa-edit' data-id='" + partido.id + "' data-tippy-content='Haga click para escribir resultado'></i><i class='fas fa-sync btn-reset' data-id='" + partido.id + "'></i></td>" : "";
-
+                    let colspan = ('<?php echo $_SESSION['tipo_cuenta'] ?>' == "Administrador") ? "6" : "5";
                     //Volteamos fecha debido al formato que tiene PHPMYADMIN
                     let fechaArray = partido.fecha.split('-');
                     let fecha = fechaArray[2] + '-' + fechaArray[1] + '-' + fechaArray[0];
@@ -88,17 +88,28 @@
             $.get("<?= base_url('Partidos_c/getNJugadoresPartido/') ?>" + id,
                 function(njugadores) {
                     let njugadoresEncuentro = JSON.parse(njugadores);
-                    if (njugadoresEncuentro[0].totalEquipo >= 5 && njugadoresEncuentro[1].totalEquipo >= 5) {
-                        //Redirigimos al partido.
-                        window.location.href = "<?php echo base_url('Admin_c/partido/' . $liga) ?>" + "/" + id + "";
-                    } else {
+                    console.log(njugadoresEncuentro);
+                    if (njugadoresEncuentro.length == "0") {
                         Swal.fire({
                             backdrop: false,
                             icon: 'error',
                             title: 'Ooops....',
                             text: 'Algún equipo (o ambos) no tiene como mínimo 5 jugadores en su plantilla.',
                         })
+                    } else {
+                        if (njugadoresEncuentro[0].totalEquipo >= 5 && njugadoresEncuentro[1].totalEquipo >= 5) {
+                            //Redirigimos al partido.
+                            window.location.href = "<?php echo base_url('Admin_c/partido/' . $liga) ?>" + "/" + id + "";
+                        } else {
+                            Swal.fire({
+                                backdrop: false,
+                                icon: 'error',
+                                title: 'Ooops....',
+                                text: 'Algún equipo (o ambos) no tiene como mínimo 5 jugadores en su plantilla.',
+                            })
+                        }
                     }
+
                 },
             );
         });
@@ -147,7 +158,7 @@
     </script>
     <!--Si la liga no se ha generado-->
     <?php if (count($partidos) == 0) : ?>
-        <table class="table table-bordered">
+        <table class="table table-bordered" id="equiposActuales">
             <div class="alert alert-warning d-block mx-auto mt-3" role="alert">
                 Para generar una liga se necesita tener 8 o 10 equipos.
             </div>
@@ -158,12 +169,12 @@
                 for ($i = 0; $i < count($equipos); $i++) : ?>
                     <tr>
                         <td><img src="<?= base_url($equipos[$i]->escudo_ruta) ?>" alt="" class=""></td>
-                        <td>
+                        <td class="nombreEquipo">
                             <p><?= $equipos[$i]->equipo ?></p>
                         </td>
                         <?php if (isset($equipos[$i + 1])) : $i++ ?>
                             <td><img src="<?= base_url($equipos[$i]->escudo_ruta) ?>" alt="" class=""></td>
-                            <td>
+                            <td class="nombreEquipo">
                                 <p><?= $equipos[$i]->equipo ?></p>
                             </td>
                         <?php endif; ?>

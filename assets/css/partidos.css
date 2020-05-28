@@ -64,3 +64,11 @@ table td img {
     width: 120px;
     height: 130px;
 }
+ 
+.table .nombreEquipo {
+    vertical-align: middle;
+}
+
+#equiposActuales .nombreEquipo p {
+    margin: 0;
+}
