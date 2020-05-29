@@ -18,6 +18,7 @@
         </thead>
         <tbody>
             <?php
+            //Insertamos la clasificación.
             foreach ($clasificacion as $posic => $equipo) {
                 $posic++;
                 echo "<tr>";

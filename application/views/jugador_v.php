@@ -1,29 +1,8 @@
 <script>
-    $.ajax({
-        type: "POST",
-        url: "<?php echo base_url('Usuario_c/getJugadoresEquipo/') ?>",
-        data: "data",
-        dataType: "dataType",
-        success: function(response) {
-            let jugadores = JSON.parse(response);
-            console.log(jugadores);
-        }
-    });
-    $(document).ready(function() {
-        $("#ofrecerFichaje").on("click", function(evento) {
-            if ('<?php echo (!empty($entrenador->Entrenador)) ?>' != "") {
-                $("#modalFichaje").modal("show");
-            } else {
-                Swal.fire({
-                    backdrop: false,
-                    icon: 'error',
-                    title: 'Ooops....',
-                    text: 'El entrenador del jugador que deseas fichar no está dado de alta en la plataforma.',
-                })
-            }
-        });
-    });
+    let baseurl = '<?= base_url() ?>';
+    let entrenadorExiste = '<?php echo (!empty($entrenador->Entrenador)) ?>';
 </script>
+<script src="<?php echo base_url('assets/js/jugador.js') ?>"></script>
 <div class="row justify-content-center flex-start h-100" id="wrapper-stats">
     <div class="col-10 h-75 d-flex flex-start flex-wrap mt-2" id="estadisticas">
         <div id="foto" class="w-100 text-center">
@@ -94,7 +73,9 @@
                     <div class="modal-body">
                         <form method="post" id="formCrearLiga" class="text-center">
                             <h3>Fichar a</h3>
-                            <h4 id="nombreFichaje" data-entrenador="<?= $entrenador->Entrenador ?>"><?= $jugador ?></h4>
+                            <?php if (isset($entrenador->Entrenador)) : ?>
+                                <h4 id="nombreFichaje" data-entrenador="<?= $entrenador->Entrenador ?>"><?= $jugador ?></h4>
+                            <?php endif; ?>
                             <h3>por</h3>
                             <select name="jugadores" id="jugadores">
                                 <?php foreach ($tusJugadores as $Jugador) :
