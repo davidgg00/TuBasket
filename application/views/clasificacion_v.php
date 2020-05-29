@@ -1,5 +1,5 @@
 <div class="row justify-content-center align-items-center h-100" id="clasificacion">
-    <table class="table table-bordered bg-white text-center mt-3">
+    <table class="table table-bordered bg-white text-center">
         <thead>
             <tr>
                 <th colspan="7">

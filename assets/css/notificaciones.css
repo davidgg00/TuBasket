@@ -8,12 +8,13 @@ h4 {
 }
 
 #notificacionesWrapper {
-   min-height: 85%;
+   min-height: 74%;
 }
 
 .notificacion {
     border-top: 1px solid #f8f9fa ;
     border-bottom: 1px solid #f8f9fa ;
+    padding: 0.8rem !important;
 }
 
 span {

@@ -15,7 +15,7 @@
                     if (notificacion.idfichaje == fichajes[0].idfichaje) {
                         n = 1;
                     }
-                    let html = "<div class='notificacion col-12 text-center p-3 itemPaginacion' data-estado='" + notificacion.estado + "' data-idfichaje='" + notificacion.idfichaje + "'>";
+                    let html = "<div class='notificacion col-12 text-center itemPaginacion' data-estado='" + notificacion.estado + "' data-idfichaje='" + notificacion.idfichaje + "'>";
                     if (notificacion.estado == "PENDIENTE") {
                         if (notificacion.EntrenadorRecibe == '<?= $_SESSION['username'] ?>') {
                             html += "<h5 class='text-center'>El '" + notificacion.equipoSolicitante + "' desea realizar un intercambio</h5>";

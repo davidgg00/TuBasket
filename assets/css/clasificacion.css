@@ -1,5 +1,5 @@
 .table {
-   width: 85%;
+   width: 90%;
 }
 
 
@@ -17,4 +17,8 @@ td p {
     margin: 0 auto;
     margin-top: 1rem;
     font-size: 1.1em;
+}
+
+.table {
+    margin-bottom: 0;
 }
