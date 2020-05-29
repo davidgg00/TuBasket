@@ -108,7 +108,7 @@ function sumarMarcador() {
     let totalLocal = 0;
     let totalVisitante = 0;
     //Y no está disabled (los marcadores)
-    $("input:not([disabled])").each(function () {
+    $("input:not(.d-none):not(.datos)").each(function () {
         //Miramos su atributo name y dependiendo de este se hace una acción u otra
         switch ($(this).attr('name')) {
             case "triples":
