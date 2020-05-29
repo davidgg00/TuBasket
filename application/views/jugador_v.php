@@ -9,6 +9,20 @@
             console.log(jugadores);
         }
     });
+    $(document).ready(function() {
+        $("#ofrecerFichaje").on("click", function(evento) {
+            if ('<?php echo (!empty($entrenador->Entrenador)) ?>' != "") {
+                $("#modalFichaje").modal("show");
+            } else {
+                Swal.fire({
+                    backdrop: false,
+                    icon: 'error',
+                    title: 'Ooops....',
+                    text: 'El entrenador del jugador que deseas fichar no está dado de alta en la plataforma.',
+                })
+            }
+        });
+    });
 </script>
 <div class="row justify-content-center flex-start h-100" id="wrapper-stats">
     <div class="col-10 h-75 d-flex flex-start flex-wrap mt-2" id="estadisticas">
@@ -66,9 +80,8 @@
 
         <!--La opción de ofrecer fichaje saldrá solo si el jugador que vas a seleccionar NO está en tu equipo-->
         <?php if (isset($datos_user->equipo) && $_SESSION['equipo'] != $datos_user->equipo) : ?>
-            <img src="<?php echo base_url('assets/img/ofrecerfichaje.jpg'); ?>" alt="" id="ofrecerFichaje" class="mx-auto" data-toggle="modal" data-target="#modalFichaje">
+            <img src="<?php echo base_url('assets/img/ofrecerfichaje.jpg'); ?>" alt="" id="ofrecerFichaje" class="mx-auto" data-toggle="modal">
         <?php endif; ?>
-
         <div class="modal fade" id="modalFichaje" tabindex="-1" role="dialog" aria-labelledby="modalFichaje" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
