@@ -81,8 +81,19 @@ class Registro_c extends CI_Controller
                 'imagen' => "assets/uploads/perfiles/pordefecto.png"
             );
             $this->Registro_m->insert_jugador($datos_post);
+            $sesion = array(
+                'username' => $this->input->post()['username'],
+                'tipo_cuenta' => $this->input->post()['tipocuenta'],
+                'email' => $this->input->post()['email'],
+                'apenom' => $this->input->post()['apenom'],
+                'fecha_nac' => $this->input->post()['fecha_nac'],
+                'equipo' => null,
+                'liga' => $this->input->post()['nombre_liga'],
+                'validado' => '0',
+                'imagen' => "assets/uploads/perfiles/pordefecto.png"
+            );
             //Creamos la session para que elija un equipo y después cerrar la sesión
-            $this->session->set_userdata($datos_post);
+            $this->session->set_userdata($sesion);
             redirect("Usuario_c/");
         }
     }
