@@ -115,6 +115,7 @@ class Jugador_m extends CI_Model
     {
         $this->db->select('equipo,count(*) as total');
         $this->db->from('usuarios');
+        $this->db->where('tipo', "Jugador");
         $this->db->where('liga', $liga);
         $this->db->group_by('equipo');
         $query = $this->db->get();

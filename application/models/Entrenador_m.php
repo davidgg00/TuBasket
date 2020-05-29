@@ -54,4 +54,15 @@ class Entrenador_m extends CI_Model
         $resultado = $this->db->get();
         return $resultado->result();
     }
+
+    public function getNEntrenadores($liga)
+    {
+        $this->db->select('equipo,count(*) as `NEntrenadores`');
+        $this->db->from('usuarios');
+        $this->db->where("tipo", "Entrenador");
+        $this->db->where("liga", $liga);
+        $this->db->group_by('equipo');
+        $resultado = $this->db->get();
+        return $resultado->result();
+    }
 }
