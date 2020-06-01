@@ -8,6 +8,12 @@ class RecuperarClave_m extends CI_Model
         parent::__construct();
     }
 
+    /**
+     * insertarTokenBBDD
+     * Inserta el nuevo token a la Base de datos
+     * @param  $email
+     * @param  $token
+     */
     public function insertarTokenBBDD($email, $token)
     {
         $datetime = new DateTime('tomorrow');
@@ -27,7 +33,12 @@ class RecuperarClave_m extends CI_Model
         }
     }
 
-    //Función que comprueba si el email ya existe en la tabla de los TOKENS para saber si hacer un insert o Update
+    /**
+     * existeEmail
+     * Comprueba si el email existe en la tabla de los tokens para hacer un insert o Update
+     * @param  $email
+     * @return true or false
+     */
     public function existeEmail($email)
     {
         $this->db->from("reseteo_clave");
@@ -42,6 +53,12 @@ class RecuperarClave_m extends CI_Model
         }
     }
 
+    /**
+     * existeEmailCuenta
+     *  Comprueba si existe el email de una cuenta.
+     * @param  $email
+     * @return true or false
+     */
     public function existeEmailCuenta($email)
     {
         $this->db->select("*");
@@ -57,7 +74,12 @@ class RecuperarClave_m extends CI_Model
         }
     }
 
-    //Función que te devuelve el día de expiración de un token
+    /**
+     * getDatosToken
+     * Te devuelve el dia de expiración de un token
+     * @param  $token
+     * @return $query->row()
+     */
     public function getDatosToken($token)
     {
         $query = $this->db->get_where('reseteo_clave', array('token' => $token));
@@ -65,6 +87,13 @@ class RecuperarClave_m extends CI_Model
         return $query->row();
     }
 
+    /**
+     * cambiarClaveUsuario
+     * Cambia la clave de un usuario
+     * @param  $email
+     * @param  $clave
+     * @return true
+     */
     public function cambiarClaveUsuario($email, $clave)
     {
         $data = array(

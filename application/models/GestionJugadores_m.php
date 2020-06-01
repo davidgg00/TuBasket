@@ -8,6 +8,12 @@ class GestionJugadores_m extends CI_Model
         parent::__construct();
     }
 
+    /**
+     * getJugadoresSinConfirmar
+     * Retorna los jugadores que no están confirmados en la plataforma todavía.
+     * @param  $liga
+     * @return return $query->result()
+     */
     public function getJugadoresSinConfirmar($liga)
     {
         //Creamos la sentencia sql
@@ -20,6 +26,12 @@ class GestionJugadores_m extends CI_Model
         return $query->result();
     }
 
+    /**
+     * aceptarJugador
+     * Actualiza el estado de jugador a validado por un admin
+     * @param  $username
+     * @return void
+     */
     public function aceptarJugador($username)
     {
         $this->db->set('validado', 1);
@@ -27,6 +39,12 @@ class GestionJugadores_m extends CI_Model
         $this->db->update('usuarios');
     }
 
+    /**
+     * denegarJugador
+     * Borra a un jugador que no estaba validado ya que el admin le ha denegado el acceso a la plataforma.
+     * @param  $username
+     * @return void
+     */
     public function denegarJugador($username)
     {
         $this->db->where('username', $username);
@@ -34,6 +52,12 @@ class GestionJugadores_m extends CI_Model
     }
 
 
+    /**
+     * getJugadoresConfirmados
+     *
+     * @param  $liga
+     * @return void
+     */
     public function getJugadoresConfirmados($liga)
     {
         //Creamos la sentencia sql

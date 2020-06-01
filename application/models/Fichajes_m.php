@@ -8,6 +8,14 @@ class Fichajes_m extends CI_Model
         parent::__construct();
     }
 
+    /**
+     * OfrecerFichaje
+     * Inserta en la tabla fichajes que entrenador solicita el fichaje, de quien, quien ofrece y a que entrenador.
+     * @param  $username
+     * @param  $jugadorAFichar
+     * @param  $entrenadorRecibe
+     * @param  $jugadorOfrecido
+     */
     public function OfrecerFichaje($username, $jugadorAFichar, $entrenadorRecibe, $jugadorOfrecido)
     {
         $datos = array(
@@ -29,6 +37,11 @@ class Fichajes_m extends CI_Model
         }
     }
 
+    /**
+     * aceptarFichaje
+     * Cambia el Estado de PENDIENTE a ACEPTADO el fichaje.
+     * @param  $idfichaje
+     */
     public function aceptarFichaje($idfichaje)
     {
         $this->db->set('estado', 'ACEPTADO');
@@ -36,6 +49,11 @@ class Fichajes_m extends CI_Model
         $this->db->update('fichajes');
     }
 
+    /**
+     * rechazarFichaje
+     * Cambia el Estado de PENDIENTE a DENEGADO el fichaje.
+     * @param  $idfichaje
+     */
     public function rechazarFichaje($idfichaje)
     {
         $this->db->set('estado', 'DENEGADO');

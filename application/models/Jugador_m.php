@@ -8,13 +8,12 @@ class Jugador_m extends CI_Model
         parent::__construct();
     }
 
-    public function mostrar_ligas($username)
-    {
-        $this->db->where('administrador', $username);
-        $query = $this->db->get('liga');
-        return $query->result();
-    }
-
+    /**
+     * mostrarClasificacion
+     * Retorna los datos de la clasificación de una liga (pasada por parámetro).
+     * @param  $liga
+     * @return $query->result()
+     */
     public function mostrarClasificacion($liga)
     {
         $this->db->select("v.*, e.escudo_ruta");
@@ -25,12 +24,24 @@ class Jugador_m extends CI_Model
         return $query->result();
     }
 
+    /**
+     * obtenerEquipos
+     * Obtiene los equipos de una liga (Pasada por parámetros).
+     * @param  $liga
+     * @return  $query->result()
+     */
     public function obtenerEquipos($liga)
     {
         $query = $this->db->get_where('equipo', array('liga' => $liga));
         return $query->result();
     }
 
+    /**
+     * unirseEquipo
+     * Actualiza el equipo de un jugador pasando de NULL a el id del equipo.
+     * @param  $equipo
+     * @param  $username
+     */
     public function unirseEquipo($equipo, $username)
     {
         $this->db->set('equipo', $equipo);
@@ -38,6 +49,12 @@ class Jugador_m extends CI_Model
         $this->db->update('usuarios');
     }
 
+    /**
+     * getStats
+     * Obtiene las estadísticas TOTALES de un jugador (pasado por parámetro)
+     * @param  $username
+     * @return $query->row()
+     */
     public function getStats($username)
     {
         $this->db->select('SUM(triples_metidos) AS triples, SUM(tiros_2_metidos) AS tiros_2, SUM(tiros_libres_metidos) AS tiros_libres, SUM(tapones) AS tapones, SUM(robos) AS robos, COUNT(jugador) partidos_jugados FROM `jugador_stats` WHERE jugador="' . $username . '"');
@@ -45,13 +62,12 @@ class Jugador_m extends CI_Model
         return $query->row();
     }
 
-    public function getStatsJugadores($username)
-    {
-        $this->db->select('SUM(triples_metidos) AS triples, SUM(tiros_2_metidos) AS tiros_2, SUM(tiros_libres_metidos) AS tiros_libres, SUM(tapones) AS tapones, SUM(robos) AS robos, COUNT(jugador) partidos_jugados FROM `jugador_stats` WHERE jugador="' . $username . '"');
-        $query = $this->db->get();
-        return $query->row();
-    }
-
+    /**
+     * proxPartido
+     *  Retorna los escudos, la jornada, fecha de los próximos partidos a disputar del equipo y liga.
+     * @param  $liga
+     * @param  $equipo
+     */
     public function proxPartido($liga, $equipo)
     {
         //Select que te muestra los escudos, la jornada y la fecha de los próximos partidos a disputar del equipo y liga. (Máximo 3 partidos muestra)
@@ -65,6 +81,12 @@ class Jugador_m extends CI_Model
         return $query->result();
     }
 
+    /**
+     * getEstadisticasJugadorPartido
+     * Retorna las estadísticas de CADA partido de un jugador (pasado por parámetro).
+     * @param  $username
+     * @return $query->result()
+     */
     public function getEstadisticasJugadorPartido($username)
     {
         $this->db->select('id_local,equipo_local, id_visitante,equipo_visitante, triples_metidos, tiros_2_metidos, tiros_libres_metidos, tapones, robos');
@@ -75,23 +97,13 @@ class Jugador_m extends CI_Model
         return $query->result();
     }
 
-    public function getPartidos($liga)
-    {
-        //Creamos la sentencia sql
-        $this->db->order_by('id', 'ASC');
-        $query = $this->db->get_where('view_partidos_liga ', array('liga' => $liga));
-        //Retornamos
-        return $query;
-    }
 
-    public function getNumEquipos($liga)
-    {
-        //Creamos la sentencia sql
-        $query = $this->db->get_where('equipo ', array('liga' => $liga));
-        //Retornamos
-        return $query->num_rows();
-    }
-
+    /**
+     * getDatosUser
+     * Retorna los datos de un usuario (pasado por parámetro).
+     * @param $user
+     * @return $query->row()
+     */
     public function getDatosUser($user)
     {
         //Creamos la sentencia sql
@@ -100,6 +112,12 @@ class Jugador_m extends CI_Model
         return $query->row();
     }
 
+    /**
+     * getEntrenadorJugador
+     * Retorna el entrenador que tiene un jugador.
+     * @param  $jugador
+     * @return $query->row()
+     */
     public function getEntrenadorJugador($jugador)
     {
         $this->db->select('u2.username as `Entrenador`');
@@ -111,6 +129,12 @@ class Jugador_m extends CI_Model
         return $query->row();
     }
 
+    /**
+     * getNJugadoresEquipos
+     * Retorna el número de jugadores que tiene un equipo.
+     * @param  $liga
+     * @return $query->result()
+     */
     public function getNJugadoresEquipos($liga)
     {
         $this->db->select('equipo,count(*) as total');

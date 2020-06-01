@@ -64,3 +64,9 @@ select {
 .equipo p {
     width: 100%;
 }
+
+@media screen and (max-width: 576px) {
+    .row {
+        margin: 0 auto;
+    }
+  }

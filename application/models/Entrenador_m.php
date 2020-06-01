@@ -8,6 +8,13 @@ class Entrenador_m extends CI_Model
         parent::__construct();
     }
 
+    /**
+     * proxPartido
+     * Retorna los 3 próximos partidos de una liga y equipo en específico (pasado por parámetro).
+     * @param  $liga
+     * @param  $equipo
+     * @return $query->result();
+     */
     public function proxPartido($liga, $equipo)
     {
         //Select que te muestra los escudos, la jornada y la fecha de los próximos partidos a disputar del equipo y liga. (Máximo 3 partidos muestra)
@@ -16,12 +23,24 @@ class Entrenador_m extends CI_Model
         return $query->result();
     }
 
+    /**
+     * obtenerEquipos
+     * Retorna los equipos de una liga (pasada por parámetros).
+     * @param  $liga
+     * @return $query->result()
+     */
     public function obtenerEquipos($liga)
     {
         $query = $this->db->get_where('equipo', array('liga' => $liga));
         return $query->result();
     }
 
+    /**
+     * getDatosEntrenador
+     * Retorna los datos del Entrenador de un equipo.
+     * @param  $user
+     * @return $query->row()
+     */
     public function getDatosEntrenador($user)
     {
         //Creamos la sentencia sql
@@ -30,6 +49,12 @@ class Entrenador_m extends CI_Model
         return $query->row();
     }
 
+    /**
+     * obtenerJugadoresEquipo
+     * Retorna los jugadores de un equipo en específico (pasado por parámetros).
+     * @param  $idequipo
+     * @return $query->result()
+     */
     public function obtenerJugadoresEquipo($idequipo)
     {
         //Creamos la sentencia sql
@@ -39,6 +64,12 @@ class Entrenador_m extends CI_Model
     }
 
 
+    /**
+     * verFichajes
+     * Retorna TODOS los fichajes (ya sean PENDIENTES,ACEPTADOS O DENEGADOS) de un entrenador (dando igual si ha pedido un fichaje o se lo han pedido)-
+     * @param  $username
+     * @return $resultado->result()
+     */
     public function verFichajes($username)
     {
         $this->db->select('f.entrenadorSolicita AS `entrenadorSolicita`, f.username_jugador1 AS `pide`,u.imagen as `img_jugador_pide`, f.username_jugador2 AS `ofrece`, u2.imagen as `img_jugador_ofrece`, f.EntrenadorRecibe AS `EntrenadorRecibe`,e.equipo AS `equipoSolicitante`, f.id as `idfichaje`, f.estado as `estado`');
@@ -51,17 +82,6 @@ class Entrenador_m extends CI_Model
         $this->db->where("(f.entrenadorSolicita='$username') OR (f.EntrenadorRecibe='$username')", NULL, FALSE);
         $this->db->order_by('f.id', 'DESC');
         $this->db->order_by('f.id', 'DESC');
-        $resultado = $this->db->get();
-        return $resultado->result();
-    }
-
-    public function getNEntrenadores($liga)
-    {
-        $this->db->select('equipo,count(*) as `NEntrenadores`');
-        $this->db->from('usuarios');
-        $this->db->where("tipo", "Entrenador");
-        $this->db->where("liga", $liga);
-        $this->db->group_by('equipo');
         $resultado = $this->db->get();
         return $resultado->result();
     }

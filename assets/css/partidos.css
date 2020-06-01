@@ -74,7 +74,8 @@ table td img {
 }
 
 ul {
-    margin: 0 auto;;
+    display: flex;
+    justify-content: center;
 }
 
 li {
@@ -92,4 +93,7 @@ li a {
     height: 100%;
     text-align: center;
     float: left;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

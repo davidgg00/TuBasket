@@ -8,6 +8,13 @@ class Login_m extends CI_Model
         parent::__construct();
     }
 
+    /**
+     * comprobar_usuario_clave
+     * Comprueba si el inicio de sesión es correcto
+     * @param  $username
+     * @param  $password
+     * @return $resultado->row()
+     */
     public function comprobar_usuario_clave($username, $password)
     {
         //Para evitar la inyeccion SQL hago una consulta preparada

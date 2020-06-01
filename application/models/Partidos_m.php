@@ -8,6 +8,12 @@ class Partidos_m extends CI_Model
         parent::__construct();
     }
 
+    /**
+     * getPartidos
+     * Obtiene los partidos de una liga (pasada por parámetros).
+     * @param  $liga
+     * @return $query
+     */
     public function getPartidos($liga)
     {
         //Creamos la sentencia sql
@@ -17,6 +23,12 @@ class Partidos_m extends CI_Model
         return $query;
     }
 
+    /**
+     * getNumEquipos
+     * Obtiene el número de equipos que tiene una liga (pasada por parámetros).
+     * @param  $liga
+     * @return $query->num_rows()
+     */
     public function getNumEquipos($liga)
     {
         //Creamos la sentencia sql
@@ -25,6 +37,12 @@ class Partidos_m extends CI_Model
         return $query->num_rows();
     }
 
+    /**
+     * getEquipos
+     * Retorna los equipos de una liga (pasada por parámetro).
+     * @param  $liga
+     * @return  $query->result()
+     */
     public function getEquipos($liga)
     {
         //Creamos la sentencia sql
@@ -33,6 +51,12 @@ class Partidos_m extends CI_Model
         return $query->result();
     }
 
+    /**
+     * getJugadoresPartidos
+     * Retorna los jugadores que disputan un partido (se pasa por parámetro la ID del PARTIDO).
+     * @param  $id
+     * @return $query->result()
+     */
     public function getJugadoresPartidos($id)
     {
         $this->db->select('apenom,username,equipo.equipo,triples_metidos,tiros_2_metidos,tiros_libres_metidos,tapones,robos');
@@ -52,18 +76,29 @@ class Partidos_m extends CI_Model
         }
     }
 
-    public function obtenerEquiposLiga($liga)
-    {
-        $query = $this->db->get_where('equipo', array('liga' => $liga));
-        return $query->result();
-    }
-
+    /**
+     * getPartido
+     * Retorna los datos de un partido (se pasa por parámetros el id del partido)
+     * @param  $id
+     * @return  $query->row()
+     */
     public function getPartido($id)
     {
         $query = $this->db->get_where('view_partidos_liga', array('id' => $id));
         return $query->row();
     }
 
+    /**
+     * insertarEstadisticaPartido
+     * Inserta las estadísticas de UN JUGADOR en la base de datos
+     * @param  $id
+     * @param  $jugador
+     * @param  $triples
+     * @param  $tiros2
+     * @param  $tiroslibres
+     * @param  $tapones
+     * @param  $robos
+     */
     public function insertarEstadisticaPartido($id, $jugador, $triples, $tiros2, $tiroslibres, $tapones, $robos)
     {
         $data = array(
@@ -80,6 +115,14 @@ class Partidos_m extends CI_Model
         $this->db->replace('jugador_stats', $data);
     }
 
+    /**
+     * insertPartidos
+     * Inserta un partido (al generarse la liga)
+     * @param  $local
+     * @param  $visitante
+     * @param  $jornada
+     * @param  $liga
+     */
     public function insertPartidos($local, $visitante, $jornada, $liga)
     {
         $data = array(
@@ -93,6 +136,13 @@ class Partidos_m extends CI_Model
         $this->db->insert('partido', $data);
     }
 
+    /**
+     * insertarResultadoPartido
+     * Actualiza el resultado de un enfrentamiento.
+     * @param  $id
+     * @param  $local
+     * @param  $visitante
+     */
     public function insertarResultadoPartido($id, $local, $visitante)
     {
         $this->db->set('resultado_local', $local);
@@ -101,6 +151,12 @@ class Partidos_m extends CI_Model
         $this->db->update('partido');
     }
 
+    /**
+     * cambiarFecha
+     * Actualiza la fecha de un encuentro.
+     * @param  $idPartido
+     * @param  $fecha
+     */
     public function cambiarFecha($idPartido, $fecha)
     {
         $this->db->set('fecha', $fecha);
@@ -108,6 +164,12 @@ class Partidos_m extends CI_Model
         $this->db->update('partido');
     }
 
+    /**
+     * cambiarHora
+     * Actualiza la hora de un encuentro
+     * @param  $idPartido
+     * @param  $hora
+     */
     public function cambiarHora($idPartido, $hora)
     {
         $this->db->set('hora', $hora);
@@ -115,6 +177,11 @@ class Partidos_m extends CI_Model
         $this->db->update('partido');
     }
 
+    /**
+     * resetPartido
+     * Resetea un partido y pone los resultados a null.
+     * @param  $id
+     */
     public function resetPartido($id)
     {
         $this->db->set('resultado_local', "");
@@ -123,7 +190,12 @@ class Partidos_m extends CI_Model
         $this->db->update('partido');
     }
 
-    //Obtener el email de los jugadores de un encuentro
+    /**
+     * getEmailJugadores
+     * Retorna los emails de los jugadores de un encuentro.
+     * @param  $id
+     * @return $query->result();
+     */
     public function getEmailJugadores($id)
     {
         $this->db->select('email');
@@ -135,6 +207,12 @@ class Partidos_m extends CI_Model
         return $query->result();
     }
 
+    /**
+     * getEmailEntrenador
+     * Retorna el email del entrenador de un equipo
+     * @param  $idequipo
+     * @return $query->row();
+     */
     public function getEmailEntrenador($idequipo)
     {
         $this->db->select('email');
@@ -145,6 +223,12 @@ class Partidos_m extends CI_Model
         return $query->row();
     }
 
+    /**
+     * getNJugadoresPartidos
+     * Retorna el numero de jugadores qaue disputa un partido.
+     * @param  $id
+     * @return $query
+     */
     public function getNJugadoresPartidos($id)
     {
         $this->db->select('count(*) as totalEquipo');

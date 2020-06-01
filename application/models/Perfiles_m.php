@@ -8,6 +8,14 @@ class Perfiles_m extends CI_Model
         parent::__construct();
     }
 
+    /**
+     * actualizarClave
+     * Actualiza la clave de un usuario de la plataforma.
+     * @param  $claveAntigua
+     * @param  $claveNueva
+     * @param  $username
+     * @return true OR false
+     */
     public function actualizarClave($claveAntigua, $claveNueva, $username)
     {
         $this->db->set('password', $claveNueva);
@@ -22,6 +30,14 @@ class Perfiles_m extends CI_Model
         }
     }
 
+    /**
+     * updateJugador
+     * Actualiza los datos de un usuario de la plataforma
+     * @param  $apenom
+     * @param  $email
+     * @param  $fechanac
+     * @param  $path
+     */
     public function updateJugador($apenom, $email, $fechanac, $path = null)
     {
         $this->db->set('apenom', $apenom);
@@ -39,6 +55,13 @@ class Perfiles_m extends CI_Model
         $this->session->set_userdata('fecha_nac', $fechanac);
     }
 
+    /**
+     * getEmail
+     * Retorna el numero de filas que tiene un email. (Para ver si al actualizar los datos el email existe o no)
+     * @param  $email
+     * @param  $usuario
+     * @return $query->num_rows()
+     */
     public function getEmail($email, $usuario)
     {
         $this->db->select('email');

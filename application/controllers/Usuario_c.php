@@ -176,10 +176,4 @@ class Usuario_c extends CI_Controller
         $datos = $this->Jugador_m->getNJugadoresEquipos($liga);
         echo json_encode($datos);
     }
-
-    public function obtenerNEntrenadores($liga)
-    {
-        $datos = $this->Entrenador_m->getNEntrenadores($liga);
-        echo json_encode($datos);
-    }
 }

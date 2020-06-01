@@ -8,6 +8,13 @@ class Notificaciones_m extends CI_Model
         parent::__construct();
     }
 
+    /**
+     * leerNotificaciones
+     * Actualiza las notificaciones a LEIDAS
+     * @param  $idfichaje
+     * @param  $username
+     * @return void
+     */
     public function leerNotificaciones($idfichaje, $username)
     {
         $this->db->set('leido', '1');
@@ -16,6 +23,12 @@ class Notificaciones_m extends CI_Model
         $this->db->update('notificaciones');
     }
 
+    /**
+     * numeroNotificaciones
+     * Retorna el número de notificaciones QUE NO ESTÁN LEIDAS de un usuario.
+     * @param  $username
+     * @return void
+     */
     public function numeroNotificaciones($username)
     {
         $this->db->select('*');

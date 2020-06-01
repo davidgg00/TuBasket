@@ -69,7 +69,7 @@ class Partidos_c extends CI_Controller
     {
         if ($this->session->userdata['tipo_cuenta'] == 'Administrador') {
             //obtenemos todos los equipos de la liga que queremos
-            $data = $this->Partidos_m->obtenerEquiposLiga($liga);
+            $data = $this->Partidos_m->getEquipos($liga);
             //Creamos un array donde se guardarán las ids de los equipos
             $equipos = array();
             foreach ($data as $dato) {
