@@ -62,7 +62,7 @@ $(document).ready(function () {
             //Si no hay ninguna clase error en los inputs enviamos el formulario por ajax
             if (!$("#equipo").hasClass("is-invalid") && !$("#pabellon").hasClass("is-invalid") && !$("#ciudad").hasClass("is-invalid") && $("#formulario").hasClass("max-equipos") == false) {
                 $.ajax({
-                    url: "<?php echo base_url() ?>" + "GestionEquipos_c/enviarEquipo ",
+                    url: baseurl + "GestionEquipos_c/enviarEquipo ",
                     type: "POST",
                     //El Objeto formdata nos permite transmitir nuestros datos en una codificación multipart/form-data
                     //Además que nos facilita bastante la subida de archivos a través de un <input type="file">
@@ -156,6 +156,9 @@ function ajaxContentEditable() {
 
     //Una vez que se quite el foco del parrafo
     $("p").on("blur", function (evento) {
+        console.log($(this).html());
+        console.log($(this).parent().class());
+        console.log($(this).parent().parent().children().eq(0).html());
         //Si se ha cambiado el contenido del contenteditable
         if (contenidoAnterior != $(this).html()) {
             //Si se ha cambiado algo se lanza ajax y notificación

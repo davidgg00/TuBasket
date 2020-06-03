@@ -68,26 +68,35 @@ function calendario() {
             break;
 
         case 10:
-            for (let partido of partidos) {
-                //Si la cuenta es de tipo jugador la fila de modificar o resetear partido no debe de aparecer.
-                thaccion = (tipo_cuenta == "Administrador") ? "<th>Acción</th>" : "";
-                accion = (tipo_cuenta == "Administrador") ? "<td><i class='fas fa-edit' data-id='" + partido.id + "' data-tippy-content='Haga click para escribir resultado'></i><i class='fas fa-sync btn-reset' data-id='" + partido.id + "'></i></td>" : "";
-                let colspan = (tipo_cuenta == "Administrador") ? "6" : "5";
-                //Volteamos fecha debido al formato que tiene PHPMYADMIN
-                let fechaArray = partido.fecha.split('-');
-                let fecha = fechaArray[2] + '-' + fechaArray[1] + '-' + fechaArray[0];
-                //Creamos una variable que almacene el resultado directamente
-                resultado_completo = partido.resultado_local + " - " + partido.resultado_visitante
-
-                //Si el partido es divisible entre 5 crear un nuevo div porque es nueva jornada
-                if (npartido % 5 == 0 || npartido == 0) {
-                    $("#contenedor").append("<div class='jornada mt-2 table-responsive p-0'><table class='table table-hover'><thead><tr><th colspan='" + colspan + "'>JORNADA " + jornada + "</th></tr><tr><th>Local</th><th>Resultado</th><th>Visitante</th><th id='fecha'>Fecha</th><th>Hora</th>" + thaccion + "</tr></thead><tbody  id='jornada" + jornada + "'><tr class='partido'><td>" + partido.equipo_local + "</td><td data-id='" + partido.id + "'>" + resultado_completo + "</td><td>" + partido.equipo_visitante + "</td><td><input type='text' id='" + partido.id + "' class='datepick w-100 mx-auto' value='" + fecha + "' " + disabled + "></td><td><input id='" + partido.id + "' class='hora w-100 mx-auto text-center ' type='time' step='60' value='" + partido.hora + "'" + disabled + "></td></td>" + accion + "</tr></tbody></table></div>")
-                    jornada++;
-                } else {
-                    $("tbody").last().append("<tr class='partido'><td>" + partido.equipo_local + "</td><td data-id='" + partido.id + "'>" + resultado_completo + "</td><td>" + partido.equipo_visitante + "</td><td><input type='text' id='" + partido.id + "' class='datepick w-100 mx-auto' value='" + fecha + "' " + disabled + "></td><td><input id='" + partido.id + "' class='hora w-100 mx-auto text-center ' type='time' step='60' value='" + partido.hora + "' " + disabled + "></td></td>" + accion + "</tr>")
+            $("#paginacion").pagination({
+                dataSource: partidos,
+                pageSize: 20,
+                callback: function (partidosPaginacion) {
+                    $("#calendarioWrapper").html("")
+                    for (let partido of partidosPaginacion) {
+                        if (partido == partidos_copia[0]) {
+                            jornada = 1;
+                        }
+                        //Si la cuenta es de tipo jugador la fila de modificar o resetear partido no debe de aparecer.
+                        let thaccion = (tipo_cuenta == "Administrador") ? "<th>Acción</th>" : "";
+                        let accion = (tipo_cuenta == "Administrador") ? "<td><i class='fas fa-edit' data-id='" + partido.id + "' data-tippy-content='Haga click para escribir resultado'></i><i class='fas fa-sync btn-reset' data-id='" + partido.id + "'></i></td>" : "";
+                        let colspan = (tipo_cuenta == "Administrador") ? "6" : "5";
+                        //Volteamos fecha debido al formato que tiene PHPMYADMIN
+                        let fechaArray = partido.fecha.split('-');
+                        let fecha = fechaArray[2] + '-' + fechaArray[1] + '-' + fechaArray[0];
+                        //Creamos una variable que almacene el resultado directamente
+                        resultado_completo = partido.resultado_local + " - " + partido.resultado_visitante
+                        //Si el partido es divisible entre 4 crear un nuevo div porque es nueva jornada
+                        if (npartido % 5 == 0 || npartido == 0) {
+                            $("#calendarioWrapper").append("<div class='jornada mt-2 table-responsive p-0'><table class='table table-hover'><thead><tr><th colspan='" + colspan + "'>JORNADA " + jornada + "</th></tr><tr><th>Local</th><th>Resultado</th><th>Visitante</th><th id='fecha'>Fecha</th><th>Hora</th>" + thaccion + "</tr></thead><tbody  id='jornada" + jornada + "'><tr class='partido'><td>" + partido.equipo_local + "</td><td data-id='" + partido.id + "'>" + resultado_completo + "</td><td>" + partido.equipo_visitante + "</td><td><input type='text' id='" + partido.id + "' class='datepick w-100 mx-auto' value='" + fecha + "' " + disabled + "></td><td><input id='" + partido.id + "' class='hora w-100 mx-auto text-center ' type='time' step='60' value='" + partido.hora + "'" + disabled + "></td></td>" + accion + "</tr></tbody></table></div>")
+                            jornada++;
+                        } else {
+                            $("tbody").last().append("<tr class='partido'><td>" + partido.equipo_local + "</td><td data-id='" + partido.id + "'>" + resultado_completo + "</td><td>" + partido.equipo_visitante + "</td><td><input type='text' id='" + partido.id + "' class='datepick w-100 mx-auto' value='" + fecha + "' " + disabled + "></td><td><input id='" + partido.id + "' class='hora w-100 mx-auto text-center ' type='time' step='60' value='" + partido.hora + "' " + disabled + "></td></td>" + accion + "</tr>")
+                        }
+                        npartido++;
+                    }
                 }
-                npartido++;
-            }
+            });
             break;
     }
     //Añadimos acciones a los botones de acciones
@@ -153,7 +162,7 @@ function calendario() {
     $("tr").on("click", function (evento) {
         if ($(this).children('td').length > 0 && tipo_cuenta != "Administrador") {
             let idpartido = $(this).children('td').eq(1).data('id');
-            window.location.href = base_url + "Usuario_c/partido/'" + liga + "/" + idpartido + "";
+            window.location.href = base_url + "Usuario_c/partido/" + liga + "/" + idpartido + "";
         }
     })
 }

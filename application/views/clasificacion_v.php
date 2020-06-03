@@ -1,4 +1,4 @@
-<div class="row justify-content-center align-items-center h-100" id="clasificacion">
+<div class="row justify-content-center align-items-start h-100" id="clasificacion">
     <table class="table table-bordered bg-white text-center">
         <thead>
             <tr>

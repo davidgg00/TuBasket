@@ -56,12 +56,20 @@ class Partidos_c extends CI_Controller
         return $partido;
     }
 
-    public function insertarResultadoEquipos()
+    public function insertarResultadoEquipos($liga)
     {
         //Si el usuario es un administrador se comunica con el modelo
         if ($this->session->userdata['tipo_cuenta'] == 'Administrador') {
             $this->Partidos_m->insertarResultadoPartido($_POST['id'], $_POST['equipolocal'], $_POST['equipovisitante']);
             echo "Insertado";
+
+            //Al guardar un partido vamos a comprobar si es el último que quedaba por jugarse.
+            $nequipos = $this->Partidos_m->num_equipos_liga($liga);
+            $npartidos = ($nequipos - 1) * $nequipos;
+            $npartidosJugados = $this->Partidos_m->getNPartidosJugados($liga);
+            if ($npartidosJugados->total == $npartidos) {
+                $this->Partidos_m->definirGanador($liga);
+            }
         }
     }
 
@@ -105,7 +113,7 @@ class Partidos_c extends CI_Controller
         $this->load->view("modulos/footer");
     }
 
-    public function enviarResultado($id)
+    public function enviarResultado($id, $liga)
     {
         if ($this->session->userdata['tipo_cuenta'] == 'Administrador') {
             //Bucle que recorre los tr y TD que se han enviado para después enviarlos al MODELO

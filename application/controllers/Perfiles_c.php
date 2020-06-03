@@ -30,7 +30,10 @@ class Perfiles_c extends CI_Controller
         //Si se sube archivo
         if ($_FILES['fotoperfil']['name']) {
             //Ejecutamos este método que borrará la imagen antigua de la carpeta
-            self::borrarImagenAntigua();
+            //Borramos la imagen si no es la de por defecto
+            if ($_SESSION['imagen'] != "assets/uploads/perfiles/pordefecto.png") {
+                unlink($_SESSION['imagen']);
+            }
             $img = $_FILES['fotoperfil']['name'];
             $tmp = $_FILES['fotoperfil']['tmp_name'];
             $extension = pathinfo($img, PATHINFO_EXTENSION);
@@ -47,15 +50,6 @@ class Perfiles_c extends CI_Controller
             $this->Perfiles_m->updateJugador($_POST['apenom'], $_POST['email'], $_POST['fecha_nac'], $path = null);
         }
         echo $path;
-    }
-
-    //Función que busca una imagen de perfil en la carpeta donde se guardan las imagenes y la borra.
-    public function borrarImagenAntigua()
-    {
-        //Borramos la imagen si no es la de por defecto
-        if ($_SESSION['imagen'] != "assets/uploads/perfiles/pordefecto.png") {
-            unlink($_SESSION['imagen']);
-        }
     }
 
     public function verEmail()

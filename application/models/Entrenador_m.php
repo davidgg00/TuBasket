@@ -85,4 +85,20 @@ class Entrenador_m extends CI_Model
         $resultado = $this->db->get();
         return $resultado->result();
     }
+
+    /**
+     * getGanador
+     * Método que retorna el ganador de la liga (si no hay ganador, estará vacía.)
+     * @param  $liga
+     * @return $query->row();
+     */
+    public function getGanador($liga)
+    {
+        $this->db->select("e.equipo, e.escudo_ruta");
+        $this->db->join('equipo e', 'e.id = l.ganador');
+        $this->db->where('l.nombre', $liga);
+        $this->db->where('l.ganador !=', "");
+        $query = $this->db->get('liga l');
+        return $query->row();
+    }
 }

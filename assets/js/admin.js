@@ -37,10 +37,12 @@ function obtenerLigas() {
             let datos = JSON.parse(dato_devuelto);
             let mihtml = "";
             for (dato of datos) {
+
+                console.log(dato);
                 mihtml += "<div class='card'><div class='card-header'>";
                 mihtml += "<a href='" + base_url + "Admin_c/index/" + dato.nombre + "'>" + dato.nombre + "</a><i id='" + dato.nombre + "' class='borrarLiga fas fa-ban float-right'></i>";
-                mihtml += "</div><div class='card-body'>Ganador:";
-                mihtml += dato.ganador;
+                mihtml += "</div><div class='card-body'>Ganador: ";
+                mihtml += dato.ganador == null ? "" : dato.ganador;
                 mihtml += "</div></div>";
             }
             Swal.fire({

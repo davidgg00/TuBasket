@@ -23,7 +23,11 @@ class Usuario_c extends CI_Controller
         if ($_SESSION['validado'] == 1 && ($_SESSION['tipo_cuenta'] == "Jugador" || $_SESSION['tipo_cuenta'] == "Entrenador")) {
             $this->load->view("modulos/head", array("css" => array("liga", "jugador")));
             $data["liga"] = $_SESSION['liga'];
-            $data["proxPartidos"] = self::proxPartido($_SESSION['liga'], $_SESSION['equipo']);
+            $data["proxPartidos"] = $this->Jugador_m->proxPartido($_SESSION['liga'], $_SESSION['equipo']);
+
+            //Añadimos variable que almacena el ganador de la liga (Si no hay, estará vacía)
+            $datos["ganador"] = $this->Entrenador_m->getGanador($_SESSION['liga']);
+
             $this->load->view("modulos/header", $data);
             $this->load->view("liga_v", $data);
             $this->load->view("modulos/footer");
@@ -44,7 +48,7 @@ class Usuario_c extends CI_Controller
             $statsIndJugadores = [];
             foreach ($_POST['jugador'] as $jugador) {
                 $statsJugadores[] = self::getEstadisticasJugador($jugador);
-                $statsIndJugadores[] = self::getEstadisticasJugadorPartido($jugador);
+                $statsIndJugadores[] = $this->Jugador_m->getEstadisticasJugadorPartido($_SESSION['username']);
                 $datosUsuarios[] = $this->Jugador_m->getDatosUser($jugador);
             }
             $data["estadisticas"] = $statsJugadores;
@@ -58,13 +62,14 @@ class Usuario_c extends CI_Controller
             //Si el username es nulo que nos muestre las estadísticas de la cuenta que ha iniciado sesion, de lo contrario las estadísticas del usuario pasado por param
             if ($username != null) {
                 $data["entrenador"] = $this->Jugador_m->getEntrenadorJugador($username);
-                $data["tusJugadores"] = self::getJugadoresEquipo();
-                $data["estadisticas"] = self::getEstadisticasJugador($username);
-                $data["stats_ind"] = self::getEstadisticasJugadorPartido($username);
+                $data["tusJugadores"] = $this->Entrenador_m->obtenerJugadoresEquipo($_SESSION["equipo"]);
+                $data["estadisticas"] = $this->Jugador_m->getStats($username);
+                $data["stats_ind"] = $this->Jugador_m->getEstadisticasJugadorPartido($_SESSION['username']);
                 $data['datos_user'] = $this->Jugador_m->getDatosUser($username);
             } else {
-                $data["estadisticas"] = self::getEstadisticasJugador($_SESSION['username']);
-                $data["stats_ind"] = self::getEstadisticasJugadorPartido($_SESSION['username']);
+
+                $data["estadisticas"] = $this->Jugador_m->getStats($_SESSION['username']);
+                $data["stats_ind"] = $this->Jugador_m->getEstadisticasJugadorPartido($_SESSION['username']);
                 $data['datos_user'] = $this->Jugador_m->getDatosUser($_SESSION['username']);
             }
             $this->load->view("modulos/head", array("css" => array("jugador")));
@@ -80,7 +85,7 @@ class Usuario_c extends CI_Controller
     {
         $this->load->view("modulos/head", array("css" => array("liga", "clasificacion")));
         $data["liga"] = $_SESSION['liga'];
-        $data["clasificacion"] = self::getClasificacion($_SESSION["liga"]);
+        $data["clasificacion"] = $this->Jugador_m->mostrarClasificacion($_SESSION["liga"]);
         $this->load->view("modulos/header", $data);
         $this->load->view("clasificacion_v");
         $this->load->view("modulos/footer");
@@ -99,7 +104,7 @@ class Usuario_c extends CI_Controller
 
     public function notificaciones()
     {
-        $datos["fichajes"] = self::verNotificaciones();
+        $datos["fichajes"] = $this->Entrenador_m->verFichajes($_SESSION["username"]);
         $datos["liga"] = $_SESSION["liga"];
         $this->load->view("modulos/head", array("css" => array("liga", "notificaciones")));
         $this->load->view("modulos/header", $datos);
@@ -107,20 +112,14 @@ class Usuario_c extends CI_Controller
         $this->load->view("modulos/footer");
     }
 
-    //Función que devuelve la clasificación.
-    public function getClasificacion()
-    {
-        $resultado = $this->Jugador_m->mostrarClasificacion($_SESSION["liga"]);
-        return $resultado;
-    }
-
     //Funcion que hace un update en un jugador para unirse a un equipo.
     public function unirseEquipo($equipo, $username)
     {
         //Ejecutamos método de Jugador_m para unirse a un equipo
         $this->Jugador_m->unirseEquipo($equipo, $username);
-        //Cerramos Sesión y redirigimos al Login
-        self::cerrarsesion();
+        //Destruimos sesión y redirigimos al login
+        session_destroy();
+        redirect(base_url());
     }
 
     //Funcion que devuelve las estadisticas totales de un jugador o jugadores
@@ -137,38 +136,12 @@ class Usuario_c extends CI_Controller
         }
     }
 
-    //Funcion que devuelve las estadisticas por partido de un jugador.
-    public function getEstadisticasJugadorPartido($username)
-    {
-        $resultado = $this->Jugador_m->getEstadisticasJugadorPartido($username);
-        return $resultado;
-    }
-
     //Funcion que te destruye la sesión y te devuelve al login.
     public function cerrarsesion()
     {
         //Destruimos sesión y redirigimos al login
         session_destroy();
         redirect(base_url());
-    }
-
-    //Funcion que devuelve los proximos partido de un equipo
-    public function proxPartido($liga, $equipo)
-    {
-        $resultado = $this->Jugador_m->proxPartido($liga, $equipo);
-        return $resultado;
-    }
-
-    public function getJugadoresEquipo()
-    {
-        $datos = $this->Entrenador_m->obtenerJugadoresEquipo($_SESSION["equipo"]);
-        return $datos;
-    }
-
-    public function verNotificaciones()
-    {
-        $datos = $this->Entrenador_m->verFichajes($_SESSION["username"]);
-        return $datos;
     }
 
     public function obtenerJugadoresEquiposLiga($liga)

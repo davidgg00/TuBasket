@@ -54,9 +54,14 @@ class Admin_m extends CI_Model
      */
     public function mostrar_ligas($username)
     {
-        $this->db->where('administrador', $username);
-        $query = $this->db->get('liga');
+        $this->db->select("l.nombre, l.administrador, e.equipo as ganador");
+        $this->db->join('equipo e', 'e.id = l.ganador', 'left');
+        $this->db->where('l.administrador', $username);
+        $query = $this->db->get('liga l');
         return $query;
+        /* $this->db->where('administrador', $username);
+        $query = $this->db->get('liga');
+        return $query; */
     }
 
     /**
@@ -69,6 +74,7 @@ class Admin_m extends CI_Model
     {
         $this->db->select('*');
         $this->db->where('liga', $liga);
+        $this->db->where("resultado_local =", "");
         $this->db->order_by('jornada', 'ASC');
         $this->db->order_by('fecha', 'ASC');
         $this->db->limit(4);
@@ -145,5 +151,21 @@ class Admin_m extends CI_Model
         $this->db->from('equipo e');
         $query = $this->db->get();
         return $query->result();
+    }
+
+    /**
+     * getGanador
+     * Método que retorna el ganador de la liga (si no hay ganador, estará vacía.)
+     * @param  $liga
+     * @return $query->row();
+     */
+    public function getGanador($liga)
+    {
+        $this->db->select("e.equipo, e.escudo_ruta");
+        $this->db->join('equipo e', 'e.id = l.ganador');
+        $this->db->where('l.nombre', $liga);
+        $this->db->where('l.ganador !=', "");
+        $query = $this->db->get('liga l');
+        return $query->row();
     }
 }

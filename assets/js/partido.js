@@ -60,11 +60,11 @@ $(document).ready(function () {
 
 
             //Enviamos las estadísticas de lo usuarios por AJAX
-            $.post(base_url + "Partidos_c/enviarResultado/" + idpartido, {
+            $.post(base_url + "Partidos_c/enviarResultado/" + idpartido + "/" + liga_actual, {
                 miform: miArray
             }).done(function () {
                 //Enviamos el resultado del encuentro por AJAX
-                $.post(base_url + "Partidos_c/insertarResultadoEquipos", {
+                $.post(base_url + "Partidos_c/insertarResultadoEquipos/" + liga_actual, {
                     //Cogemos el total de puntos de cada equipo, el id y la liga
                     equipolocal: $(".equipo:first-child span").html(),
                     equipovisitante: $(".equipo:last-child span").html(),

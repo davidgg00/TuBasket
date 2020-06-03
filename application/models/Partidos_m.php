@@ -238,4 +238,50 @@ class Partidos_m extends CI_Model
         $query = $this->db->get();
         return $query;
     }
+
+    /**
+     * getNPartidosJugados
+     * Retorna el numero de partidos que se ha jugado en la liga
+     * @param  $liga
+     * @return $query->row()
+     */
+    public function getNPartidosJugados($liga)
+    {
+        $this->db->select('count(*) as total');
+        $this->db->where('liga', $liga);
+        $this->db->where('resultado_local !=', '');
+        $this->db->from('partido');
+        $query = $this->db->get();
+        return $query->row();
+    }
+
+    /**
+     * num_equipos_liga
+     * Retorna el numero de equipos que tiene una liga (pasada por parámetro).
+     * @param  $liga
+     * @return $query->num_rows();
+     */
+    public function num_equipos_liga($liga)
+    {
+        //Creamos la sentencia sql
+        $query = $this->db->get_where('equipo', array('liga' => $liga));
+        //Retornamos el numero de filas
+        return $query->num_rows();
+    }
+
+    public function definirGanador($liga)
+    {
+
+        //obtenemos al primer clasificado
+        $this->db->select("v.*, e.escudo_ruta, e.id as idequipo");
+        $this->db->join('equipo e', 'e.id = v.idequipo');
+        $this->db->where('v.liga', $liga);
+        $this->db->order_by('puntos_clasificacion', 'DESC');
+        $this->db->order_by('puntos_favor ', 'DESC');
+        $this->db->limit(1);
+        $ganador = $this->db->get('view_clasificacion v')->row();
+        $this->db->set('ganador', $ganador->idequipo);
+        $this->db->where('nombre', $liga);
+        $this->db->update('liga');
+    }
 }
