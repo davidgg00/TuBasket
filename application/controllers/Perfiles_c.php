@@ -16,6 +16,10 @@ class Perfiles_c extends CI_Controller
         }
     }
 
+    /**
+     * cambiarClave
+     * Función que manda al administrador la antigua clave y la nueva para cambiarla.
+     */
     public function cambiarClave()
     {
         $datos = $this->Perfiles_m->actualizarClave(hash("sha512", $_POST["claveAntigua"]), hash("sha512", $_POST["claveNueva"]), $_POST["username"]);
@@ -24,7 +28,11 @@ class Perfiles_c extends CI_Controller
         }
     }
 
-    //Función que actualiza los datos de perfil del usuario.
+    /**
+     * updateUsuario
+     *Función que manda al modelo los datos de perfil del usuario.  
+     * @return void
+     */
     public function updateUsuario()
     {
         //Si se sube archivo
@@ -52,8 +60,26 @@ class Perfiles_c extends CI_Controller
         echo $path;
     }
 
+    /**
+     * verEmail
+     * Función que se comunica con el modelo y te devuelve tu propio email.
+     * @return void
+     */
     public function verEmail()
     {
         echo $this->Perfiles_m->getEmail($_GET['email'], $_SESSION['username']);
+    }
+
+
+    /**
+     * cerrarsesion
+     * Destruye la sesión y te redirige al login.
+     * @return void
+     */
+    public function cerrarsesion()
+    {
+        //Borra $_SESSION y redirige al login
+        session_destroy();
+        redirect(base_url());
     }
 }

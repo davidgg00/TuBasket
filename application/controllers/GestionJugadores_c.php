@@ -14,6 +14,11 @@ class GestionJugadores_c extends CI_Controller
             redirect('');
         }
     }
+    /**
+     * gestJugadores
+     * Función que te redirige a la vista de la Gestión de Jugadores
+     * @param  $liga
+     */
     public function gestJugadores($liga)
     {
         $datos["liga"] = $liga;
@@ -24,11 +29,22 @@ class GestionJugadores_c extends CI_Controller
         $this->load->view('gest_jugadores_v');
         $this->load->view("modulos/footer");
     }
+
+    /**
+     * aceptarJugador
+     * Función que comunica al modelo que jugador se va a aceptar en la liga.
+     * @param  $username
+     */
     public function aceptarJugador($username)
     {
         $this->GestionJugadores_m->aceptarJugador($username);
     }
 
+    /**
+     * eliminarJugador
+     * Función que comunica al modelo que jugador se va a denegar en la liga.
+     * @param  $username
+     */
     public function eliminarJugador($username)
     {
         $this->GestionJugadores_m->denegarJugador($username);

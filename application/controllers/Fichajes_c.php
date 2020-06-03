@@ -17,17 +17,29 @@ class Fichajes_c extends CI_Controller
     }
 
 
+    /**
+     * OfrecerFichaje
+     * Función que manda al modelo la solicitud del fichaje
+     */
     public function OfrecerFichaje()
     {
         $mensaje = $this->Fichajes_m->OfrecerFichaje($_SESSION['username'], $_POST['jugadorAFichar'], $_POST['entrenadorRecibe'], $_POST['jugadorOfrecido']);
         echo $mensaje;
     }
 
+    /**
+     * aceptarFichaje
+     * Función que acepta la solicitud del fichaje
+     */
     public function aceptarFichaje()
     {
         $this->Fichajes_m->aceptarFichaje($_POST['idfichaje']);
     }
 
+    /**
+     * rechazarFichaje
+     * Función que deniega la solicitud del fichaje
+     */
     public function rechazarFichaje()
     {
         $this->Fichajes_m->rechazarFichaje($_POST['idfichaje']);

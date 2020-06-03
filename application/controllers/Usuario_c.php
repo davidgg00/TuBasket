@@ -17,6 +17,10 @@ class Usuario_c extends CI_Controller
         }
     }
 
+    /**
+     * index
+     * Función que dependiendo si estás validado o no, te lleva a la vista de la liga a la que perteneces o a elegir un equipo de la liga.
+     */
     public function index()
     {
         //Si está validado y es un Jugador o Entrenador
@@ -38,7 +42,11 @@ class Usuario_c extends CI_Controller
         }
     }
 
-    //Funcion que consulta las estadísticas totales y por partido del JUGADOR o JUGADORES y nos lo muestra en una vista
+    /**
+     * estadisticas
+     * Funcion que consulta las estadísticas totales y por partido del JUGADOR o JUGADORES y nos lo muestra en una vista  
+     * @param  $username
+     */
     public function estadisticas($username = null)
     {
         $this->load->view("modulos/head", array("css" => array("liga", "estadisticas")));
@@ -80,7 +88,10 @@ class Usuario_c extends CI_Controller
         }
     }
 
-    //Función que consulta la clasificación y nos la muestra en una vista.
+    /**
+     * clasificacion
+     * Función que consulta la clasificación y nos la muestra en una vista.    
+     */
     public function clasificacion()
     {
         $this->load->view("modulos/head", array("css" => array("liga", "clasificacion")));
@@ -91,6 +102,10 @@ class Usuario_c extends CI_Controller
         $this->load->view("modulos/footer");
     }
 
+    /**
+     * listaJugadores
+     * Función que nos muestra la vista de jugadores de la liga (funcionalidad de Entrenador).
+     */
     public function listaJugadores()
     {
         $this->load->model("GestionJugadores_m");
@@ -102,6 +117,10 @@ class Usuario_c extends CI_Controller
         $this->load->view("modulos/footer");
     }
 
+    /**
+     * notificaciones
+     * Función que nos muestra la vista de las notificaciones de tu cuenta (entrenador).
+     */
     public function notificaciones()
     {
         $datos["fichajes"] = $this->Entrenador_m->verFichajes($_SESSION["username"]);
@@ -112,17 +131,26 @@ class Usuario_c extends CI_Controller
         $this->load->view("modulos/footer");
     }
 
-    //Funcion que hace un update en un jugador para unirse a un equipo.
+    /**
+     * unirseEquipo
+     * Funcion que hace un update en un JUGADOR O ENTRENADOR para unirse a un equipo.    
+     * @param  $equipo
+     * @param  $username
+     */
     public function unirseEquipo($equipo, $username)
     {
-        //Ejecutamos método de Jugador_m para unirse a un equipo
         $this->Jugador_m->unirseEquipo($equipo, $username);
         //Destruimos sesión y redirigimos al login
         session_destroy();
         redirect(base_url());
     }
 
-    //Funcion que devuelve las estadisticas totales de un jugador o jugadores
+
+    /**
+     * getEstadisticasJugador
+     * Funcion que devuelve las estadisticas TOTALES de un jugador o jugadores    
+     * @param  $username
+     */
     public function getEstadisticasJugador($username)
     {
         if (is_array($username)) {
@@ -136,14 +164,11 @@ class Usuario_c extends CI_Controller
         }
     }
 
-    //Funcion que te destruye la sesión y te devuelve al login.
-    public function cerrarsesion()
-    {
-        //Destruimos sesión y redirigimos al login
-        session_destroy();
-        redirect(base_url());
-    }
-
+    /**
+     * obtenerJugadoresEquiposLiga
+     * Función que pide al modelo los jugadores que hay en una liga.
+     * @param  $liga
+     */
     public function obtenerJugadoresEquiposLiga($liga)
     {
         $datos = $this->Jugador_m->getNJugadoresEquipos($liga);

@@ -10,12 +10,21 @@ class RecuperarClave_c extends CI_Controller
         $this->load->model("RecuperarClave_m");
     }
 
+    /**
+     * index
+     * Función que te lleva a la vista de recuperarclave
+     */
     public function index()
     {
         $this->load->view("modulos/head", array("css" => array("plantilla")));
         $this->load->view("recuperarclave_v");
     }
 
+    /**
+     * recuperarclave
+     * Función que manda al modelo el email para comprobar si existe y después envia un correo de reseteo de contraseña.
+     * @return void
+     */
     public function recuperarclave()
     {
         //Primero de todo vamos a comprobar si el email existe
@@ -35,6 +44,12 @@ class RecuperarClave_c extends CI_Controller
         }
     }
 
+    /**
+     * EnviarMail
+     * Función que envia el correo de reseteo de clave.
+     * @param  $email
+     * @param  $token
+     */
     public function EnviarMail($email, $token)
     {
         // Protocolo de envío
@@ -63,6 +78,11 @@ class RecuperarClave_c extends CI_Controller
         $this->email->send();
     }
 
+    /**
+     * resetearClave
+     * Función que te comprueba si el token es correcto, si es asi te redirige para poner la nueva contraseña.
+     * @return
+     */
     public function resetearClave()
     {
         $datetime = new DateTime('today');
@@ -81,6 +101,10 @@ class RecuperarClave_c extends CI_Controller
         }
     }
 
+    /**
+     * cambiarClave
+     * Función que te agrega un $_SESSION de confirmación y te redirige al login.
+     */
     public function cambiarClave()
     {
         if ($this->RecuperarClave_m->cambiarClaveUsuario($_POST['email'], hash("sha512", $_POST['clave']))) {

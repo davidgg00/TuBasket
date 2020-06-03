@@ -10,7 +10,11 @@ class Partidos_c extends CI_Controller
         $this->load->model("Partidos_m");
     }
 
-    //Función que devuelve el calendario de partidos y nos la muestra en una vista.
+    /**
+     * partidos
+     * Función que devuelve el calendario de partidos y nos la muestra en una vista.  
+     * @param  $liga
+     */
     public function partidos($liga = null)
     {
         //Si no se pasa ningún parámetro es que el nombre de liga lo tenemos en la sesión (cuentas jugador y entrenador)
@@ -21,8 +25,8 @@ class Partidos_c extends CI_Controller
         if (isset($_SESSION['equipo'])) {
             $datos['numeroNotif'] = self::getnumeroNotificaciones();
         }
-        $datos["partidos"] = self::mostrarPartidos($liga);
-        $datos["nequipos"] = self::numeroEquiposLiga($liga);
+        $datos["partidos"] = $this->Partidos_m->getPartidos($liga)->result();
+        $datos["nequipos"] = $this->Partidos_m->getNumEquipos($liga);
         $datos["equipos"] = $this->Partidos_m->getEquipos($liga);
         $this->load->view("modulos/head", array("css" => array("liga", "partidos")));
         $this->load->view("modulos/header", $datos);
@@ -30,32 +34,12 @@ class Partidos_c extends CI_Controller
         $this->load->view("modulos/footer");
     }
 
-    //Función que devuelve el calendario de partidos de una liga
-    public function mostrarPartidos($liga)
-    {
-        $partidos = $this->Partidos_m->getPartidos($liga);
-        return $partidos->result();
-    }
 
-    public function numeroEquiposLiga($liga)
-    {
-        $nequipos = $this->Partidos_m->getNumEquipos($liga);
-        return $nequipos;
-    }
-
-    //MÉTODOS PARTIDO INDIVIDUAL SELECCIONADO
-    public function getJugadoresPartidos($id)
-    {
-        $partidos = $this->Partidos_m->getJugadoresPartidos($id);
-        return $partidos;
-    }
-
-    public function getPartido($id)
-    {
-        $partido = $this->Partidos_m->getPartido($id);
-        return $partido;
-    }
-
+    /**
+     * insertarResultadoEquipos
+     * Función que manda al modelo el resultado de LOS EQUIPOS (no jugadores).
+     * @param  $liga
+     */
     public function insertarResultadoEquipos($liga)
     {
         //Si el usuario es un administrador se comunica con el modelo
@@ -73,6 +57,11 @@ class Partidos_c extends CI_Controller
         }
     }
 
+    /**
+     * generarLiga
+     * Función que manda al modelo los enfrentamientos que se van a generar.
+     * @param  $liga
+     */
     function generarLiga($liga)
     {
         if ($this->session->userdata['tipo_cuenta'] == 'Administrador') {
@@ -101,18 +90,30 @@ class Partidos_c extends CI_Controller
         }
     }
 
+    /**
+     * resultadoPartido
+     * Función que te devuelve la vista de un partido en concreto.
+     * @param  $liga
+     * @param  $id
+     */
     public function resultadoPartido($liga, $id)
     {
         $datos['liga'] = $liga;
         $datos['id'] = $id;
-        $datos['equipos'] = self::getPartido($id);
-        $datos['jugadores'] = self::getJugadoresPartidos($id);
+        $datos['equipos'] = $this->Partidos_m->getPartido($id);
+        $datos['jugadores'] = $this->Partidos_m->getJugadoresPartidos($id);
         $this->load->view("modulos/head", array("css" => array("liga", "partido")));
         $this->load->view("modulos/header", $datos);
         $this->load->view("partido_v");
         $this->load->view("modulos/footer");
     }
 
+    /**
+     * enviarResultado
+     * Función que inserta las estadísticas de los JUGADORES que han disputado el encuentro.
+     * @param  $id
+     * @param  $liga
+     */
     public function enviarResultado($id, $liga)
     {
         if ($this->session->userdata['tipo_cuenta'] == 'Administrador') {
@@ -130,21 +131,38 @@ class Partidos_c extends CI_Controller
         }
     }
 
+    /**
+     * cambiarFecha
+     * Función que manda al modelo el cambio de fecha de un partido.
+     */
     public function cambiarFecha()
     {
         $this->Partidos_m->cambiarFecha($_POST['idPartido'], $_POST['fecha']);
     }
 
+    /**
+     * cambiarHora
+     * Función que manda al modelo el cambio de hora de un partido.
+     */
     public function cambiarHora()
     {
         $this->Partidos_m->cambiarHora($_POST['idPartido'], $_POST['hora']);
     }
 
+    /**
+     * resetPartido
+     * Función que manda al modelo el reseteo de un partido.
+     */
     public function resetPartido()
     {
         $this->Partidos_m->resetPartido($_POST['idPartido']);
     }
 
+    /**
+     * generarPDF
+     * Función que te genera el PDF del partido.
+     * @param  $idpartido
+     */
     public function generarPDF($idpartido)
     {
         if (file_exists('assets/pdfPartidos/' . $idpartido . '.pdf')) {
@@ -169,6 +187,13 @@ class Partidos_c extends CI_Controller
         $mpdf->Output('C:/xampp/htdocs/TuBasket/assets/pdfPartidos/' . $idpartido . '.pdf', 'F');
     }
 
+    /**
+     * EnviarMail
+     * Función que Envia el email a los jugadores
+     * @param  $id
+     * @param  $datos_jugadores
+     * @param  $datos_partido
+     */
     public function EnviarMail($id, $datos_jugadores, $datos_partido)
     {
         // Protocolo de envío
@@ -213,6 +238,10 @@ class Partidos_c extends CI_Controller
         $this->email->send();
     }
 
+    /**
+     * getnumeroNotificaciones
+     * Función que te devuelve el numero de notificaciones del entrenador.
+     */
     public function getnumeroNotificaciones()
     {
         $this->load->model("Notificaciones_m");
@@ -220,6 +249,11 @@ class Partidos_c extends CI_Controller
         return $datos;
     }
 
+    /**
+     * getNJugadoresPartido
+     * Función que te devuelve el numero de jugadores que tiene un partido (si no hay el mínimo no te deja entrar.)
+     * @param  $id
+     */
     public function getNJugadoresPartido($id)
     {
 

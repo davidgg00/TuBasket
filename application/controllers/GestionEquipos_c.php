@@ -15,6 +15,11 @@ class GestionEquipos_c extends CI_Controller
         }
     }
 
+    /**
+     * index
+     * Funcion que nos devuelve la vista de la gestión de equipos
+     * @param  $liga
+     */
     public function index($liga)
     {
         $datos["equipos"] = $this->GestionEquipos_m->getEquipos($liga)->result();
@@ -26,11 +31,19 @@ class GestionEquipos_c extends CI_Controller
         $this->load->view("modulos/footer");
     }
 
+    /**
+     * modificarEquipo
+     * Función que actualiza los datos de un equipo que haya mandado la vista.
+     */
     public function modificarEquipo()
     {
         $this->GestionEquipos_m->updateEquipo($_POST['equipo'], $_POST['campo'], $_POST['contenido']);
     }
 
+    /**
+     * eliminarEquipo
+     * Función que borra los datos de un equipo que haya mandado la vista.
+     */
     public function eliminarEquipo()
     {
         $this->GestionEquipos_m->eliminarEquipo($_POST['id']);
@@ -38,18 +51,32 @@ class GestionEquipos_c extends CI_Controller
         unlink($_POST['rutaImagen']);
     }
 
+    /**
+     * obtenerNumEquipos
+     * Función que obtiene el NÚMERO de equipos que hay en una liga
+     * @param  $liga
+     */
     public function obtenerNumEquipos($liga)
     {
         $equipos = $this->GestionEquipos_m->getEquipos($liga);
         echo $equipos->num_rows();
     }
 
+    /**
+     * obtenerEquipos
+     * Función que obtiene los equipos de una liga
+     * @param  $liga
+     */
     public function obtenerEquipos($liga)
     {
         $equipos = $this->GestionEquipos_m->getEquipos($liga);
         echo json_encode($equipos->result());
     }
 
+    /**
+     * enviarEquipo
+     * Función envia al módelo un equipo que se va a añadir en la base de datos
+     */
     public function enviarEquipo()
     {
         if (!empty($_FILES['escudo']['name'])) {
@@ -62,6 +89,10 @@ class GestionEquipos_c extends CI_Controller
         echo json_encode($this->GestionEquipos_m->getUltimoEquipoInsertado());
     }
 
+    /**
+     * cambiarImgEquipo
+     * Función que cambia la imagen de un equipo.
+     */
     public function cambiarImgEquipo()
     {
         if ($_FILES['escudo_nuevo']['name']) {
@@ -69,7 +100,6 @@ class GestionEquipos_c extends CI_Controller
             unlink($_POST['idImagen']);
             $img = $_FILES['escudo_nuevo']['name'];
             $tmp = $_FILES['escudo_nuevo']['tmp_name'];
-            $nombre_imagen = $img;
             $extension = pathinfo($img, PATHINFO_EXTENSION);
             $path = "assets/uploads/escudos/" . "escudoequipo" . $_POST['idEquipo'] . "." . $extension;
             move_uploaded_file($tmp, $path);

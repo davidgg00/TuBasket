@@ -10,12 +10,21 @@ class Login_c extends CI_Controller
         $this->load->model("Login_m");
     }
 
+    /**
+     * index
+     * Función que te redirige a la vista del login.
+     */
     public function index()
     {
         $this->load->view("modulos/head", array("css" => array("plantilla")));
         $this->load->view("login_v");
     }
 
+    /**
+     * iniciarsesion
+     * Función que se comunica con el modelo para comprobar si el usuario y contraseña es correcto.
+     * @return void
+     */
     public function iniciarsesion()
     {
         //Si devuelve algo comprobar_usuario_clave es que el login es correcto
@@ -79,10 +88,5 @@ class Login_c extends CI_Controller
             $this->session->set_flashdata('error', 'El username o la contraseña no válidos.');
             redirect(base_url());
         }
-    }
-    public function cerrarsesion()
-    {
-        session_destroy();
-        redirect(base_url());
     }
 }

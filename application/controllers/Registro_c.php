@@ -10,12 +10,20 @@ class Registro_c extends CI_Controller
         $this->load->model("Registro_m");
     }
 
+    /**
+     * index
+     * Función que te redirige a la vista del registro.
+     */
     public function index()
     {
         $this->load->view("modulos/head", array("css" => array("plantilla")));
         $this->load->view("registro_v");
     }
 
+    /**
+     * comprobar_username
+     * Función que consulta al modelo si el username está libre.
+     */
     public function comprobar_username()
     {
         $resultado = $this->Registro_m->select_username($_GET['username']);
@@ -26,6 +34,10 @@ class Registro_c extends CI_Controller
         }
     }
 
+    /**
+     * comprobar_email
+     * Función que consulta al modelo si el email está libre.     
+     */
     public function comprobar_email()
     {
         $resultado = $this->Registro_m->select_email($_GET['email']);
@@ -36,6 +48,10 @@ class Registro_c extends CI_Controller
         }
     }
 
+    /**
+     * comprobar_liga
+     * Función que consulta al modelo si el la liga y la contraseña son correctas.
+     */
     public function comprobar_liga()
     {
         $resultado = $this->Registro_m->comprueba_liga($_GET['liga'], hash("sha512", $_GET['clave']));
@@ -46,6 +62,10 @@ class Registro_c extends CI_Controller
         }
     }
 
+    /**
+     * registrar_user
+     * Función que manda al modelo los datos del registro del usuario.
+     */
     public function registrar_user()
     {
         //Si el tipo de cuenta es administrador

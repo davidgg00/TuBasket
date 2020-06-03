@@ -18,7 +18,7 @@
                     <p class="w-100 mt-1 font-weight-bold">Gestionar Liga</p>
                 </div>
                 <div class="opcion col-3 text-center p-2 d-flex justify-content-center">
-                    <a href="admin_c/cerrarsesion" class="">
+                    <a href="Perfiles_c/cerrarsesion" class="">
                         <img src="<?php echo base_url('assets/img/cerrarsesion.png') ?>" alt="Balon" class="img-fluid align-self-center" id="balon">
                         <p class="w-100 mt-1 font-weight-bold">Cerrar Sesión</p>
                     </a>
