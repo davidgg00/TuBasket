@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-05-2020 a las 14:19:56
+-- Tiempo de generación: 04-06-2020 a las 20:07:05
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.4.5
 
@@ -31,9 +31,9 @@ USE `tubasket`;
 
 CREATE TABLE `equipo` (
   `id` int(11) NOT NULL,
-  `equipo` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
-  `pabellon` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
-  `ciudad` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
+  `equipo` varchar(25) COLLATE utf8_spanish_ci NOT NULL,
+  `pabellon` varchar(25) COLLATE utf8_spanish_ci NOT NULL,
+  `ciudad` varchar(25) COLLATE utf8_spanish_ci NOT NULL,
   `escudo_ruta` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
   `liga` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
   `partidos_ganados` int(3) NOT NULL,
@@ -48,14 +48,14 @@ CREATE TABLE `equipo` (
 --
 
 INSERT INTO `equipo` (`id`, `equipo`, `pabellon`, `ciudad`, `escudo_ruta`, `liga`, `partidos_ganados`, `partidos_perdidos`, `puntos_favor`, `puntos_contra`, `puntos_clasificacion`) VALUES
-(12, 'Real Madrid', '         Wizink Center', '      Madridd', 'assets/uploads/escudos/escudoequipo12.png', 'miliga', 1, 0, 80, 53, 2),
+(12, 'Real Madrid', '          Wizink Center', '       Madrid', 'assets/uploads/escudos/escudoequipo12.png', 'miliga', 0, 1, 27, 59, 1),
 (13, 'Barcelona', 'Barcelona Pabellon', 'Barcelona', 'assets/uploads/escudos/636Barcelona850barcelona.png', 'miliga', 1, 0, 90, 54, 2),
-(14, 'Almería', 'Pabellon Almería', 'Almería', 'assets/uploads/escudos/356Almería451almeria.png', 'miliga', 0, 0, 0, 0, 0),
-(15, 'Betis', 'Pabellon Betis', 'Betis', 'assets/uploads/escudos/838Betis324betis.png', 'miliga', 0, 0, 0, 0, 0),
-(16, 'Manresa', 'Pabellon Manresa', 'Manresa', 'assets/uploads/escudos/374Manresa266manresa.png', 'miliga', 0, 1, 54, 90, 1),
-(17, 'Bilbao Basket', 'Pabellon Bilbao', 'Bilbao', 'assets/uploads/escudos/751Bilbao Basket179bilbao.png', 'miliga', 0, 1, 53, 80, 1),
-(18, 'Valencia', 'Pabellon Valencia', 'Valencia', 'assets/uploads/escudos/895Valencia174valencia.png', 'miliga', 0, 0, 0, 0, 0),
-(19, 'Sevilla', 'Pabellon Sevilla', 'Sevilla', 'assets/uploads/escudos/979sevilla.png', 'miliga', 0, 0, 0, 0, 0);
+(14, 'Almería', 'Pabellon Almería', 'Almería', 'assets/uploads/escudos/356Almería451almeria.png', 'miliga', 2, 0, 161, 30, 4),
+(15, 'Betis', 'Pabellon Betis', 'Betis', 'assets/uploads/escudos/838Betis324betis.png', 'miliga', 0, 1, 110, 55, 1),
+(16, 'Manresa', 'Pabellon Manresa', 'Manresa', 'assets/uploads/escudos/374Manresa266manresa.png', 'miliga', 0, 2, 80, 116, 2),
+(17, 'Bilbao Basket', 'Pabellon Bilbao', 'Bilbao', 'assets/uploads/escudos/751Bilbao Basket179bilbao.png', 'miliga', 1, 0, 77, 27, 2),
+(18, 'Valencia', 'Pabellon Valencia', 'Valencia', 'assets/uploads/escudos/895Valencia174valencia.png', 'miliga', 1, 0, 80, 40, 2),
+(19, 'Sevilla', 'Pabellon Sevilla', 'Sevilla', 'assets/uploads/escudos/979sevilla.png', 'miliga', 0, 1, 80, 70, 1);
 
 -- --------------------------------------------------------
 
@@ -85,7 +85,14 @@ INSERT INTO `fichajes` (`id`, `EntrenadorSolicita`, `username_jugador1`, `Entren
 (19, 'entrenadorRealmadrid', 'jugadorBarcelona4', 'entrenadorBarcelona', 'jugadorRealMadrid', 'DENEGADO'),
 (20, 'entrenadorRealmadrid', 'jugadorBarcelona4', 'entrenadorBarcelona', 'jugadorRealMadrid', 'DENEGADO'),
 (21, 'entrenadorRealmadrid', 'jugadorBarcelona4', 'entrenadorBarcelona', 'jugadorRealMadrid', 'DENEGADO'),
-(22, 'entrenadorRealmadrid', 'jugadorBarcelona4', 'entrenadorBarcelona', 'jugadorRealMadrid', 'DENEGADO');
+(22, 'entrenadorRealmadrid', 'jugadorBarcelona4', 'entrenadorBarcelona', 'jugadorRealMadrid', 'DENEGADO'),
+(23, 'entrenadorRealmadrid', 'jugadorBarcelona3', 'entrenadorBarcelona', 'jugadorRealMadrid', 'DENEGADO'),
+(24, 'entrenadorRealmadrid', 'jugadorBarcelona2', 'entrenadorBarcelona', 'jugadorRealMadrid', 'DENEGADO'),
+(26, 'entrenadorRealmadrid', 'jugadorBarcelona', 'entrenadorBarcelona', 'jugadorRealMadrid', 'DENEGADO'),
+(27, 'entrenadorRealmadrid', 'jugadorBarcelona3', 'entrenadorBarcelona', 'jugadorRealMadrid', 'DENEGADO'),
+(28, 'entrenadorRealmadrid', 'jugadorBarcelona3', 'entrenadorBarcelona', 'jugadorRealMadrid', 'DENEGADO'),
+(29, 'entrenadorRealmadrid', 'jugadorBarcelona', 'entrenadorBarcelona', 'jugadorRealMadrid2', 'DENEGADO'),
+(30, 'entrenadorAlmeria', 'jugadorRealMadrid', 'entrenadorRealmadrid', 'jugadormeet', 'ACEPTADO');
 
 --
 -- Disparadores `fichajes`
@@ -150,16 +157,35 @@ CREATE TABLE `jugador_stats` (
 --
 
 INSERT INTO `jugador_stats` (`id_partido`, `jugador`, `triples_metidos`, `tiros_2_metidos`, `tiros_libres_metidos`, `tapones`, `robos`) VALUES
-(116, 'jugadorBilbao', 2, 11, 1, 1, 1),
+(114, 'jugadorSevilla', 1, 1, 1, 1, 1),
+(114, 'jugadorSevilla2', 1, 1, 11, 1, 1),
+(114, 'jugadorSevilla3', 1, 1, 1, 1, 1),
+(114, 'jugadorSevilla4', 1, 1, 1, 1, 1),
+(114, 'jugadorSevilla5', 1, 1, 1, 1, 1),
+(114, 'jugadorValencia', 1, 11, 1, 1, 1),
+(114, 'jugadorValencia2', 1, 1, 1, 11, 1),
+(114, 'jugadorValencia3', 1, 1, 1, 1, 1),
+(114, 'jugadorValencia4', 1, 11, 1, 1, 1),
+(114, 'jugadorValencia5', 1, 1, 1, 1, 11),
+(115, 'jugadorAlmeria', 2, 2, 1, 1, 1),
+(115, 'jugadorAlmeria2', 1, 1, 11, 1, 1),
+(115, 'jugadorAlmeria3', 1, 1, 1, 1, 1),
+(115, 'jugadorAlmeria4', 1, 1, 11, 1, 1),
+(115, 'jugadorAlmeria5', 1, 1, 1, 1, 1),
+(115, 'jugadorBetis', 1, 1, 1, 1, 1),
+(115, 'jugadorBetis2', 1, 1, 1, 1, 1),
+(115, 'jugadorBetis3', 1, 1, 1, 1, 1),
+(115, 'jugadorBetis4', 1, 1, 1, 1, 1),
+(115, 'jugadorBetis5', 1, 1, 1, 1, 1),
+(116, 'jugadorBilbao', 4, 11, 1, 1, 1),
 (116, 'jugadorBilbao2', 1, 1, 1, 1, 1),
 (116, 'jugadorBilbao3', 1, 1, 1, 1, 1),
 (116, 'jugadorBilbao4', 1, 1, 1, 1, 1),
 (116, 'jugadorBilbao5', 1, 1, 1, 1, 1),
-(116, 'jugadorRealMadrid', 1, 1, 1, 1, 1),
+(116, 'jugadorRealMadrid', 2, 1, 1, 1, 1),
 (116, 'jugadorRealMadrid2', 1, 1, 1, 1, 1),
 (116, 'jugadorRealMadrid3', 1, 1, 1, 11, 1),
 (116, 'jugadorRealMadrid4', 1, 1, 1, 1, 1),
-(116, 'jugadorRealMadrid5', 11, 11, 1, 1, 1),
 (117, 'jugadorBarcelona', 3, 1, 1, 1, 1),
 (117, 'jugadorBarcelona2', 4, 1, 1, 1, 1),
 (117, 'jugadorBarcelona3', 5, 1, 1, 1, 1),
@@ -169,7 +195,18 @@ INSERT INTO `jugador_stats` (`id_partido`, `jugador`, `triples_metidos`, `tiros_
 (117, 'jugadorManresa2', 3, 1, 1, 1, 1),
 (117, 'jugadorManresa3', 3, 1, 1, 1, 1),
 (117, 'jugadorManresa4', 3, 1, 1, 1, 1),
-(117, 'jugadorManresa5', 3, 1, 1, 1, 1);
+(117, 'jugadorManresa5', 3, 1, 1, 1, 1),
+(120, 'jugadorAlmeria', 0, 0, 0, 0, 0),
+(120, 'jugadorAlmeria2', 0, 0, 0, 0, 0),
+(120, 'jugadorAlmeria3', 0, 0, 0, 0, 0),
+(120, 'jugadorAlmeria4', 0, 0, 0, 0, 0),
+(120, 'jugadorAlmeria5', 0, 0, 0, 0, 0),
+(120, 'jugadorManresa', 0, 0, 0, 0, 0),
+(120, 'jugadorManresa2', 0, 0, 0, 0, 0),
+(120, 'jugadorManresa3', 0, 0, 0, 0, 0),
+(120, 'jugadorManresa4', 0, 0, 0, 0, 0),
+(120, 'jugadorManresa5', 0, 0, 0, 0, 0),
+(120, 'jugadormeet', 5, 4, 3, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -181,7 +218,7 @@ CREATE TABLE `liga` (
   `nombre` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
   `password` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
   `administrador` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
-  `ganador` varchar(255) COLLATE utf8_spanish_ci NOT NULL
+  `ganador` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -189,7 +226,7 @@ CREATE TABLE `liga` (
 --
 
 INSERT INTO `liga` (`nombre`, `password`, `administrador`, `ganador`) VALUES
-('miliga', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'admin', '');
+('miliga', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'admin', NULL);
 
 -- --------------------------------------------------------
 
@@ -227,7 +264,21 @@ INSERT INTO `notificaciones` (`idnotificacion`, `username`, `idfichaje`, `Inform
 (15, 'entrenadorRealmadrid', 21, 'El fichaje está pendiente', 1),
 (16, 'entrenadorBarcelona', 21, 'Tienes una nueva propuesta de fichaje.', 1),
 (17, 'entrenadorRealmadrid', 22, 'El fichaje está pendiente', 1),
-(18, 'entrenadorBarcelona', 22, 'Tienes una nueva propuesta de fichaje.', 1);
+(18, 'entrenadorBarcelona', 22, 'Tienes una nueva propuesta de fichaje.', 1),
+(19, 'entrenadorRealmadrid', 23, 'El fichaje está pendiente', 1),
+(20, 'entrenadorBarcelona', 23, 'Tienes una nueva propuesta de fichaje.', 1),
+(21, 'entrenadorRealmadrid', 24, 'El fichaje está pendiente', 1),
+(22, 'entrenadorBarcelona', 24, 'Tienes una nueva propuesta de fichaje.', 1),
+(25, 'entrenadorRealmadrid', 26, 'El fichaje está pendiente', 1),
+(26, 'entrenadorBarcelona', 26, 'Has rechazado el fichaje', 1),
+(27, 'entrenadorRealmadrid', 27, 'El fichaje ha sido denegado.', 1),
+(28, 'entrenadorBarcelona', 27, 'Has rechazado el fichaje', 1),
+(29, 'entrenadorRealmadrid', 28, 'El fichaje ha sido denegado.', 1),
+(30, 'entrenadorBarcelona', 28, 'Tienes una nueva propuesta de fichaje.', 1),
+(31, 'entrenadorRealmadrid', 29, 'El fichaje está pendiente', 1),
+(32, 'entrenadorBarcelona', 29, 'Tienes una nueva propuesta de fichaje.', 1),
+(33, 'entrenadorAlmeria', 30, 'El fichaje está pendiente', 1),
+(34, 'entrenadorRealmadrid', 30, 'Tienes una nueva propuesta de fichaje.', 1);
 
 -- --------------------------------------------------------
 
@@ -252,13 +303,13 @@ CREATE TABLE `partido` (
 --
 
 INSERT INTO `partido` (`id`, `local`, `visitante`, `resultado_local`, `resultado_visitante`, `fecha`, `Hora`, `jornada`, `liga`) VALUES
-(114, 19, 18, '', '', '2020-05-07', '13:26:00', 1, 'miliga'),
-(115, 15, 14, '', '', '0000-00-00', NULL, 1, 'miliga'),
-(116, 17, 12, '53', '80', '0000-00-00', NULL, 1, 'miliga'),
+(114, 19, 18, '40', '70', '2020-05-07', '13:26:00', 1, 'miliga'),
+(115, 15, 14, '30', '55', '2020-06-03', '15:00:00', 1, 'miliga'),
+(116, 17, 12, '59', '27', '0000-00-00', NULL, 1, 'miliga'),
 (117, 16, 13, '54', '90', '0000-00-00', NULL, 1, 'miliga'),
 (118, 18, 15, '', '', '0000-00-00', NULL, 2, 'miliga'),
 (119, 19, 17, '', '', '2020-05-21', NULL, 2, 'miliga'),
-(120, 14, 16, '', '', '0000-00-00', NULL, 2, 'miliga'),
+(120, 14, 16, '26', '0', '0000-00-00', NULL, 2, 'miliga'),
 (121, 12, 13, '', '', '0000-00-00', NULL, 2, 'miliga'),
 (122, 17, 18, '', '', '0000-00-00', NULL, 3, 'miliga'),
 (123, 16, 15, '', '', '0000-00-00', NULL, 3, 'miliga'),
@@ -409,7 +460,8 @@ CREATE TABLE `reseteo_clave` (
 --
 
 INSERT INTO `reseteo_clave` (`email`, `token`, `exp`) VALUES
-('admin@admin.com', '8a6edd0e968bbca604371acd07e18c3b165af98885f7989009cfdd7286977a583cd10bd8a0472310671ba3759dbe2c76b404a0a89ac48a26bd1a0bf1007cfee78032321e80b4a68095da7835b9e3c3cc703d02d55fdf4f3433f9bc5a5edd5004163ed759', '2020-05-10');
+('admin@admin.com', '8a6edd0e968bbca604371acd07e18c3b165af98885f7989009cfdd7286977a583cd10bd8a0472310671ba3759dbe2c76b404a0a89ac48a26bd1a0bf1007cfee78032321e80b4a68095da7835b9e3c3cc703d02d55fdf4f3433f9bc5a5edd5004163ed759', '2020-05-10'),
+('davidguisado2000@gmail.com', '3666216b86c21979a461a17c9cca55cd92e7e4bd61359b20d926fdf909f4e40d9f0da714efc4696d917ffec1ba7fcede922cdccc4bbba0878e2593d794bafa4ee557a4ab76c9e6dbf7b56c1d8fb378da0ec914ac411e40a403682db243bc3863ed507184', '2020-06-05');
 
 -- --------------------------------------------------------
 
@@ -436,8 +488,10 @@ CREATE TABLE `usuarios` (
 
 INSERT INTO `usuarios` (`username`, `password`, `tipo`, `email`, `apenom`, `fecha_nac`, `liga`, `equipo`, `validado`, `imagen`) VALUES
 ('admin', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Administrador', 'admin@admin.com', 'admin admin', '2000-12-12', NULL, NULL, 1, 'assets/uploads/perfiles/admin.PNG'),
+('entrenadorAlmeria', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Entrenador', 'entrenadorAlmeria@entrenadorAlmeria.com', 'entrenador Almeria', '2002-06-02', 'miliga', 14, 1, 'assets/uploads/perfiles/pordefecto.png'),
 ('entrenadorBarcelona', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Entrenador', 'entrenadorBarcelona@entrenadorBarcelona.com', 'entrenador Barcelona', '2002-05-08', 'miliga', 13, 1, 'assets/uploads/perfiles/pordefecto.png'),
-('entrenadorRealmadrid', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Entrenador', 'entrenadorRealmadrid@entrenadorRealmadrid.com', 'entrenador Realmadrid', '2002-05-10', 'miliga', 12, 1, 'assets/uploads/perfiles/pordefecto.png'),
+('entrenadorRealmadrid', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Entrenador', 'entrenadorRealMadrid@entrenadorRealMadrid.com', 'entrenador Realmadrid', '2002-05-10', 'miliga', 12, 1, 'assets/uploads/perfiles/pordefecto.png'),
+('entrenadorRealmadrid2', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Entrenador', 'entrenadorRealmadrid2@entrenadorRealmadrid2.com', 'entrenador Realmadrid2', '2002-05-04', 'miliga', NULL, 0, 'assets/uploads/perfiles/pordefecto.png'),
 ('jugadorAlmeria', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorAlmeria@jugadorAlmeria.com', 'jugador Almeria', '2002-05-09', 'miliga', 14, 1, 'assets/uploads/perfiles/pordefecto.png'),
 ('jugadorAlmeria2', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorAlmeria2@jugadorAlmeria.com', 'jugador Almeria2', '2002-05-09', 'miliga', 14, 1, 'assets/uploads/perfiles/pordefecto.png'),
 ('jugadorAlmeria3', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorAlmeria3@jugadorAlmeria.com', 'jugador Almeria3', '2002-05-09', 'miliga', 14, 1, 'assets/uploads/perfiles/pordefecto.png'),
@@ -453,7 +507,7 @@ INSERT INTO `usuarios` (`username`, `password`, `tipo`, `email`, `apenom`, `fech
 ('jugadorBetis3', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorBetis3@jugadorBetis.com', 'jugador Betis3', '2002-05-09', 'miliga', 15, 1, 'assets/uploads/perfiles/pordefecto.png'),
 ('jugadorBetis4', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorBetis4@jugadorBetis.com', 'jugador Betis4', '2002-05-09', 'miliga', 15, 1, 'assets/uploads/perfiles/pordefecto.png'),
 ('jugadorBetis5', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorBetis5@jugadorBetis.com', 'jugador Betis5', '2002-05-09', 'miliga', 15, 1, 'assets/uploads/perfiles/pordefecto.png'),
-('jugadorBilbao', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'davidguisado2000@gmail.com', 'Jugador Bilbao', '2002-05-02', 'miliga', 17, 1, 'assets/uploads/perfiles/pordefecto.png'),
+('jugadorBilbao', 'd9e6762dd1c8eaf6d61b3c6192fc408d4d6d5f1176d0c29169bc24e71c3f274ad27fcd5811b313d681f7e55ec02d73d499c95455b6b5bb503acf574fba8ffe85', 'Jugador', 'davidguisado2000@gmail.com', 'Jugador Bilbao', '2002-05-02', 'miliga', 17, 1, 'assets/uploads/perfiles/pordefecto.png'),
 ('jugadorBilbao2', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorBilbao2@jugadorBilbao.com', 'Jugador Bilbao2', '2002-05-02', 'miliga', 17, 1, 'assets/uploads/perfiles/pordefecto.png'),
 ('jugadorBilbao3', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorBilbao3@jugadorBilbao.com', 'Jugador Bilbao3', '2002-05-02', 'miliga', 17, 1, 'assets/uploads/perfiles/pordefecto.png'),
 ('jugadorBilbao4', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorBilbao4@jugadorBilbao.com', 'Jugador Bilbao4', '2002-05-02', 'miliga', 17, 1, 'assets/uploads/perfiles/pordefecto.png'),
@@ -463,11 +517,12 @@ INSERT INTO `usuarios` (`username`, `password`, `tipo`, `email`, `apenom`, `fech
 ('jugadorManresa3', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorManresa3@jugadorManresa.com', 'jugador Manresa3', '2002-05-09', 'miliga', 16, 1, 'assets/uploads/perfiles/pordefecto.png'),
 ('jugadorManresa4', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorManresa4@jugadorManresa.com', 'jugador Manresa4', '2002-05-09', 'miliga', 16, 1, 'assets/uploads/perfiles/pordefecto.png'),
 ('jugadorManresa5', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorManresa5@jugadorManresa.com', 'jugador Manresa5', '2002-05-09', 'miliga', 16, 1, 'assets/uploads/perfiles/pordefecto.png'),
-('jugadorRealMadrid', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorRealMadrid@jugadorRealMadrid.com', 'jugador RealMadrid', '2002-05-02', 'miliga', 12, 1, 'assets/uploads/perfiles/pordefecto.png'),
+('jugadormeet', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadormeet@jugadormeet.com', 'jugador meet', '2002-05-28', 'miliga', 12, 1, 'assets/uploads/perfiles/jugadormeet.PNG'),
+('jugadorRealMadrid', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorRealMadrid@jugadorRealMadrid.com', 'jugador RealMadrid', '2002-05-02', 'miliga', 14, 1, 'assets/uploads/perfiles/pordefecto.png'),
 ('jugadorRealMadrid2', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorRealMadri2d@jugadorRealMadrid.com', 'jugador RealMadrid2', '2002-05-02', 'miliga', 12, 1, 'assets/uploads/perfiles/pordefecto.png'),
 ('jugadorRealMadrid3', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorRealMadri3d@jugadorRealMadrid.com', 'jugador RealMadrid3', '2002-05-02', 'miliga', 12, 1, 'assets/uploads/perfiles/pordefecto.png'),
 ('jugadorRealMadrid4', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorRealMadri4d@jugadorRealMadrid.com', 'jugador RealMadrid4', '2002-05-02', 'miliga', 12, 1, 'assets/uploads/perfiles/pordefecto.png'),
-('jugadorRealMadrid5', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorRealMadri5d@jugadorRealMadrid.com', 'jugador RealMadrid5', '2002-05-02', 'miliga', 12, 1, 'assets/uploads/perfiles/pordefecto.png'),
+('jugadorRealMadrid5', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorRealMadrid5@jugadorRealMadrid5.com', 'jugadorrealmadrid 5', '1999-01-07', 'miliga', 12, 1, 'assets/uploads/perfiles/pordefecto.png'),
 ('jugadorSevilla', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorSevilla@jugadorSevilla.com', 'jugador Sevilla', '2002-05-09', 'miliga', 19, 1, 'assets/uploads/perfiles/pordefecto.png'),
 ('jugadorSevilla2', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorSevilla2@jugadorSevilla.com', 'jugador Sevilla2', '2002-05-09', 'miliga', 19, 1, 'assets/uploads/perfiles/pordefecto.png'),
 ('jugadorSevilla3', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorSevilla3@jugadorSevilla.com', 'jugador Sevilla3', '2002-05-09', 'miliga', 19, 1, 'assets/uploads/perfiles/pordefecto.png'),
@@ -477,7 +532,8 @@ INSERT INTO `usuarios` (`username`, `password`, `tipo`, `email`, `apenom`, `fech
 ('jugadorValencia2', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorValencia2@jugadorValencia.com', 'jugador Valencia2', '2002-05-01', 'miliga', 18, 1, 'assets/uploads/perfiles/pordefecto.png'),
 ('jugadorValencia3', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorValencia3@jugadorValencia.com', 'jugador Valencia3', '2002-05-01', 'miliga', 18, 1, 'assets/uploads/perfiles/pordefecto.png'),
 ('jugadorValencia4', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorValencia4@jugadorValencia.com', 'jugador Valencia4', '2002-05-01', 'miliga', 18, 1, 'assets/uploads/perfiles/pordefecto.png'),
-('jugadorValencia5', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorValencia5@jugadorValencia.com', 'jugador Valencia5', '2002-05-01', 'miliga', 18, 1, 'assets/uploads/perfiles/pordefecto.png');
+('jugadorValencia5', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'jugadorValencia5@jugadorValencia.com', 'jugador Valencia5', '2002-05-01', 'miliga', 18, 1, 'assets/uploads/perfiles/pordefecto.png'),
+('pruebavideo', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'Jugador', 'pruebavideo@pruebavideo.com', 'prueba video', '2002-06-01', 'miliga', 17, 1, 'assets/uploads/perfiles/pordefecto.png');
 
 -- --------------------------------------------------------
 
@@ -486,7 +542,8 @@ INSERT INTO `usuarios` (`username`, `password`, `tipo`, `email`, `apenom`, `fech
 -- (Véase abajo para la vista actual)
 --
 CREATE TABLE `view_clasificacion` (
-`equipo` varchar(255)
+`idequipo` int(11)
+,`equipo` varchar(25)
 ,`partidos_ganados` int(3)
 ,`partidos_perdidos` int(3)
 ,`puntos_favor` int(10)
@@ -506,7 +563,7 @@ CREATE TABLE `view_jugadores_partidos` (
 ,`apenom` varchar(255)
 ,`username` varchar(255)
 ,`idequipo` int(11)
-,`equipo` varchar(255)
+,`equipo` varchar(25)
 ,`escudo_ruta_local` varchar(255)
 );
 
@@ -519,10 +576,10 @@ CREATE TABLE `view_jugadores_partidos` (
 CREATE TABLE `view_partidos_liga` (
 `id` int(255)
 ,`id_local` int(11)
-,`equipo_local` varchar(255)
+,`equipo_local` varchar(25)
 ,`escudo_local` varchar(255)
 ,`id_visitante` int(11)
-,`equipo_visitante` varchar(255)
+,`equipo_visitante` varchar(25)
 ,`escudo_visitante` varchar(255)
 ,`resultado_local` varchar(255)
 ,`resultado_visitante` varchar(255)
@@ -549,7 +606,7 @@ CREATE TABLE `view_usuarios_liga` (
 ,`equipo` int(11)
 ,`foto_perfil` varchar(100)
 ,`validado` tinyint(1)
-,`nombre_equipo` varchar(255)
+,`nombre_equipo` varchar(25)
 );
 
 -- --------------------------------------------------------
@@ -559,7 +616,7 @@ CREATE TABLE `view_usuarios_liga` (
 --
 DROP TABLE IF EXISTS `view_clasificacion`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_clasificacion`  AS  select `e`.`equipo` AS `equipo`,`e`.`partidos_ganados` AS `partidos_ganados`,`e`.`partidos_perdidos` AS `partidos_perdidos`,`e`.`puntos_favor` AS `puntos_favor`,`e`.`puntos_contra` AS `puntos_contra`,`e`.`puntos_clasificacion` AS `puntos_clasificacion`,`l`.`nombre` AS `liga` from (`equipo` `e` join `liga` `l` on(`l`.`nombre` = `e`.`liga`)) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_clasificacion`  AS  select `e`.`id` AS `idequipo`,`e`.`equipo` AS `equipo`,`e`.`partidos_ganados` AS `partidos_ganados`,`e`.`partidos_perdidos` AS `partidos_perdidos`,`e`.`puntos_favor` AS `puntos_favor`,`e`.`puntos_contra` AS `puntos_contra`,`e`.`puntos_clasificacion` AS `puntos_clasificacion`,`l`.`nombre` AS `liga` from (`equipo` `e` join `liga` `l` on(`l`.`nombre` = `e`.`liga`)) ;
 
 -- --------------------------------------------------------
 
@@ -621,7 +678,8 @@ ALTER TABLE `jugador_stats`
 --
 ALTER TABLE `liga`
   ADD PRIMARY KEY (`nombre`),
-  ADD KEY `administrador` (`administrador`);
+  ADD KEY `administrador` (`administrador`),
+  ADD KEY `ganador` (`ganador`);
 
 --
 -- Indices de la tabla `notificaciones`
@@ -662,25 +720,25 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `equipo`
 --
 ALTER TABLE `equipo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=125;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=147;
 
 --
 -- AUTO_INCREMENT de la tabla `fichajes`
 --
 ALTER TABLE `fichajes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT de la tabla `notificaciones`
 --
 ALTER TABLE `notificaciones`
-  MODIFY `idnotificacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `idnotificacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT de la tabla `partido`
 --
 ALTER TABLE `partido`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=316;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=406;
 
 --
 -- Restricciones para tablas volcadas
@@ -712,7 +770,8 @@ ALTER TABLE `jugador_stats`
 -- Filtros para la tabla `liga`
 --
 ALTER TABLE `liga`
-  ADD CONSTRAINT `liga_ibfk_1` FOREIGN KEY (`administrador`) REFERENCES `usuarios` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `liga_ibfk_1` FOREIGN KEY (`administrador`) REFERENCES `usuarios` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `liga_ibfk_2` FOREIGN KEY (`ganador`) REFERENCES `equipo` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `notificaciones`
