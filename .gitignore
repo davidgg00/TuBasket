@@ -2,7 +2,6 @@ system
 user_guide
 application/*
 !application/config
-application/config/config_mail.php
 !application/views
 !application/models
 !application/controllers

@@ -56,7 +56,7 @@ class Usuario_c extends CI_Controller
             $statsIndJugadores = [];
             foreach ($_POST['jugador'] as $jugador) {
                 $statsJugadores[] = self::getEstadisticasJugador($jugador);
-                $statsIndJugadores[] = $this->Jugador_m->getEstadisticasJugadorPartido($_SESSION['username']);
+                $statsIndJugadores[] = $this->Jugador_m->getEstadisticasJugadorPartido($jugador);
                 $datosUsuarios[] = $this->Jugador_m->getDatosUser($jugador);
             }
             $data["estadisticas"] = $statsJugadores;

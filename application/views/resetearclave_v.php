@@ -38,7 +38,7 @@
                         </div>
                     </div>
                     <div class="form-group mx-auto text-center col-10 d-flex flex-wrap justify-content-center">
-                        <button type="submit" id="btn-registro" class="btn btn-lg btn-block w-50 mx-auto">Resetear</button>
+                        <button type="submit" id="btn-registro" class="btn btn-lg btn-block w-50 mx-auto btn-success">Resetear</button>
                     </div>
                     <div class="form-group mx-auto text-center">
                         <p class="text-dark">¿Tienes cuenta?</p>

@@ -38,12 +38,25 @@ function calendario() {
             $("#paginacion").pagination({
                 dataSource: partidos,
                 pageSize: 16,
-                callback: function (partidosPaginacion) {
-                    $("#calendarioWrapper").html("")
+                callback: function (partidosPaginacion, pagination) {
+                    $("#calendarioWrapper").html("");
+                    switch (pagination.pageNumber) {
+                        case 1:
+                            jornada = 1
+                            break;
+
+                        case 2:
+                            jornada = 5
+                            break;
+                        case 3:
+                            jornada = 9
+                            break;
+                        case 4:
+                            jornada = 13
+                            break;
+                    }
                     for (let partido of partidosPaginacion) {
-                        if (partido == partidos_copia[0]) {
-                            jornada = 1;
-                        }
+
                         //Si la cuenta es de tipo jugador la fila de modificar o resetear partido no debe de aparecer.
                         let thaccion = (tipo_cuenta == "Administrador") ? "<th>Acción</th>" : "";
                         let accion = (tipo_cuenta == "Administrador") ? "<td><i class='fas fa-edit' data-id='" + partido.id + "' data-tippy-content='Haga click para escribir resultado'></i><i class='fas fa-sync btn-reset' data-id='" + partido.id + "'></i></td>" : "";
@@ -71,8 +84,26 @@ function calendario() {
             $("#paginacion").pagination({
                 dataSource: partidos,
                 pageSize: 20,
-                callback: function (partidosPaginacion) {
-                    $("#calendarioWrapper").html("")
+                callback: function (partidosPaginacion, pagination) {
+                    $("#calendarioWrapper").html("");
+                    switch (pagination.pageNumber) {
+                        case 1:
+                            jornada = 1
+                            break;
+
+                        case 2:
+                            jornada = 5
+                            break;
+                        case 3:
+                            jornada = 9
+                            break;
+                        case 4:
+                            jornada = 13
+                            break;
+                        case 5:
+                            jornada = 17
+                            break;
+                    }
                     for (let partido of partidosPaginacion) {
                         if (partido == partidos_copia[0]) {
                             jornada = 1;

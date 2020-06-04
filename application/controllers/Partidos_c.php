@@ -54,6 +54,12 @@ class Partidos_c extends CI_Controller
             if ($npartidosJugados->total == $npartidos) {
                 $this->Partidos_m->definirGanador($liga);
             }
+
+            //Enviamos EMAIL y PDF
+            $datos_jugadores = $this->Partidos_m->getEmailJugadores($_POST['id']);
+            $datos_partido = $this->Partidos_m->getPartido($_POST['id']);
+            self::generarPDF($_POST['id']);
+            self::EnviarMail($_POST['id'], $datos_jugadores, $datos_partido);
         }
     }
 
@@ -124,10 +130,6 @@ class Partidos_c extends CI_Controller
                     $this->Partidos_m->insertarEstadisticaPartido($id, $_POST['miform'][$valor - 6], $_POST['miform'][$valor - 5], $_POST['miform'][$valor - 4], $_POST['miform'][$valor - 3], $_POST['miform'][$valor - 2], $_POST['miform'][$valor - 1]);
                 }
             }
-            $datos_jugadores = $this->Partidos_m->getEmailJugadores($id);
-            $datos_partido = $this->Partidos_m->getPartido($id);
-            self::generarPDF($id);
-            self::EnviarMail($id, $datos_jugadores, $datos_partido);
         }
     }
 

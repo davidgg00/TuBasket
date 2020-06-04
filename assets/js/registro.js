@@ -1,9 +1,27 @@
 $(document).ready(function () {
+
+    //El mdboostrap me genera un bug con el input date ya que me lo cambia a texto.
+    $("#fecha_nac").attr('type', 'date');
+    $("#fecha_nac").on("blur", function (evento) {
+        $(this).attr('type', 'date');
+
+        //También comprobaremos si es menor (abajo tenemos puesto un minimo y máximo pero si lo escribe manualmente burla el sistema)
+        if ($(this).val() > hoy.getFullYear() - 18 + "-" + ("0" + (hoy.getMonth() + 1)).slice(-2) + "-" + ("0" + hoy.getDate()).slice(-2)) {
+            $(this).addClass("is-invalid");
+            $("#btn-registro").prop('disabled', true);
+        } else {
+            $(this).removeClass("is-invalid");
+            if (!$("#email").hasClass("is-invalid") && !("#username").hasClass("is-invalid")) {
+                $("#btn-registro").prop('disabled', false);
+            }
+        }
+    })
+
     /*
-    Nada mas cargar el documento pondremos un minimo y un máximo de edad.
-    El mínimo es 18 años así que calculamos desde el día de hoy 18 años
-    El máximo 100 años, así que calculamos desde el dia de hoy 100 años
-     */
+   Nada mas cargar el documento pondremos un minimo y un máximo de edad.
+   El mínimo es 18 años así que calculamos desde el día de hoy 18 años
+   El máximo 100 años, así que calculamos desde el dia de hoy 100 años
+    */
     let hoy = new Date();
     $("#fecha_nac").attr('min', hoy.getFullYear() - 100 + "-" + ("0" + (hoy.getMonth() + 1)).slice(-2) + "-" + ("0" + hoy.getDate()).slice(-2))
     $("#fecha_nac").attr('max', hoy.getFullYear() - 18 + "-" + ("0" + (hoy.getMonth() + 1)).slice(-2) + "-" + ("0" + hoy.getDate()).slice(-2))
@@ -29,7 +47,7 @@ $(document).ready(function () {
                         $("#username").removeClass("is-invalid");
                         $("#error-username").html("&nbsp");
                         //Si aparte de que el username sea válido el email también lo es, habilitamos el submit del envio
-                        if (!$("#email").hasClass("is-invalid")) {
+                        if (!$("#email").hasClass("is-invalid") && !$("#fecha_nac").hasClass("is-invalid")) {
                             $("#btn-registro").prop('disabled', false);
                         }
                     }
@@ -58,7 +76,7 @@ $(document).ready(function () {
                         $("#email").removeClass("is-invalid");
                         $("#error-email").html("&nbsp");
                         //Si aparte de que el email sea válido el username también lo es, habilitamos el submit del envio
-                        if (!$("#username").hasClass("is-invalid")) {
+                        if (!$("#username").hasClass("is-invalid") && !$("#fecha_nac").hasClass("is-invalid")) {
                             $("#btn-registro").prop('disabled', false);
                         }
                     }

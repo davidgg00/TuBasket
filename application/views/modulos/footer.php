@@ -50,7 +50,7 @@
             console.log(this);
             previsualizarImagen(this);
         })
-        $("#email").on("blur", function(evento) {
+        $("#email").on("keyup", function(evento) {
             let email = $(this).val();
             var testEmail = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
             //Si es un correo valido comprobamos que no se repite
