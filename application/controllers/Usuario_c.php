@@ -72,10 +72,9 @@ class Usuario_c extends CI_Controller
                 $data["entrenador"] = $this->Jugador_m->getEntrenadorJugador($username);
                 $data["tusJugadores"] = $this->Entrenador_m->obtenerJugadoresEquipo($_SESSION["equipo"]);
                 $data["estadisticas"] = $this->Jugador_m->getStats($username);
-                $data["stats_ind"] = $this->Jugador_m->getEstadisticasJugadorPartido($_SESSION['username']);
+                $data["stats_ind"] = $this->Jugador_m->getEstadisticasJugadorPartido($username);
                 $data['datos_user'] = $this->Jugador_m->getDatosUser($username);
             } else {
-
                 $data["estadisticas"] = $this->Jugador_m->getStats($_SESSION['username']);
                 $data["stats_ind"] = $this->Jugador_m->getEstadisticasJugadorPartido($_SESSION['username']);
                 $data['datos_user'] = $this->Jugador_m->getDatosUser($_SESSION['username']);

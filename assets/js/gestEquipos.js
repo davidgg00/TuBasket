@@ -156,9 +156,6 @@ function ajaxContentEditable() {
 
     //Una vez que se quite el foco del parrafo
     $("p").on("blur", function (evento) {
-        console.log($(this).html());
-        console.log($(this).parent().class());
-        console.log($(this).parent().parent().children().eq(0).html());
         //Si se ha cambiado el contenido del contenteditable
         if (contenidoAnterior != $(this).html()) {
             //Si se ha cambiado algo se lanza ajax y notificación

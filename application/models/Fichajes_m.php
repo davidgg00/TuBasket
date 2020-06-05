@@ -19,7 +19,6 @@ class Fichajes_m extends CI_Model
     public function OfrecerFichaje($username, $jugadorAFichar, $entrenadorRecibe, $jugadorOfrecido)
     {
         $datos = array(
-            'id' => "",
             'EntrenadorSolicita' => $username,
             'username_jugador1' => $jugadorAFichar,
             'EntrenadorRecibe' => $entrenadorRecibe,

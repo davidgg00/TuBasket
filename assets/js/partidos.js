@@ -8,9 +8,15 @@ $(document).ready(function () {
         window.location.href = base_url + "Partidos_c/generarLiga/" + liga;
     })
     $(".btn-reset").on("click", function (evento) {
-        $(this).parentsUntil("tbody").find(".resultado").html(" - ");
+        $(this).parent().parent().children().eq(1).html(" - ");
         $.post(base_url + "Partidos_c/resetPartido", {
             idPartido: $(this).data('id')
+        });
+        $.notify({
+            title: '<strong class="">¡Partido Reseteado!</strong><br>',
+            message: 'El partido ahora mismo se encontrará como si no se hubiese jugado.'
+        }, {
+            type: 'success'
         });
     })
 
@@ -173,6 +179,13 @@ function calendario() {
             fecha: fecha_val
         }
         );
+
+        $.notify({
+            title: '<strong class="">¡Fecha Guardada!</strong><br>',
+            message: 'Fecha del partido guardada correctamente.'
+        }, {
+            type: 'success'
+        });
     })
 
     //Si cambia la hora se envía un ajax
@@ -183,6 +196,15 @@ function calendario() {
         }
         );
     });
+
+    $(".hora").on("blur", function (evento) {
+        $.notify({
+            title: '<strong class="">¡Hora Guardada!</strong><br>',
+            message: 'Hora del partido guardada correctamente.'
+        }, {
+            type: 'success'
+        });
+    })
 
     //al clickar en un partido te rederige al encuentro
     $("tr").on("click", function (evento) {

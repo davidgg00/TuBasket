@@ -59,9 +59,6 @@ class Admin_m extends CI_Model
         $this->db->where('l.administrador', $username);
         $query = $this->db->get('liga l');
         return $query;
-        /* $this->db->where('administrador', $username);
-        $query = $this->db->get('liga');
-        return $query; */
     }
 
     /**
