@@ -11,7 +11,6 @@
                 }
             });
         }
-        console.log(resultado);
     </script>
     <style>
         .dropdown:hover>.dropdown-menu {

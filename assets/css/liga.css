@@ -41,7 +41,7 @@ aside {
     height: calc(100% - 86.66px - 52px);
 }
 
-#foto-perfil {
+#foto-perfil, #foto-perfil_modal {
     width: 130px;
     height: 150px;
 }

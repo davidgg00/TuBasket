@@ -6,7 +6,7 @@
 <script src="<?php echo base_url('assets/js/sinEquipo.js') ?>"></script>
 
 <body>
-    <div class="container-fluid border">
+    <div class="container-fluid">
         <header class="row d-flex justify-content-around align-items-center">
             <img id="logo" src="<?php echo base_url('assets/img/logo2.png') ?>" class="img-fluid">
         </header>

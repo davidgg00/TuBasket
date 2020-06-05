@@ -174,4 +174,15 @@ class Usuario_c extends CI_Controller
         $datos = $this->Jugador_m->getNJugadoresEquipos($liga);
         echo json_encode($datos);
     }
+
+    /**
+     * obtenerNEntrenadores
+     * Función que pide al modelo el numero de entrenadores de una liga y te lo devuelve.
+     * @param  $liga
+     */
+    public function obtenerNEntrenadores($liga)
+    {
+        $datos = $this->Entrenador_m->getNEntrenadores($liga);
+        echo json_encode($datos);
+    }
 }

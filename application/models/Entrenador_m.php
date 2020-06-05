@@ -101,4 +101,21 @@ class Entrenador_m extends CI_Model
         $query = $this->db->get('liga l');
         return $query->row();
     }
+
+    /**
+     * getNEntrenadores
+     * Método que retorna el equipo y número de entrenadores que tiene ese equipo.
+     * @param  $liga
+     * @return $resultado->result()
+     */
+    public function getNEntrenadores($liga)
+    {
+        $this->db->select('equipo,count(*) as `NEntrenadores`');
+        $this->db->from('usuarios');
+        $this->db->where("tipo", "Entrenador");
+        $this->db->where("liga", $liga);
+        $this->db->group_by('equipo');
+        $resultado = $this->db->get();
+        return $resultado->result();
+    }
 }

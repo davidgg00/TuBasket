@@ -103,7 +103,7 @@
                         &nbsp;
                     </div>
                     <form method="POST" enctype="multipart/form-data" id="formUpdatePassword" class="mx-auto">
-                        <img src="<?php echo base_url($_SESSION['imagen']) ?>" class="img-fluid rounded-circle w-25 d-block mx-auto mb-3" id='foto-perfil' alt="">
+                        <img src="<?php echo base_url($_SESSION['imagen']) ?>" class="img-fluid rounded-circle w-25 d-block mx-auto mb-3" id='foto-perfil_modal' alt="">
                         <div id="campos" class="d-flex flex-wrap justify-content-around">
                             <label for="claveAntigua">Introduzca la clave actual: </label>
                             <div id="error_clave" class="w-50 text-center mb-2">

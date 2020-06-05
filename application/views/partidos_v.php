@@ -11,8 +11,10 @@
     <div class="row mx-auto" id="contenedor">
         <section id="wrapperCalendario col-10 d-flex flex-wrap align-content-space-around justify-content-center">
             <div id="calendarioWrapper" class="d-flex flex-wrap align-items-start col-12">
+
                 <!--Si la liga no se ha generado-->
                 <?php if (count($partidos) == 0) : ?>
+
                     <table class="table table-bordered" id="equiposActuales">
                         <div class="alert alert-warning d-block mx-auto mt-3" role="alert">
                             Para generar una liga se necesita tener 8 o 10 equipos.

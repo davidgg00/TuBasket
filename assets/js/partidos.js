@@ -1,6 +1,9 @@
 //Cuando se haya cargado el documento
 $(document).ready(function () {
-    calendario();
+    //Si el número de partidos es mayor que 0 generamos paginacion
+    if (partidos.length > 0) {
+        calendario()
+    }
     $("button#generarLiga").on("click", function (evento) {
         window.location.href = base_url + "Partidos_c/generarLiga/" + liga;
     })
@@ -14,21 +17,16 @@ $(document).ready(function () {
     // Si el numero de equipos no es el correcto, el boton de generar ligas está disabled
     if (nequipos == 8 || nequipos == 10) {
         $("#btn-generarLiga").on("click", function (evento) {
-            window.location.href = base_url + "Partidos_c/generarLiga/'  " + liga;
+            window.location.href = base_url + "Partidos_c/generarLiga/" + liga;
         });
     } else {
         $("#btn-generarLiga").prop('disabled', true);
     }
 });
-$("#contenedor").ready(function () {
-
-});
 function calendario() {
     //Creo unas variables para controlar el numero de la jornada y que cree una tabla nueva cada x partidos
     let jornada = 1;
     let npartido = 0;
-    //Creo un copia del array de los equipos para arreglar bug de la paginacion
-    let partidos_copia = partidos;
     //Si la cuenta es de tipo jugador esta variable almacenará "disabled" y se le introducirá a los inputs de fecha y hora para 
     //que los jugadores y entrenadores no puedan cambiar los datos del encuentro
     let disabled = (tipo_cuenta == "Jugador" || tipo_cuenta == "Entrenador") ? "disabled" : "";
@@ -105,9 +103,6 @@ function calendario() {
                             break;
                     }
                     for (let partido of partidosPaginacion) {
-                        if (partido == partidos_copia[0]) {
-                            jornada = 1;
-                        }
                         //Si la cuenta es de tipo jugador la fila de modificar o resetear partido no debe de aparecer.
                         let thaccion = (tipo_cuenta == "Administrador") ? "<th>Acción</th>" : "";
                         let accion = (tipo_cuenta == "Administrador") ? "<td><i class='fas fa-edit' data-id='" + partido.id + "' data-tippy-content='Haga click para escribir resultado'></i><i class='fas fa-sync btn-reset' data-id='" + partido.id + "'></i></td>" : "";

@@ -92,9 +92,10 @@
                         if (response != "") {
                             d = new Date();
                             let url = "<?= base_url() ?>" + response;
-                            //Agrego una marca de tiempo a la URL para refrescar la imagen ya que va a tener el mismo nombre y alomejor la misma extensión
+                            //Agrego una marca de tiempo a la URL para refrescar la imagen ya que va a tener el mismo nombre y a lo mejor la misma extensión
                             //Entonces, al cambiar la URL el navegador no pilla la imagen por caché
                             $('#foto-perfil').attr('src', url + "?" + d.getTime());
+                            $('#foto-perfil_modal').attr('src', url + "?" + d.getTime());
                         }
                         Swal.fire({
                             backdrop: false,
