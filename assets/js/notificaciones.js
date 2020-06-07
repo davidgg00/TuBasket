@@ -17,7 +17,7 @@ $(document).ready(function () {
                 if (notificacion.estado == "PENDIENTE") {
                     if (notificacion.EntrenadorRecibe == username) {
                         html += "<h5 class='text-center'>El '" + notificacion.equipoSolicitante + "' desea realizar un intercambio</h5>";
-                        html += "<div class='d-flex align-items-center justify-content-between w-75 mx-auto fotos'><img src='" + baseurl + notificacion.img_jugador_ofrece + "' class='img-fluid rounded-circle'><i class='fas fa-arrow-right'></i><img src='" + baseurl + notificacion.img_jugador_pide + "' class='img-fluid rounded-circle'></div>";
+                        html += "<div class='d-flex align-items-center justify-content-between w-75 mx-auto fotos'><img src='" + baseurl + notificacion.img_jugador_pide + "' class='img-fluid rounded-circle'><i class='fas fa-arrow-right'></i><img src='" + baseurl + notificacion.img_jugador_ofrece + "' class='img-fluid rounded-circle'></div>";
                         html += "<div class='jugadores d-flex align-items-center justify-content-between mx-auto'><h4 class='d-inline'>" + notificacion.pide + "</h4><h4 class='d-inline'>" + notificacion.ofrece + "</h4></div>";
                         html += "<div class='mt-2 accion d-flex justify-content-between mx-auto d-flex'><div class='aceptar bg-success d-flex justify-content-center align-items-center'><i class='fas fa-check' data-idfichaje='" + notificacion.idfichaje + "'></i></div><div class='denegar bg-danger d-flex justify-content-center align-items-center'><i class='fas fa-times float-right' data-idfichaje='" + notificacion.idfichaje + "'></i></div></div>";
                         html += "</div>";
