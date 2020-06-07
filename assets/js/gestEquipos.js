@@ -18,9 +18,9 @@ $(document).ready(function () {
     });
 
     //Si presionamos enter en el contenteditable te genera <br> así que
-    //voy a hacer que si lo presionas pierda el foco.
+    //voy a hacer que si lo presionas pierda el foco y si la cadena es mayor de 25 también.
     $('p[contenteditable]').keydown(function (e) {
-        if (e.keyCode === 13) {
+        if (e.keyCode === 13 || $(this).text().length >= 25 && e.keyCode != 8) {
             $(this).blur();
         }
     });
@@ -29,9 +29,9 @@ $(document).ready(function () {
     //Si hay 10 como máximo, no permitiremos meter más.
     comprobarMaxEquipos();
 
-
     //Si se va a enviar el formulario con el equipo a añadir
     $("#formulario").on("submit", function (evento) {
+        console.log($("#escudo"));
         evento.preventDefault();
         //Si todavía no se ha generado los enfrentamientos
         if (npartidos == 0) {
@@ -59,8 +59,15 @@ $(document).ready(function () {
                 }
             });
 
+            //Comprobamos extension img
+            if ($("#escudo").val().split('.').pop().toUpperCase() != "PNG" && $("#escudo").val().split('.').pop().toUpperCase() != "JPG") {
+                $("#escudo").addClass("is-invalid");
+            } else {
+                $("#escudo").removeClass("is-invalid");
+            }
+
             //Si no hay ninguna clase error en los inputs enviamos el formulario por ajax
-            if (!$("#equipo").hasClass("is-invalid") && !$("#pabellon").hasClass("is-invalid") && !$("#ciudad").hasClass("is-invalid") && $("#formulario").hasClass("max-equipos") == false) {
+            if (!$("#equipo").hasClass("is-invalid") && !$("#pabellon").hasClass("is-invalid") && !$("#escudo").hasClass("is-invalid") && !$("#ciudad").hasClass("is-invalid") && $("#formulario").hasClass("max-equipos") == false) {
                 $.ajax({
                     url: baseurl + "GestionEquipos_c/enviarEquipo ",
                     type: "POST",
@@ -112,8 +119,24 @@ $(document).ready(function () {
                 $("input.datos").each(function (evento) {
                     $(this).val("");
                 })
+            } else if (($("#equipo").hasClass("is-invalid") || $("#pabellon").hasClass("is-invalid") || $("#ciudad").hasClass("is-invalid")) && !$("#formulario").hasClass("max-equipos")) {
+                //Si es que hay algun error de que hay algún campo vacío.
+                Swal.fire({
+                    backdrop: false,
+                    icon: 'error',
+                    title: 'Ooops....',
+                    text: "Hay algún campo vacío. Rellenelo para insertar el Equipo."
+                })
+            } else if ($("#escudo").hasClass("is-invalid")) {
+                //Si el escudo no tiene una extensión correcta.
+                Swal.fire({
+                    backdrop: false,
+                    icon: 'error',
+                    title: 'Ooops....',
+                    text: 'La extensión del escudo no es correcta. Prueba con un .jpg o .png',
+                })
             } else {
-                //Si hay error se muestra
+                //Si ya hay 10 equipos.
                 Swal.fire({
                     backdrop: false,
                     icon: 'error',
@@ -188,8 +211,8 @@ function ajaxEliminarEquipo() {
         if (npartidos == 0) {
             //Aparece una confirmacion de que si quiere eliminar el equipo
             Swal.fire({
-                title: '¿Estás seguro de que quieres borrar la Liga?',
-                text: "¡Una ve que la elimines no podrás recuperarla!",
+                title: '¿Estás seguro de que quieres borrar el equipo?',
+                text: "¡Una vez que lo elimines no podrás recuperarlo!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -221,9 +244,7 @@ function ajaxEliminarEquipo() {
                                 rutaImagen: imgEquipo
                             },
                             success: function (response) {
-                                $(fila).remove();
-                                console.log(response);
-                                console.log(imgEquipo);
+                                $(fila).fadeOut();
                             }
                         });
                     })

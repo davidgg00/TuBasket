@@ -20,9 +20,9 @@
             <tbody>
                 <tr class="text-center" id="tr_form">
                     <form method="post" id="formulario" enctype="multipart/form-data">
-                        <td><input type="text" name="equipo" id="equipo" class="form-control datos"></td>
-                        <td><input type="text" name="pabellon" id="pabellon" class="form-control datos"></td>
-                        <td><input type="text" name="ciudad" id="ciudad" class="form-control datos"></td>
+                        <td><input type="text" name="equipo" id="equipo" class="form-control datos" maxlength="25"></td>
+                        <td><input type="text" name="pabellon" id="pabellon" class="form-control datos" maxlength="25"></td>
+                        <td><input type="text" name="ciudad" id="ciudad" class="form-control datos" maxlength="25"></td>
                         <td><input type="file" name="escudo" id="escudo" class="datos" required></td>
                         <input type="hidden" name="liga" value="<?php echo $liga ?>">
                         <td><button id="añadir">
@@ -35,7 +35,7 @@
                     <tr class='text-center datos'>
                         <td class='d-none idequipo'><?= $equipo->id ?></td>
                         <td class='equipo'>
-                            <p data-tippy-content='Haga click para editar el campo' class='dato_td' contenteditable='true'><?= $equipo->equipo ?> </p>
+                            <p data-tippy-content='Haga click para editar el campo' class='dato_td' contenteditable='true' maxlength="25"><?= $equipo->equipo ?> </p>
                         </td>
                         <td class='pabellon'>
                             <p data-tippy-content='Haga click para editar el campo' class='dato_td' contenteditable='true'> <?= $equipo->pabellon ?> </p>
