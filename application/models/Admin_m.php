@@ -165,4 +165,18 @@ class Admin_m extends CI_Model
         $query = $this->db->get('ligas l');
         return $query->row();
     }
+
+    /**
+     * comprobarPropiedadLiga
+     * Método que comprueba que la liga a la que va a intentar acceder el administrador es realmente suya
+     * @param  mixed $liga
+     * @return void
+     */
+    public function comprobarPropiedadLiga($liga, $administrador)
+    {
+        //Creamos la sentencia sql
+        $query = $this->db->get_where('ligas', array('nombre' => $liga, 'administrador' => $administrador));
+        //Retornamos el numero de filas
+        return $query->num_rows();
+    }
 }

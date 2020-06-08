@@ -29,17 +29,22 @@ class Admin_c extends CI_Controller
             $this->load->view("modulos/head", array("css" => array("panel_admin")));
             $this->load->view("admin_v");
         } else {
-            $datos["liga"] = $liga;
-            $datos["proxPartidos"] = $this->Admin_m->getProx5Partidos($liga);
+            //Si se intenta acceder a una liga que no existe o si la liga a la que intentas acceder no es tuya. Redirigimos al panel
+            if (!$this->Admin_m->comprobarNombreLiga($liga) || !$this->Admin_m->comprobarPropiedadLiga($liga, $_SESSION['username'])) {
+                redirect("Admin_c");
+            } else {
+                $datos["liga"] = $liga;
+                $datos["proxPartidos"] = $this->Admin_m->getProx5Partidos($liga);
 
-            //Añadimos variable que almacena el ganador de la liga (Si no hay, estará vacía)
-            $datos["ganador"] = $this->Admin_m->getGanador($liga);
+                //Añadimos variable que almacena el ganador de la liga (Si no hay, estará vacía)
+                $datos["ganador"] = $this->Admin_m->getGanador($liga);
 
-            //Cargamos los modulos junto con $datos que tiene el nombre de la liga
-            $this->load->view("modulos/head", array("css" => array("liga")));
-            $this->load->view("modulos/header", $datos);
-            $this->load->view("liga_v");
-            $this->load->view("modulos/footer");
+                //Cargamos los modulos junto con $datos que tiene el nombre de la liga
+                $this->load->view("modulos/head", array("css" => array("liga")));
+                $this->load->view("modulos/header", $datos);
+                $this->load->view("liga_v");
+                $this->load->view("modulos/footer");
+            }
         }
     }
 
