@@ -19,7 +19,7 @@ class GestionEquipos_m extends CI_Model
     {
         $this->db->set($campo, $contenido);
         $this->db->where('id', $equipo);
-        $this->db->update('equipo');
+        $this->db->update('equipos');
     }
 
     /**
@@ -30,7 +30,7 @@ class GestionEquipos_m extends CI_Model
      */
     public function eliminarEquipo($id)
     {
-        $this->db->delete('equipo', array('id' => $id));
+        $this->db->delete('equipos', array('id' => $id));
     }
 
     /**
@@ -42,7 +42,7 @@ class GestionEquipos_m extends CI_Model
     public function getEquipos($liga)
     {
         //Creamos la sentencia sql
-        $query = $this->db->get_where('equipo', array('liga' => $liga));
+        $query = $this->db->get_where('equipos', array('liga' => $liga));
         return $query;
     }
 
@@ -54,7 +54,7 @@ class GestionEquipos_m extends CI_Model
      */
     public function getEquipo($idequipo)
     {
-        $query = $this->db->get_where('equipo', array('id' => $idequipo));
+        $query = $this->db->get_where('equipos', array('id' => $idequipo));
         return $query;
     }
 
@@ -66,7 +66,7 @@ class GestionEquipos_m extends CI_Model
     public function getUltimoEquipoInsertado()
     {
         $this->db->select('*');
-        $this->db->from('equipo');
+        $this->db->from('equipos');
         $this->db->order_by('id', 'desc');
         $this->db->limit(1);
         $query = $this->db->get();
@@ -93,7 +93,7 @@ class GestionEquipos_m extends CI_Model
             'liga' => $liga
         );
 
-        $this->db->insert('equipo', $data);
+        $this->db->insert('equipos', $data);
     }
 
     /**
@@ -107,7 +107,7 @@ class GestionEquipos_m extends CI_Model
     {
         $this->db->set('escudo_ruta', $ruta);
         $this->db->where('escudo_ruta', $id);
-        $this->db->update('equipo');
+        $this->db->update('equipos');
     }
 
     /**
@@ -119,7 +119,7 @@ class GestionEquipos_m extends CI_Model
     public function getNPartidosLiga($liga)
     {
         //Vamos a ver si la liga ya tiene unos enfrentamientos generados.
-        $query = $this->db->get_where('partido', array('liga' => $liga));
+        $query = $this->db->get_where('partidos', array('liga' => $liga));
         return $query->num_rows();
     }
 }

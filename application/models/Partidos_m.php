@@ -32,7 +32,7 @@ class Partidos_m extends CI_Model
     public function getNumEquipos($liga)
     {
         //Creamos la sentencia sql
-        $query = $this->db->get_where('equipo ', array('liga' => $liga));
+        $query = $this->db->get_where('equipos ', array('liga' => $liga));
         //Retornamos
         return $query->num_rows();
     }
@@ -46,7 +46,7 @@ class Partidos_m extends CI_Model
     public function getEquipos($liga)
     {
         //Creamos la sentencia sql
-        $query = $this->db->get_where('equipo ', array('liga' => $liga));
+        $query = $this->db->get_where('equipos ', array('liga' => $liga));
         //Retornamos
         return $query->result();
     }
@@ -59,10 +59,10 @@ class Partidos_m extends CI_Model
      */
     public function getJugadoresPartidos($id)
     {
-        $this->db->select('apenom,username,equipo.equipo,triples_metidos,tiros_2_metidos,tiros_libres_metidos,tapones,robos');
+        $this->db->select('apenom,username,equipos.equipo,triples_metidos,tiros_2_metidos,tiros_libres_metidos,tapones,robos');
         $this->db->from('jugador_stats');
         $this->db->join('usuarios', 'username = jugador');
-        $this->db->join('equipo', 'usuarios.equipo = equipo.id');
+        $this->db->join('equipos', 'usuarios.equipo = equipos.id');
         $this->db->where('id_partido', $id);
         $query = $this->db->get();
         /* Con la anterior consulta se comprueba si hay estadisticas de los jugadores en la tabla jugador_stats
@@ -133,7 +133,7 @@ class Partidos_m extends CI_Model
             'liga' => $liga,
         );
 
-        $this->db->insert('partido', $data);
+        $this->db->insert('partidos', $data);
     }
 
     /**
@@ -148,7 +148,7 @@ class Partidos_m extends CI_Model
         $this->db->set('resultado_local', $local);
         $this->db->set('resultado_visitante', $visitante);
         $this->db->where('id', $id);
-        $this->db->update('partido');
+        $this->db->update('partidos');
     }
 
     /**
@@ -161,7 +161,7 @@ class Partidos_m extends CI_Model
     {
         $this->db->set('fecha', $fecha);
         $this->db->where('id', $idPartido);
-        $this->db->update('partido');
+        $this->db->update('partidos');
     }
 
     /**
@@ -174,7 +174,7 @@ class Partidos_m extends CI_Model
     {
         $this->db->set('hora', $hora);
         $this->db->where('id', $idPartido);
-        $this->db->update('partido');
+        $this->db->update('partidos');
     }
 
     /**
@@ -187,7 +187,7 @@ class Partidos_m extends CI_Model
         $this->db->set('resultado_local', "");
         $this->db->set('resultado_visitante', "");
         $this->db->where('id', $id);
-        $this->db->update('partido');
+        $this->db->update('partidos');
     }
 
     /**
@@ -201,7 +201,7 @@ class Partidos_m extends CI_Model
         $this->db->select('email');
         $this->db->from('jugador_stats');
         $this->db->join('usuarios', 'username = jugador');
-        $this->db->join('equipo', 'usuarios.equipo = equipo.id');
+        $this->db->join('equipo', 'usuarios.equipo = equipos.id');
         $this->db->where('id_partido', $id);
         $query = $this->db->get();
         return $query->result();
@@ -217,7 +217,7 @@ class Partidos_m extends CI_Model
     {
         $this->db->select('email');
         $this->db->from('usuarios');
-        $this->db->where('equipo', $idequipo);
+        $this->db->where('equipos', $idequipo);
         $this->db->where('tipo', "Entrenador");
         $query = $this->db->get();
         return $query->row();
@@ -250,7 +250,7 @@ class Partidos_m extends CI_Model
         $this->db->select('count(*) as total');
         $this->db->where('liga', $liga);
         $this->db->where('resultado_local !=', '');
-        $this->db->from('partido');
+        $this->db->from('partidos');
         $query = $this->db->get();
         return $query->row();
     }
@@ -264,7 +264,7 @@ class Partidos_m extends CI_Model
     public function num_equipos_liga($liga)
     {
         //Creamos la sentencia sql
-        $query = $this->db->get_where('equipo', array('liga' => $liga));
+        $query = $this->db->get_where('equipos', array('liga' => $liga));
         //Retornamos el numero de filas
         return $query->num_rows();
     }
@@ -274,7 +274,7 @@ class Partidos_m extends CI_Model
 
         //obtenemos al primer clasificado
         $this->db->select("v.*, e.escudo_ruta, e.id as idequipo");
-        $this->db->join('equipo e', 'e.id = v.idequipo');
+        $this->db->join('equipos e', 'e.id = v.idequipo');
         $this->db->where('v.liga', $liga);
         $this->db->order_by('puntos_clasificacion', 'DESC');
         $this->db->order_by('puntos_favor ', 'DESC');

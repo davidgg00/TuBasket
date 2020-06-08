@@ -2,6 +2,7 @@ system
 user_guide
 application/*
 !application/config
+application/config/config_mail.php
 !application/views
 !application/models
 !application/controllers
@@ -17,4 +18,3 @@ license.txt
 bootstrap-v4
 vendor/
 assets/pdfPartidos/
-assets/uploads/

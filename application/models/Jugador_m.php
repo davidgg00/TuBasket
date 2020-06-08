@@ -17,7 +17,7 @@ class Jugador_m extends CI_Model
     public function mostrarClasificacion($liga)
     {
         $this->db->select("v.*, e.escudo_ruta");
-        $this->db->join('equipo e', 'e.id = v.idequipo');
+        $this->db->join('equipos e', 'e.id = v.idequipo');
         $this->db->where('v.liga', $liga);
         $this->db->order_by('puntos_clasificacion', 'DESC');
         $query = $this->db->get('view_clasificacion v');
@@ -32,7 +32,7 @@ class Jugador_m extends CI_Model
      */
     public function obtenerEquipos($liga)
     {
-        $query = $this->db->get_where('equipo', array('liga' => $liga));
+        $query = $this->db->get_where('equipos', array('liga' => $liga));
         return $query->result();
     }
 

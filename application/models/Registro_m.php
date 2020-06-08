@@ -39,7 +39,7 @@ class Registro_m extends CI_Model
     {
         $this->db->where('nombre', $liga);
         $this->db->where('password', $clave);
-        $query = $this->db->get('liga');
+        $query = $this->db->get('ligas');
         if ($query) {
             return $query->row();
         } else {

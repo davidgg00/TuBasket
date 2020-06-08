@@ -18,7 +18,7 @@ class Admin_m extends CI_Model
     public function comprobarNombreLiga($liga)
     {
         $this->db->where('nombre', $liga);
-        $query = $this->db->get('liga');
+        $query = $this->db->get('ligas');
         if ($query) {
             return $query->row();
         } else {
@@ -33,7 +33,7 @@ class Admin_m extends CI_Model
      */
     public function crearLiga($datos)
     {
-        $this->db->insert('liga', $datos);
+        $this->db->insert('ligas', $datos);
     }
 
     /**
@@ -43,7 +43,7 @@ class Admin_m extends CI_Model
      */
     public function borrarLiga($liga)
     {
-        $this->db->delete('liga', array('nombre' => $liga));
+        $this->db->delete('ligas', array('nombre' => $liga));
     }
 
     /**
@@ -55,9 +55,9 @@ class Admin_m extends CI_Model
     public function mostrar_ligas($username)
     {
         $this->db->select("l.nombre, l.administrador, e.equipo as ganador");
-        $this->db->join('equipo e', 'e.id = l.ganador', 'left');
+        $this->db->join('equipos e', 'e.id = l.ganador', 'left');
         $this->db->where('l.administrador', $username);
-        $query = $this->db->get('liga l');
+        $query = $this->db->get('ligas l');
         return $query;
     }
 
@@ -88,7 +88,7 @@ class Admin_m extends CI_Model
     public function num_equipos_liga($liga)
     {
         //Creamos la sentencia sql
-        $query = $this->db->get_where('equipo', array('liga' => $liga));
+        $query = $this->db->get_where('equipos', array('liga' => $liga));
         //Retornamos el numero de filas
         return $query->num_rows();
     }
@@ -145,7 +145,7 @@ class Admin_m extends CI_Model
     {
         $this->db->select('escudo_ruta');
         $this->db->where('liga', $liga);
-        $this->db->from('equipo e');
+        $this->db->from('equipos e');
         $query = $this->db->get();
         return $query->result();
     }
@@ -159,10 +159,10 @@ class Admin_m extends CI_Model
     public function getGanador($liga)
     {
         $this->db->select("e.equipo, e.escudo_ruta");
-        $this->db->join('equipo e', 'e.id = l.ganador');
+        $this->db->join('equipos e', 'e.id = l.ganador');
         $this->db->where('l.nombre', $liga);
         $this->db->where('l.ganador !=', "");
-        $query = $this->db->get('liga l');
+        $query = $this->db->get('ligas l');
         return $query->row();
     }
 }

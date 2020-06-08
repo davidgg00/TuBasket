@@ -31,7 +31,7 @@ class Entrenador_m extends CI_Model
      */
     public function obtenerEquipos($liga)
     {
-        $query = $this->db->get_where('equipo', array('liga' => $liga));
+        $query = $this->db->get_where('equipos', array('liga' => $liga));
         return $query->result();
     }
 
@@ -78,7 +78,7 @@ class Entrenador_m extends CI_Model
         $this->db->join('usuarios u2', 'u2.username = f.username_jugador2');
         $this->db->join('usuarios u3', 'u3.username = f.EntrenadorSolicita');
         $this->db->join('usuarios u4', 'u4.username = f.EntrenadorRecibe');
-        $this->db->join('equipo e', 'e.id = u3.equipo');
+        $this->db->join('equipos e', 'e.id = u3.equipo');
         $this->db->where("(f.entrenadorSolicita='$username') OR (f.EntrenadorRecibe='$username')", NULL, FALSE);
         $this->db->order_by('f.id', 'DESC');
         $this->db->order_by('f.id', 'DESC');
@@ -95,10 +95,10 @@ class Entrenador_m extends CI_Model
     public function getGanador($liga)
     {
         $this->db->select("e.equipo, e.escudo_ruta");
-        $this->db->join('equipo e', 'e.id = l.ganador');
+        $this->db->join('equipos e', 'e.id = l.ganador');
         $this->db->where('l.nombre', $liga);
         $this->db->where('l.ganador !=', "");
-        $query = $this->db->get('liga l');
+        $query = $this->db->get('ligas l');
         return $query->row();
     }
 
