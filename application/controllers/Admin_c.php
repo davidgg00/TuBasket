@@ -63,11 +63,11 @@ class Admin_c extends CI_Controller
     }
 
     /**
-     * gestJugadores
-     * Método que te lleva a la vista de la Gestión de Jugadores
+     * gestUsuarios
+     * Método que te lleva a la vista de la Gestión de usuarios
      * @param  $liga
      */
-    public function gestJugadores($liga)
+    public function gestUsuarios($liga)
     {
         $datos["liga"] = $liga;
         $this->load->view("modulos/head", array("css" => array("liga", "gestion_jugadores")));

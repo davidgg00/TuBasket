@@ -1,12 +1,12 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class GestionJugadores_c extends CI_Controller
+class GestionUsuarios_c extends CI_Controller
 {
     public function __construct()
     {
         parent::__construct();
-        $this->load->model("GestionJugadores_m");
+        $this->load->model("GestionUsuarios_m");
 
         //Si el usuario no es un Administrador, redirigimos LOGIN
         if ($this->session->userdata['tipo_cuenta'] != 'Administrador') {
@@ -19,11 +19,11 @@ class GestionJugadores_c extends CI_Controller
      * Función que te redirige a la vista de la Gestión de Jugadores
      * @param  $liga
      */
-    public function gestJugadores($liga)
+    public function gestUsuarios($liga)
     {
         $datos["liga"] = $liga;
-        $datos['jugadoresSinConfirmar'] = $this->GestionJugadores_m->getJugadoresSinConfirmar($liga);
-        $datos['jugadoresConfirmados'] = $this->GestionJugadores_m->getJugadoresConfirmados($liga);
+        $datos['jugadoresSinConfirmar'] = $this->GestionUsuarios_m->getJugadoresSinConfirmar($liga);
+        $datos['jugadoresConfirmados'] = $this->GestionUsuarios_m->getJugadoresConfirmados($liga);
         $this->load->view("modulos/head", array("css" => array("liga", "gestion_jugadores")));
         $this->load->view("modulos/header", $datos);
         $this->load->view('gest_jugadores_v');

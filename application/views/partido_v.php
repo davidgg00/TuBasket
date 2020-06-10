@@ -18,7 +18,7 @@
                 </div>
             </div>
         </div>
-        <div id="jugadores_stats" class="text-center mx-auto">
+        <div id="jugadores_stats" class="text-center mx-auto col-12">
             <table id="tabla_stats" class="col-11 mx-auto" border="1">
                 <thead>
                     <tr class='text-center'>

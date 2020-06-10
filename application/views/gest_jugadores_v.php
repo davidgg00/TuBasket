@@ -1,7 +1,7 @@
 <script>
     let baseurl = '<?= base_url() ?>';
 </script>
-<script src="<?php echo base_url('assets/js/gestJugadores.js') ?>"></script>
+<script src="<?php echo base_url('assets/js/gestUsuarios.js') ?>"></script>
 
 <body>
     <div class="row">

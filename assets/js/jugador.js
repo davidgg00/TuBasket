@@ -1,13 +1,3 @@
-$.ajax({
-    type: "POST",
-    url: baseurl + "Usuario_c/getJugadoresEquipo/",
-    data: "data",
-    dataType: "dataType",
-    success: function (response) {
-        let jugadores = JSON.parse(response);
-        console.log(jugadores);
-    }
-});
 
 function ofrecerFichaje() {
     console.log($("#nombreFichaje").html());

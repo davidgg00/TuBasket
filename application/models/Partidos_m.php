@@ -201,7 +201,7 @@ class Partidos_m extends CI_Model
         $this->db->select('email');
         $this->db->from('jugador_stats');
         $this->db->join('usuarios', 'username = jugador');
-        $this->db->join('equipo', 'usuarios.equipo = equipos.id');
+        $this->db->join('equipos', 'usuarios.equipo = equipos.id');
         $this->db->where('id_partido', $id);
         $query = $this->db->get();
         return $query->result();
@@ -217,7 +217,7 @@ class Partidos_m extends CI_Model
     {
         $this->db->select('email');
         $this->db->from('usuarios');
-        $this->db->where('equipos', $idequipo);
+        $this->db->where('equipo', $idequipo);
         $this->db->where('tipo', "Entrenador");
         $query = $this->db->get();
         return $query->row();

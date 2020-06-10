@@ -59,7 +59,7 @@ $route['Admin_c/partido/(:any)/(:num)'] = 'Partidos_c/resultadoPartido/$1/$2';
 
 $route['Admin_c/partidos/(:any)'] = 'Partidos_c/partidos/$1';
 
-$route['Admin_c/gestJugadores/(:any)'] = 'GestionJugadores_c/gestJugadores/$1';
+$route['Admin_c/gestUsuarios/(:any)'] = 'GestionUsuarios_c/gestUsuarios/$1';
 
 $route['Usuario_c/partidos'] = 'Partidos_c/partidos';
 

@@ -71,7 +71,7 @@ class Jugador_m extends CI_Model
     public function proxPartido($liga, $equipo)
     {
         //Select que te muestra los escudos, la jornada y la fecha de los próximos partidos a disputar del equipo y liga. (Máximo 3 partidos muestra)
-        $this->db->select('escudo_local,escudo_visitante,jornada,fecha,hora FROM `view_partidos_liga` where liga = "' . $liga . '" and ((id_local = "' . $equipo . '") or (id_visitante="' . $equipo . '")) AND date(fecha) > "' . date('Y-m-d') . '" AND resultado_local LIKE "" ORDER BY jornada ASC LIMIT 3');
+        $this->db->select('escudo_local,escudo_visitante,jornada,fecha,hora, equipo_local, equipo_visitante FROM `view_partidos_liga` where liga = "' . $liga . '" and ((id_local = "' . $equipo . '") or (id_visitante="' . $equipo . '")) AND (date(fecha) > "' . date('Y-m-d') . '" OR fecha = 0000-00-00) AND resultado_local LIKE "" ORDER BY jornada ASC LIMIT 3');
         $query = $this->db->get();
         //Si la consulta no devuelve nada, vamos a probar si es porque las fechas no están puestas todavía
         if ($query->num_rows() == 0) {

@@ -11,7 +11,7 @@ $(document).ready(function () {
             $("#btn-registro").prop('disabled', true);
         } else {
             $(this).removeClass("is-invalid");
-            if (!$("#email").hasClass("is-invalid") && !("#username").hasClass("is-invalid")) {
+            if (!$("#email").hasClass("is-invalid") && !$("#username").hasClass("is-invalid")) {
                 $("#btn-registro").prop('disabled', false);
             }
         }

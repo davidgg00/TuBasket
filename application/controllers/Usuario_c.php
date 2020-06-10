@@ -109,7 +109,7 @@ class Usuario_c extends CI_Controller
     {
         $this->load->model("GestionJugadores_m");
         $datos["liga"] = $_SESSION["liga"];
-        $datos['jugadores'] = $this->GestionJugadores_m->getJugadoresConfirmados($_SESSION["liga"]);
+        $datos['jugadores'] = $this->GestionUsuarios_m->getJugadoresConfirmados($_SESSION["liga"]);
         $this->load->view("modulos/head", array("css" => array("liga", "listaJugadores")));
         $this->load->view("modulos/header", $datos);
         $this->load->view('listajugadores_v');

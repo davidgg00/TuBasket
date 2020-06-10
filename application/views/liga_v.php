@@ -19,11 +19,16 @@
                         foreach ($proxPartidos as $partido) : ?>
                             <div class="carousel-item">
                                 <div id="partido" class="col-12 d-flex justify-content-around h-50">
-                                    <img src="<?php echo base_url($partido->escudo_local) ?>" class="img-fluid">
+                                    <div class="equipo d-flex flex-wrap">
+                                        <img src="<?php echo base_url($partido->escudo_local) ?>" class="img-fluid mx-auto">
+                                        <span class="col-12 text-center p-0"><?= $partido->equipo_local ?></span>
+                                    </div>
                                     <img src="<?php echo base_url('assets/img/vs.png') ?>" class="img-fluid">
-                                    <img src="<?php echo base_url($partido->escudo_visitante) ?>" class="img-fluid">
+                                    <div class="equipo d-flex flex-wrap">
+                                        <img src="<?php echo base_url($partido->escudo_visitante) ?>" class="img-fluid mx-auto">
+                                        <span class="col-12 text-center p-0"><?= $partido->equipo_visitante ?></span>
+                                    </div>
                                 </div>
-
                                 <p id="lugar" class="col-12 text-center">Jornada: <?= $partido->jornada ?></p>
                                 <?php if ($partido->fecha != "0000-00-00") : ?>
                                     <p id="fecha" class="col-12 text-center">Fecha: <?= date("d-m-Y", strtotime($partido->fecha)) ?></p>
@@ -31,7 +36,7 @@
                                     <p id="fecha" class="col-12 text-center">Fecha: NO DECIDIDA</p>
                                 <?php endif; ?>
                                 <?php if (isset($partido->hora)) : ?>
-                                    <p id="hora" class="col-12 text-center">Hora: <?= date("d-m-Y", strtotime($partido->fecha)) ?></p>
+                                    <p id="hora" class="col-12 text-center">Hora: <?= substr($partido->hora, 0, -3); ?></p>
                                 <?php else : ?>
                                     <p id="hora" class="col-12 text-center">Hora: NO DECIDIDA</p>
                                 <?php endif; ?>

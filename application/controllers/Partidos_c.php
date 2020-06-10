@@ -262,4 +262,10 @@ class Partidos_c extends CI_Controller
         $njugadores = $this->Partidos_m->getNJugadoresPartidos($id)->result();
         echo json_encode($njugadores);
     }
+
+    public function obtenerPartidosLiga($liga)
+    {
+        $partidos = $this->Partidos_m->getPartidos($liga)->result();
+        echo json_encode($partidos);
+    }
 }
