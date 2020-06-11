@@ -37,7 +37,7 @@ class GestionUsuarios_c extends CI_Controller
      */
     public function aceptarJugador($username)
     {
-        $this->GestionJugadores_m->aceptarJugador($username);
+        $this->GestionUsuarios_m->aceptarJugador($username);
     }
 
     /**
@@ -47,6 +47,6 @@ class GestionUsuarios_c extends CI_Controller
      */
     public function eliminarJugador($username)
     {
-        $this->GestionJugadores_m->denegarJugador($username);
+        $this->GestionUsuarios_m->denegarJugador($username);
     }
 }

@@ -35,19 +35,6 @@ $(document).ready(function () {
         evento.preventDefault();
         //Si todavía no se ha generado los enfrentamientos
         if (npartidos == 0) {
-            $.ajax({
-                type: "post",
-                url: baseurl + "GestionEquipos_c/obtenerNumEquipos/" + liga_actual,
-                success: function (dato_devuelto) {
-                    //Si llegamos al tope de equipo añadimos la clase que nos hará
-                    //que no podamos añadir mas equipos
-                    if (dato_devuelto >= 9) {
-                        $("#formulario").addClass("max-equipos");
-                    } else {
-                        $("#formulario").removeClass("max-equipos");
-                    }
-                },
-            });
 
 
             //Si hay algun input vacío añadimos clase error
@@ -68,6 +55,21 @@ $(document).ready(function () {
 
             //Si no hay ninguna clase error en los inputs enviamos el formulario por ajax
             if (!$("#equipo").hasClass("is-invalid") && !$("#pabellon").hasClass("is-invalid") && !$("#escudo").hasClass("is-invalid") && !$("#ciudad").hasClass("is-invalid") && $("#formulario").hasClass("max-equipos") == false) {
+                //Comprobamos si es el equipo numero 10 para que no pueda insertar mas equipos.
+                $.ajax({
+                    type: "post",
+                    url: baseurl + "GestionEquipos_c/obtenerNumEquipos/" + liga_actual,
+                    success: function (dato_devuelto) {
+                        //Si llegamos al tope de equipo añadimos la clase que nos hará
+                        //que no podamos añadir mas equipos
+                        if (dato_devuelto >= 9) {
+                            $("#formulario").addClass("max-equipos");
+                        } else {
+                            $("#formulario").removeClass("max-equipos");
+                        }
+                    },
+                });
+
                 $.ajax({
                     url: baseurl + "GestionEquipos_c/enviarEquipo ",
                     type: "POST",
@@ -161,7 +163,9 @@ function comprobarMaxEquipos() {
         type: "post",
         url: baseurl + "GestionEquipos_c/obtenerNumEquipos/" + liga_actual,
         success: function (dato_devuelto) {
-            if (dato_devuelto >= 10) {
+            console.log(dato_devuelto);
+
+            if (parseInt(dato_devuelto) >= 10) {
                 $("#formulario").addClass("max-equipos");
             } else {
                 $("#formulario").removeClass("max-equipos");
@@ -245,6 +249,11 @@ function ajaxEliminarEquipo() {
                             },
                             success: function (response) {
                                 $(fila).fadeOut();
+                                //Si había 10 equipos (los máximos), no se podía añadir más pero al borrar uno
+                                //Comprobamos por ajax el numero de equipos de la liga, si es menor que 10 
+                                //Quitamos la clase max-equipos
+
+                                comprobarMaxEquipos();
                             }
                         });
                     })
@@ -260,11 +269,7 @@ function ajaxEliminarEquipo() {
         }
 
 
-        //Si había 10 equipos (los máximos), no se podía añadir más pero al borrar uno
-        //Comprobamos por ajax el numero de equipos de la liga, si es menor que 10 
-        //Quitamos la clase max-equipos
 
-        comprobarMaxEquipos();
     })
 }
 

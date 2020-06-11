@@ -257,6 +257,19 @@ function calendario() {
                 let idpartido = $(this).children('td').eq(1).data('id');
                 window.location.href = base_url + "Usuario_c/partido/" + liga + "/" + idpartido + "";
             }
+        });
+
+        $(".btn-reset").on("click", function (evento) {
+            $(this).parent().parent().children().eq(1).html(" - ");
+            $.post(base_url + "Partidos_c/resetPartido", {
+                idPartido: $(this).data('id')
+            });
+            $.notify({
+                title: '<strong class="">¡Partido Reseteado!</strong><br>',
+                message: 'El partido ahora mismo se encontrará como si no se hubiese jugado.'
+            }, {
+                type: 'success'
+            });
         })
     }
 }

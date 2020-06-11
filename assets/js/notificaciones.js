@@ -65,9 +65,12 @@ $(document).ready(function () {
         $.post(baseurl + "Fichajes_c/aceptarFichaje", {
             idfichaje: $(this).children().data('idfichaje'),
         })
-
         //y borramos la propuesta de fichaje al usuario
         $(this).parent().parent().fadeOut('slow');
+        //Recargamos la página
+        setTimeout(function () {
+            window.location.reload(1);
+        }, 1000);
     })
 
     $(".denegar").on("click", function (evento) {

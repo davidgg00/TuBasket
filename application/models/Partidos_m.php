@@ -282,6 +282,6 @@ class Partidos_m extends CI_Model
         $ganador = $this->db->get('view_clasificacion v')->row();
         $this->db->set('ganador', $ganador->idequipo);
         $this->db->where('nombre', $liga);
-        $this->db->update('liga');
+        $this->db->update('ligas');
     }
 }

@@ -30,7 +30,7 @@ class Usuario_c extends CI_Controller
             $data["proxPartidos"] = $this->Jugador_m->proxPartido($_SESSION['liga'], $_SESSION['equipo']);
 
             //Añadimos variable que almacena el ganador de la liga (Si no hay, estará vacía)
-            $datos["ganador"] = $this->Entrenador_m->getGanador($_SESSION['liga']);
+            $data["ganador"] = $this->Entrenador_m->getGanador($_SESSION['liga']);
 
             $this->load->view("modulos/header", $data);
             $this->load->view("liga_v", $data);
@@ -107,7 +107,7 @@ class Usuario_c extends CI_Controller
      */
     public function listaJugadores()
     {
-        $this->load->model("GestionJugadores_m");
+        $this->load->model("GestionUsuarios_m");
         $datos["liga"] = $_SESSION["liga"];
         $datos['jugadores'] = $this->GestionUsuarios_m->getJugadoresConfirmados($_SESSION["liga"]);
         $this->load->view("modulos/head", array("css" => array("liga", "listaJugadores")));

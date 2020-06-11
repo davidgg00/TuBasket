@@ -1,6 +1,6 @@
 $(document).ready(function () {
     $(".aceptar").on("click", function (evento) {
-        $.get(baseurl + "GestionJugadores_c/aceptarJugador/" + $(this).data('username'));
+        $.get(baseurl + "GestionUsuarios_c/aceptarJugador/" + $(this).data('username'));
         let html = "<tr class='itemPaginacion'><th scope='row'>" + $(this).parent().parent().children().eq(0).html() + "</th><td>" + $(this).parent().parent().children().eq(1).html() + "</td><td>" + $(this).parent().parent().children().eq(2).html() + "</td><td>" + $(this).parent().parent().children().eq(3).html() + "</td><td>" + $(this).parent().parent().children().eq(4).html() + "</td><td><i data-tippy-content='Borrar Equipo' class='fas fa-trash-alt borrarJugador'></i></td></tr>"
         $("#jugadores_confirmados").append(html);
         $(this).parent().parent().remove();
@@ -31,7 +31,7 @@ $(document).ready(function () {
                         backdrop: false,
                     }).then(() => {
                         //Enviamos el username
-                        $.post(window.location.origin + "/TuBasket/GestionJugadores_c/eliminarJugador/" + $(this).parent().parent().children(":first").html());
+                        $.post(window.location.origin + "/TuBasket/GestionUsuarios_c/eliminarJugador/" + $(this).parent().parent().children(":first").html());
                         //quitamos el el tr del DOM y recargamos la paginación.
                         $(this).parent().parent().remove();
                         $(".activePagination").click();
@@ -41,7 +41,7 @@ $(document).ready(function () {
         })
     });
     $(".denegar").on("click", function (evento) {
-        $.get(baseurl + "GestionJugadores_c/eliminarJugador/" + $(this).data('username'));
+        $.get(baseurl + "GestionUsuarios_c/eliminarJugador/" + $(this).data('username'));
         $(this).parent().parent().remove();
         if ($("#listaJugadoresSinConfirmar table tbody").children().length == 0) {
             $("#listaJugadoresSinConfirmar").stop().fadeOut('slow', function (evento) {
@@ -75,7 +75,7 @@ $(document).ready(function () {
                     backdrop: false,
                 }).then(() => {
                     //Enviamos el username
-                    $.post(window.location.origin + "/TuBasket/GestionJugadores_c/eliminarJugador/" + $(this).parent().parent().children(":first").html());
+                    $.post(window.location.origin + "/TuBasket/GestionUsuarios_c/eliminarJugador/" + $(this).parent().parent().children(":first").html());
                     //quitamos el el tr del DOM y recargamos la paginación.
                     $(this).parent().parent().remove();
                     $(".activePagination").click();
