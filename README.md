@@ -58,9 +58,6 @@ El entrenador tendrá una opción para ver las plantillas de los equipos y
 tendrá una opción para solicitar un fichaje de un jugador, para ello el
 entrenador tendrá que ofrecer un jugador de su equipo para realizar el
 intercambio
-##### Notificar si un jugador se lesiona (entrenador)
-El entrenador tendrá que notificar si tiene en su plantilla algún lesionado para
-que los demás entrenadores puedan verlo y plantear mejor el partido.
 
 ### Función según usuario
 
@@ -85,5 +82,4 @@ que los demás entrenadores puedan verlo y plantear mejor el partido.
 -Podrá ver el calendario de liga. <br>
 -Podrá ver las estadísticas de todos sus jugadores. <br>
 -Tiene la posibilidad de fichar a un jugador ofreciendole él un jugador suyo (trueque). <br>
--Notificar si tiene algun jugador lesionado, especificiar quien y hasta que fecha. <br>
--Al acceder a un partido no disputado puede ver la plantilla del otro equipo y ver si hay algún jugador lesionado. <br>
+-Al acceder a un partido no disputado puede ver la plantilla del otro equipo. <br>
