@@ -1,6 +1,7 @@
 # TuBasket
 
-TuBasket es una aplicación que te permite crear tus propias ligas
+TuBasket es una aplicación creada para el proyecto final de Grado Superior de Desarrollo de Aplicaciones Web. <br>
+Esta aplicación web te permite crear tus propias ligas
 de baloncesto y administrarlas a tu gusto. Podrás llevar la clasificación de los equipos automáticamente,
 ver los resultados de todos los equipos, ver tus estadísticas individuales entre otras muchas funcionalidades.
 
